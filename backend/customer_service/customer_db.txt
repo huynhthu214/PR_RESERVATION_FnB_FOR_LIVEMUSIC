@@ -1,0 +1,19 @@
+INSERT INTO CUSTOMER_USERS (CUSTOMER_ID, USERNAME, EMAIL, PASSWORD, CREATED_AT)
+VALUES
+('C001', 'minhthu', 'thu@gmail.com', '123456', NOW()),
+('C002', 'hoanglong', 'long@gmail.com', '123456', NOW()),
+('C003', 'tienanh', 'anh@gmail.com', '123456', NOW());
+
+
+INSERT INTO RESERVATIONS (RESERVATION_ID, EVENT_ID, SEAT_ID, CUSTOMER_ID, RESERVATION_TIME, STATUS, TOTAL_AMOUNT)
+VALUES
+('R001', 'E001', 'S001', 'C001', NOW(), 'Confirmed', 500000),
+('R002', 'E002', 'S004', 'C002', NOW(), 'Pending', 300000),
+('R003', 'E003', 'S005', 'C003', NOW(), 'Cancelled', 0);
+
+
+INSERT INTO NOTIFICATIONS (NOTIFICATION_ID, CUSTOMER_ID, MESSAGE, TYPE, SENT_AT, IS_READ)
+VALUES
+('N001', 'C001', 'Bạn có vé sự kiện The Chill Band vào ngày 20/10!', 'Event Reminder', NOW(), FALSE),
+('N002', 'C002', 'Mã giảm giá VIP20 sắp hết hạn!', 'Promotion', NOW(), TRUE),
+('N003', 'C001', 'Thanh toán đơn hàng #O001 thành công!', 'Payment', NOW(), TRUE);

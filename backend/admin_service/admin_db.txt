@@ -1,0 +1,38 @@
+INSERT INTO ADMIN_USERS (ADMIN_ID, USERNAME, EMAIL, PASSWORD, ROLE, CREATED_AT) VALUES
+('AD001', 'admin_master', 'admin@livemusic.vn', '123456', 'SUPER_ADMIN', NOW()),
+('AD002', 'staff_hoa', 'hoa@livemusic.vn', '123456', 'STAFF', NOW()),
+('AD003', 'staff_minhtam', 'tam@livemusic.vn', '123456', 'STAFF', NOW());
+
+
+INSERT INTO VENUES (VENUE_ID, NAME, ADDRESS, CAPACITY, SEAT_LAYOUT) VALUES
+('V001', 'LiveMusic Saigon', '12 Lê Lợi, Quận 1, TP.HCM', 250, '3 tầng, layout A-B-C'),
+('V002', 'Acoustic Hanoi', '45 Tràng Thi, Hoàn Kiếm, Hà Nội', 180, '2 tầng, layout X-Y'),
+('V003', 'DaLat Chill Club', '07 Trần Phú, Đà Lạt', 120, '1 tầng, layout D');
+
+INSERT INTO SEATS (SEAT_ID, VENUE_ID, ROW_NUMBER, SEAT_NUMBER, SEAT_TYPE, PRICE_MULTIPLIER, IS_AVAILABLE)
+VALUES
+('S001', 'V001', 1, 1, 'VIP', 1.5, TRUE),
+('S002', 'V001', 1, 2, 'VIP', 1.5, TRUE),
+('S003', 'V001', 2, 5, 'Standard', 1.0, TRUE),
+('S004', 'V002', 3, 8, 'Balcony', 1.2, TRUE),
+('S005', 'V002', 4, 10, 'Standard', 1.0, TRUE);
+
+INSERT INTO EVENTS (EVENT_ID, VENUE_ID, BAND_NAME, EVENT_DATE, START_TIME, END_TIME, TICKET_PRICE, STATUS, DESCRIPTION, IMAGE_URL)
+VALUES
+('E001', 'V001', 'The Jazz Trio', '2025-11-10 00:00:00', '2025-11-10 19:00:00', '2025-11-10 21:30:00', 350000, 'Upcoming', 'Đêm nhạc Jazz nhẹ nhàng tại trung tâm thành phố', 'jazztrio.png'),
+('E002', 'V001', 'Rock Pulse', '2025-11-15 00:00:00', '2025-11-15 20:00:00', '2025-11-15 22:00:00', 420000, 'Upcoming', 'Ban nhạc rock trẻ trung với những bản hit đình đám', 'rockpulse.png'),
+('E003', 'V002', 'Acoustic Soul', '2025-11-20 00:00:00', '2025-11-20 19:30:00', '2025-11-20 21:00:00', 300000, 'Upcoming', 'Đêm nhạc acoustic chill chill', 'acoustic.png');
+
+INSERT INTO MENU_ITEMS (ITEM_ID, NAME, DESCRIPTION, PRICE, CATEGORY, STOCK_QUANTITY, IS_AVAILABLE)
+VALUES
+('M001', 'Mojito Classic', 'Cocktail vị bạc hà, chanh và rum', 120000, 'Drink', 40, TRUE),
+('M002', 'Tequila Sunrise', 'Cocktail màu cam đỏ rực rỡ', 150000, 'Drink', 25, TRUE),
+('M003', 'Pizza Margherita', 'Pizza Ý truyền thống với phô mai mozzarella', 180000, 'Food', 10, TRUE),
+('M004', 'Fried Chicken Bites', 'Gà chiên giòn sốt chanh dây', 130000, 'Food', 20, TRUE),
+('M005', 'Sparkling Water', 'Nước khoáng có gas', 50000, 'Drink', 100, TRUE);
+
+INSERT INTO PROMOTIONS (PROMO_ID, CODE, DISCOUNT_PERCENT, VALID_FROM, VALID_TO, IS_ACTIVE, APPLY_TO)
+VALUES
+('P001', 'JAZZ10', 10, '2025-11-01 00:00:00', '2025-11-30 23:59:59', TRUE, 'EVENT'),
+('P002', 'FOOD15', 15, '2025-10-01 00:00:00', '2025-12-31 23:59:59', TRUE, 'ORDER'),
+('P003', 'DRINK5', 5, '2025-11-01 00:00:00', '2025-12-15 23:59:59', TRUE, 'MENU');
