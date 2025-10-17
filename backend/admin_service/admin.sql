@@ -3,7 +3,7 @@
 /*==============================================================*/
 create table ADMIN_USERS
 (
-   ADMIN_ID           varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10) not null  comment '',
    USERNAME             text  comment '',
    EMAIL                text  comment '',
    PASSWORD             text  comment '',
@@ -12,33 +12,6 @@ create table ADMIN_USERS
    primary key (ADMIN_ID)
 );
 
-/*==============================================================*/
-/* Table: VENUES                                                */
-/*==============================================================*/
-create table VENUES
-(
-   VENUE_ID             varchar(10) not null  comment '',
-   NAME                 text  comment '',
-   ADDRESS              text  comment '',
-   CAPACITY             int  comment '',
-   SEAT_LAYOUT          text  comment '',
-   primary key (VENUE_ID)
-);
-
-/*==============================================================*/
-/* Table: SEATS                                                 */
-/*==============================================================*/
-create table SEATS
-(
-   SEAT_ID              varchar(10) not null  comment '',
-   VENUE_ID             varchar(10)  comment '',
-   ROW_NUMBER           numeric(8,0)  comment '',
-   SEAT_NUMBER          numeric(8,0)  comment '',
-   SEAT_TYPE            text  comment '',
-   PRICE_MULTIPLIER     numeric(8,0)  comment '',
-   IS_AVAILABLE         bool  comment '',
-   primary key (SEAT_ID)
-);
 
 /*==============================================================*/
 /* Table: EVENTS                                                */
@@ -46,6 +19,7 @@ create table SEATS
 create table EVENTS
 (
    EVENT_ID             varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    VENUE_ID             varchar(10)  comment '',
    BAND_NAME            text  comment '',
    EVENT_DATE           datetime  comment '',
@@ -59,11 +33,26 @@ create table EVENTS
 );
 
 /*==============================================================*/
+/* Table: VENUES                                                */
+/*==============================================================*/
+create table VENUES
+(
+   VENUE_ID             varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
+   NAME                 text  comment '',
+   ADDRESS              text  comment '',
+   CAPACITY             int  comment '',
+   SEAT_LAYOUT          text  comment '',
+   primary key (VENUE_ID)
+);
+
+/*==============================================================*/
 /* Table: MENU_ITEMS                                            */
 /*==============================================================*/
 create table MENU_ITEMS
 (
    ITEM_ID              varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    NAME                 text  comment '',
    DESCRIPTION          text  comment '',
    PRICE                float  comment '',
@@ -73,12 +62,15 @@ create table MENU_ITEMS
    primary key (ITEM_ID)
 );
 
+
 /*==============================================================*/
 /* Table: PROMOTIONS                                            */
 /*==============================================================*/
 create table PROMOTIONS
 (
    PROMO_ID             varchar(10) not null  comment '',
+   EVENT_ID             varchar(10)  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    CODE                 varchar(10)  comment '',
    DISCOUNT_PERCENT     numeric(8,0)  comment '',
    VALID_FROM           datetime  comment '',

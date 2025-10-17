@@ -19,51 +19,69 @@
 
 body {
     background-color: var(--bg-dark);
+    font-family: "Roboto", sans-serif;
     color: var(--text-light);
     display: flex;
-    height: 100vh;
+    flex-direction: column; 
+    min-height: 100vh;   
 }
 
-.container {
+.main-container {
     display: flex;
+    flex: 1;
     width: 100%;
 }
-
 /* Sidebar */
 .sidebar {
     background-color: #121212;
     width: 260px;
-    padding: 20px;
+    padding: 25px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
 .logo i {
-    font-size: 32px;
+    font-size: 36px;
     color: var(--primary);
 }
 
 .logo h2 {
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .logo p {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-gray);
 }
 
-.menu-title {
-    color: var(--text-gray);
-    font-size: 13px;
-    margin-bottom: 8px;
+/* Menu */
+.menu {
+    position: relative;
+    top: 10px; /* thay vì -100px */
+}
+
+.menu ul li i {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.8; /* độ dày nét */
+  color: var(--text-gray);
+  transition: color 0.2s ease;
+}
+
+.menu ul li:hover i,
+.menu ul li.active i {
+  color: #000;
 }
 
 .menu ul {
@@ -71,20 +89,28 @@ body {
 }
 
 .menu ul li {
-    padding: 10px;
-    border-radius: 8px;
+    padding: 14px 12px;        
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 18px;                  
     color: var(--text-gray);
-    transition: 0.3s;
+    font-size: 16px;            
+    letter-spacing: 0.3px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.menu ul li i {
+    font-size: 22px;        
 }
 
 .menu ul li:hover,
 .menu ul li.active {
     background-color: var(--primary);
     color: #000;
+    transform: translateX(4px);  
 }
 
 /* Main */
@@ -102,6 +128,127 @@ body {
 .header p {
     color: var(--text-gray);
     margin-bottom: 25px;
+}
+
+/* Header */
+/* ===== Header Admin ===== */
+.admin-header {
+  width: 100%;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 25px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-header h1 {
+  font-size: 20px;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Logo bên trái trong header */
+.header-left .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1px; /* chỉnh khoảng cách logo và header top */
+}
+
+.header-left .logo img,
+.header-left .logo i {
+  transform: translateY(15px); /* đẩy icon/ảnh xuống nhẹ */
+}
+
+.header-left .logo h2 {
+  margin-top: 25px; /* chữ LYZY Admin hạ thấp thêm chút */
+  font-size: 25px;
+}
+
+
+/* ===== Notification Bell ===== */
+.notification {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification i {
+  width: 26px;
+  height: 26px;
+  color: var(--text-gray);
+  transition: color 0.2s ease;
+}
+
+.notification:hover i {
+  color: var(--primary);
+}
+
+.notification .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--primary);
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+/* ===== User Info ===== */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  object-fit: cover;
+}
+
+.username {
+  font-size: 15px;
+  color: var(--text-gray);
+  font-weight: 500;
+}
+
+/* ===== Logout Button ===== */
+.logout-btn {
+  background: var(--primary);
+  border: none;
+  color: #000;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.logout-btn i {
+  width: 18px;
+  height: 18px;
+}
+
+.logout-btn:hover {
+  background: #ffb84d;
 }
 
 /* Stats */
@@ -196,4 +343,38 @@ body {
 .status.soldout {
     background-color: #3b1210;
     color: #ff4e3d;
+}
+
+/* ========== Footer (Admin) ========== */
+.admin-footer {
+  width: 100%;
+  background: #121212;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: auto; /* Đẩy xuống cuối trang */
+  text-align: center;
+  font-size: 13px;
+  border-top: 1px solid #2a2a2a;
+}
+
+/* ----FOOTER----*/
+
+.footer-bottom {
+  padding: 1rem 0.5rem;
+}
+
+.footer-bottom-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.footer-bottom-content p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-bottom-content p:first-child {
+  color: var(--primary);
+  font-weight: 600;
 }

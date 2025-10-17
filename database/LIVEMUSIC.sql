@@ -1,23 +1,38 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     13/10/2025 10:33:50 PM                       */
+/* Created on:     17/10/2025 3:04:25 PM                        */
 /*==============================================================*/
 
 
+alter table EMAIL_LOG 
+   drop foreign key FK_EMAIL_LO_CUSTOMER__CUSTOMER;
+
 alter table EVENTS 
-   drop foreign key FK_EVENTS_EVENT_VEN_VENUES;
+   drop foreign key FK_EVENTS_ADMIN_EVE_ADMIN_US;
+
+alter table EVENTS 
+   drop foreign key FK_EVENTS_VENUE_EVE_VENUES;
+
+alter table MENU_ITEMS 
+   drop foreign key FK_MENU_ITE_ADMIN_MEN_ADMIN_US;
+
+alter table MENU_PROMO 
+   drop foreign key FK_MENU_PRO_MENU_PROM_MENU_ITE;
+
+alter table MENU_PROMO 
+   drop foreign key FK_MENU_PRO_MENU_PROM_PROMOTIO;
 
 alter table NOTIFICATIONS 
-   drop foreign key FK_NOTIFICA_USER_NOTI_CUSTOMER;
+   drop foreign key FK_NOTIFICA_CUSTOMER__CUSTOMER;
+
+alter table ORDERS 
+   drop foreign key FK_ORDERS_CUSTOMER__CUSTOMER;
 
 alter table ORDERS 
    drop foreign key FK_ORDERS_ODER_PROM_PROMOTIO;
 
 alter table ORDERS 
-   drop foreign key FK_ORDERS_ORDER_RESERVAT;
-
-alter table ORDERS 
-   drop foreign key FK_ORDERS_USER_ORDE_CUSTOMER;
+   drop foreign key FK_ORDERS_RESER_ORD_RESERVAT;
 
 alter table ORDER_ITEMS 
    drop foreign key FK_ORDER_IT_MENU_ORDE_MENU_ITE;
@@ -25,11 +40,23 @@ alter table ORDER_ITEMS
 alter table ORDER_ITEMS 
    drop foreign key FK_ORDER_IT_ORDER_ORD_ORDERS;
 
+alter table OTP 
+   drop foreign key FK_OTP_CUSTOMER__CUSTOMER;
+
 alter table PAYMENTS 
-   drop foreign key FK_PAYMENTS_PAYMENT_ORDERS;
+   drop foreign key FK_PAYMENTS_CUSTOMER__CUSTOMER;
+
+alter table PAYMENTS 
+   drop foreign key FK_PAYMENTS_ORDER_PAY_ORDERS;
+
+alter table PROMOTIONS 
+   drop foreign key FK_PROMOTIO_ADMIN_PRO_ADMIN_US;
+
+alter table PROMOTIONS 
+   drop foreign key FK_PROMOTIO_PROMO_EVE_EVENTS;
 
 alter table RESERVATIONS 
-   drop foreign key FK_RESERVAT_BOOK_CUSTOMER;
+   drop foreign key FK_RESERVAT_CUSTOMER__CUSTOMER;
 
 alter table RESERVATIONS 
    drop foreign key FK_RESERVAT_EVENT_RES_EVENTS;
@@ -40,30 +67,55 @@ alter table RESERVATIONS
 alter table SEATS 
    drop foreign key FK_SEATS_VENUE_SEA_VENUES;
 
+alter table VENUES 
+   drop foreign key FK_VENUES_ADMIN_VEN_ADMIN_US;
+
 drop table if exists ADMIN_USERS;
 
 drop table if exists CUSTOMER_USERS;
 
 
+alter table EMAIL_LOG 
+   drop foreign key FK_EMAIL_LO_CUSTOMER__CUSTOMER;
+
+drop table if exists EMAIL_LOG;
+
+
 alter table EVENTS 
-   drop foreign key FK_EVENTS_EVENT_VEN_VENUES;
+   drop foreign key FK_EVENTS_VENUE_EVE_VENUES;
+
+alter table EVENTS 
+   drop foreign key FK_EVENTS_ADMIN_EVE_ADMIN_US;
 
 drop table if exists EVENTS;
+
+
+alter table MENU_ITEMS 
+   drop foreign key FK_MENU_ITE_ADMIN_MEN_ADMIN_US;
 
 drop table if exists MENU_ITEMS;
 
 
+alter table MENU_PROMO 
+   drop foreign key FK_MENU_PRO_MENU_PROM_MENU_ITE;
+
+alter table MENU_PROMO 
+   drop foreign key FK_MENU_PRO_MENU_PROM_PROMOTIO;
+
+drop table if exists MENU_PROMO;
+
+
 alter table NOTIFICATIONS 
-   drop foreign key FK_NOTIFICA_USER_NOTI_CUSTOMER;
+   drop foreign key FK_NOTIFICA_CUSTOMER__CUSTOMER;
 
 drop table if exists NOTIFICATIONS;
 
 
 alter table ORDERS 
-   drop foreign key FK_ORDERS_ORDER_RESERVAT;
+   drop foreign key FK_ORDERS_RESER_ORD_RESERVAT;
 
 alter table ORDERS 
-   drop foreign key FK_ORDERS_USER_ORDE_CUSTOMER;
+   drop foreign key FK_ORDERS_CUSTOMER__CUSTOMER;
 
 alter table ORDERS 
    drop foreign key FK_ORDERS_ODER_PROM_PROMOTIO;
@@ -80,16 +132,32 @@ alter table ORDER_ITEMS
 drop table if exists ORDER_ITEMS;
 
 
+alter table OTP 
+   drop foreign key FK_OTP_CUSTOMER__CUSTOMER;
+
+drop table if exists OTP;
+
+
 alter table PAYMENTS 
-   drop foreign key FK_PAYMENTS_PAYMENT_ORDERS;
+   drop foreign key FK_PAYMENTS_ORDER_PAY_ORDERS;
+
+alter table PAYMENTS 
+   drop foreign key FK_PAYMENTS_CUSTOMER__CUSTOMER;
 
 drop table if exists PAYMENTS;
+
+
+alter table PROMOTIONS 
+   drop foreign key FK_PROMOTIO_ADMIN_PRO_ADMIN_US;
+
+alter table PROMOTIONS 
+   drop foreign key FK_PROMOTIO_PROMO_EVE_EVENTS;
 
 drop table if exists PROMOTIONS;
 
 
 alter table RESERVATIONS 
-   drop foreign key FK_RESERVAT_BOOK_CUSTOMER;
+   drop foreign key FK_RESERVAT_CUSTOMER__CUSTOMER;
 
 alter table RESERVATIONS 
    drop foreign key FK_RESERVAT_EVENT_RES_EVENTS;
@@ -104,6 +172,10 @@ alter table SEATS
    drop foreign key FK_SEATS_VENUE_SEA_VENUES;
 
 drop table if exists SEATS;
+
+
+alter table VENUES 
+   drop foreign key FK_VENUES_ADMIN_VEN_ADMIN_US;
 
 drop table if exists VENUES;
 
@@ -135,11 +207,27 @@ create table CUSTOMER_USERS
 );
 
 /*==============================================================*/
+/* Table: EMAIL_LOG                                             */
+/*==============================================================*/
+create table EMAIL_LOG
+(
+   EMAILLOG_ID          varchar(10) not null  comment '',
+   CUSTOMER_ID          varchar(10)  comment '',
+   RECIPIENT_EMAIL      text  comment '',
+   SUBJECT              text  comment '',
+   SENT_TIME            datetime  comment '',
+   STATUS               text  comment '',
+   ERRORMESSAGE         text  comment '',
+   primary key (EMAILLOG_ID)
+);
+
+/*==============================================================*/
 /* Table: EVENTS                                                */
 /*==============================================================*/
 create table EVENTS
 (
    EVENT_ID             varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    VENUE_ID             varchar(10)  comment '',
    BAND_NAME            text  comment '',
    EVENT_DATE           datetime  comment '',
@@ -158,6 +246,7 @@ create table EVENTS
 create table MENU_ITEMS
 (
    ITEM_ID              varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    NAME                 text  comment '',
    DESCRIPTION          text  comment '',
    PRICE                float  comment '',
@@ -165,6 +254,16 @@ create table MENU_ITEMS
    STOCK_QUANTITY       numeric(8,0)  comment '',
    IS_AVAILABLE         bool  comment '',
    primary key (ITEM_ID)
+);
+
+/*==============================================================*/
+/* Table: MENU_PROMO                                            */
+/*==============================================================*/
+create table MENU_PROMO
+(
+   ITEM_ID              varchar(10) not null  comment '',
+   PROMO_ID             varchar(10) not null  comment '',
+   primary key (ITEM_ID, PROMO_ID)
 );
 
 /*==============================================================*/
@@ -211,12 +310,28 @@ create table ORDER_ITEMS
 );
 
 /*==============================================================*/
+/* Table: OTP                                                   */
+/*==============================================================*/
+create table OTP
+(
+   OTP_ID               varchar(10) not null  comment '',
+   CUSTOMER_ID          varchar(10)  comment '',
+   CODE                 varchar(10)  comment '',
+   CREATED_AT           datetime  comment '',
+   EXPIRES_AT           datetime  comment '',
+   IS_USED              bool  comment '',
+   STATUS               text  comment '',
+   primary key (OTP_ID)
+);
+
+/*==============================================================*/
 /* Table: PAYMENTS                                              */
 /*==============================================================*/
 create table PAYMENTS
 (
    PAYMENT_ID           varchar(10) not null  comment '',
    ORDER_ID             varchar(10)  comment '',
+   CUSTOMER_ID          varchar(10)  comment '',
    AMOUNT               numeric(8,0)  comment '',
    PAYMENT_METHOD       text  comment '',
    TRANSACTION_ID       varchar(10)  comment '',
@@ -231,6 +346,8 @@ create table PAYMENTS
 create table PROMOTIONS
 (
    PROMO_ID             varchar(10) not null  comment '',
+   EVENT_ID             varchar(10)  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    CODE                 varchar(10)  comment '',
    DISCOUNT_PERCENT     numeric(8,0)  comment '',
    VALID_FROM           datetime  comment '',
@@ -276,6 +393,7 @@ create table SEATS
 create table VENUES
 (
    VENUE_ID             varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    NAME                 text  comment '',
    ADDRESS              text  comment '',
    CAPACITY             int  comment '',
@@ -283,20 +401,35 @@ create table VENUES
    primary key (VENUE_ID)
 );
 
-alter table EVENTS add constraint FK_EVENTS_EVENT_VEN_VENUES foreign key (VENUE_ID)
+alter table EMAIL_LOG add constraint FK_EMAIL_LO_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
+      references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
+
+alter table EVENTS add constraint FK_EVENTS_ADMIN_EVE_ADMIN_US foreign key (ADMIN_ID)
+      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
+
+alter table EVENTS add constraint FK_EVENTS_VENUE_EVE_VENUES foreign key (VENUE_ID)
       references VENUES (VENUE_ID) on delete restrict on update restrict;
 
-alter table NOTIFICATIONS add constraint FK_NOTIFICA_USER_NOTI_CUSTOMER foreign key (CUSTOMER_ID)
+alter table MENU_ITEMS add constraint FK_MENU_ITE_ADMIN_MEN_ADMIN_US foreign key (ADMIN_ID)
+      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
+
+alter table MENU_PROMO add constraint FK_MENU_PRO_MENU_PROM_MENU_ITE foreign key (ITEM_ID)
+      references MENU_ITEMS (ITEM_ID) on delete restrict on update restrict;
+
+alter table MENU_PROMO add constraint FK_MENU_PRO_MENU_PROM_PROMOTIO foreign key (PROMO_ID)
+      references PROMOTIONS (PROMO_ID) on delete restrict on update restrict;
+
+alter table NOTIFICATIONS add constraint FK_NOTIFICA_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
+      references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
+
+alter table ORDERS add constraint FK_ORDERS_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
 
 alter table ORDERS add constraint FK_ORDERS_ODER_PROM_PROMOTIO foreign key (PROMO_ID)
       references PROMOTIONS (PROMO_ID) on delete restrict on update restrict;
 
-alter table ORDERS add constraint FK_ORDERS_ORDER_RESERVAT foreign key (RESERVATION_ID)
+alter table ORDERS add constraint FK_ORDERS_RESER_ORD_RESERVAT foreign key (RESERVATION_ID)
       references RESERVATIONS (RESERVATION_ID) on delete restrict on update restrict;
-
-alter table ORDERS add constraint FK_ORDERS_USER_ORDE_CUSTOMER foreign key (CUSTOMER_ID)
-      references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
 
 alter table ORDER_ITEMS add constraint FK_ORDER_IT_MENU_ORDE_MENU_ITE foreign key (ITEM_ID)
       references MENU_ITEMS (ITEM_ID) on delete restrict on update restrict;
@@ -304,10 +437,22 @@ alter table ORDER_ITEMS add constraint FK_ORDER_IT_MENU_ORDE_MENU_ITE foreign ke
 alter table ORDER_ITEMS add constraint FK_ORDER_IT_ORDER_ORD_ORDERS foreign key (ORDER_ID)
       references ORDERS (ORDER_ID) on delete restrict on update restrict;
 
-alter table PAYMENTS add constraint FK_PAYMENTS_PAYMENT_ORDERS foreign key (ORDER_ID)
+alter table OTP add constraint FK_OTP_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
+      references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
+
+alter table PAYMENTS add constraint FK_PAYMENTS_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
+      references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
+
+alter table PAYMENTS add constraint FK_PAYMENTS_ORDER_PAY_ORDERS foreign key (ORDER_ID)
       references ORDERS (ORDER_ID) on delete restrict on update restrict;
 
-alter table RESERVATIONS add constraint FK_RESERVAT_BOOK_CUSTOMER foreign key (CUSTOMER_ID)
+alter table PROMOTIONS add constraint FK_PROMOTIO_ADMIN_PRO_ADMIN_US foreign key (ADMIN_ID)
+      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
+
+alter table PROMOTIONS add constraint FK_PROMOTIO_PROMO_EVE_EVENTS foreign key (EVENT_ID)
+      references EVENTS (EVENT_ID) on delete restrict on update restrict;
+
+alter table RESERVATIONS add constraint FK_RESERVAT_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
 
 alter table RESERVATIONS add constraint FK_RESERVAT_EVENT_RES_EVENTS foreign key (EVENT_ID)
@@ -318,4 +463,7 @@ alter table RESERVATIONS add constraint FK_RESERVAT_SEAT_RESE_SEATS foreign key 
 
 alter table SEATS add constraint FK_SEATS_VENUE_SEA_VENUES foreign key (VENUE_ID)
       references VENUES (VENUE_ID) on delete restrict on update restrict;
+
+alter table VENUES add constraint FK_VENUES_ADMIN_VEN_ADMIN_US foreign key (ADMIN_ID)
+      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
 

@@ -12,30 +12,16 @@ create table CUSTOMER_USERS
 );
 
 /*==============================================================*/
-/* Table: RESERVATIONS                                          */
+/* Table: OTP                                                   */
 /*==============================================================*/
-create table RESERVATIONS
+create table OTP
 (
-   RESERVATION_ID       varchar(10) not null  comment '',
-   EVENT_ID             varchar(10)  comment '',
-   SEAT_ID              varchar(10)  comment '',
-   CUSTOMER_ID              varchar(10)  comment '',
-   RESERVATION_TIME     datetime  comment '',
+   OTP_ID               varchar(10) not null  comment '',
+   CUSTOMER_ID          varchar(10)  comment '',
+   CODE                 varchar(10)  comment '',
+   CREATED_AT           datetime  comment '',
+   EXPIRES_AT           datetime  comment '',
+   IS_USED              bool  comment '',
    STATUS               text  comment '',
-   TOTAL_AMOUNT         float  comment '',
-   primary key (RESERVATION_ID)
-);
-
-/*==============================================================*/
-/* Table: NOTIFICATIONS                                         */
-/*==============================================================*/
-create table NOTIFICATIONS
-(
-   NOTIFICATION_ID      varchar(10) not null  comment '',
-   CUSTOMER_ID              varchar(10)  comment '',
-   MESSAGE              text  comment '',
-   TYPE                 text  comment '',
-   SENT_AT              datetime  comment '',
-   IS_READ              bool  comment '',
-   primary key (NOTIFICATION_ID)
+   primary key (OTP_ID)
 );

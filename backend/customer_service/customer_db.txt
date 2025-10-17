@@ -1,19 +1,11 @@
-INSERT INTO CUSTOMER_USERS (CUSTOMER_ID, USERNAME, EMAIL, PASSWORD, CREATED_AT)
-VALUES
-('C001', 'minhthu', 'thu@gmail.com', '123456', NOW()),
-('C002', 'hoanglong', 'long@gmail.com', '123456', NOW()),
-('C003', 'tienanh', 'anh@gmail.com', '123456', NOW());
+INSERT INTO CUSTOMER_USERS VALUES 
+('CU001', 'thutrang', 'thutrang@gmail.com', 'abc123', NOW()),
+('CU002', 'minhthu', 'minhthu@gmail.com', 'xyz456', NOW()),
+('CU003', 'hoanganh', 'hoanganh@gmail.com', 'qwe789', NOW()),
+('CU004', 'longnguyen', 'longnguyen@gmail.com', 'lkj321', NOW());
 
-
-INSERT INTO RESERVATIONS (RESERVATION_ID, EVENT_ID, SEAT_ID, CUSTOMER_ID, RESERVATION_TIME, STATUS, TOTAL_AMOUNT)
-VALUES
-('R001', 'E001', 'S001', 'C001', NOW(), 'Confirmed', 500000),
-('R002', 'E002', 'S004', 'C002', NOW(), 'Pending', 300000),
-('R003', 'E003', 'S005', 'C003', NOW(), 'Cancelled', 0);
-
-
-INSERT INTO NOTIFICATIONS (NOTIFICATION_ID, CUSTOMER_ID, MESSAGE, TYPE, SENT_AT, IS_READ)
-VALUES
-('N001', 'C001', 'Bạn có vé sự kiện The Chill Band vào ngày 20/10!', 'Event Reminder', NOW(), FALSE),
-('N002', 'C002', 'Mã giảm giá VIP20 sắp hết hạn!', 'Promotion', NOW(), TRUE),
-('N003', 'C001', 'Thanh toán đơn hàng #O001 thành công!', 'Payment', NOW(), TRUE);
+INSERT INTO OTP VALUES
+('OTP001', 'CU001', '628391', '2025-10-17 15:00:00', '2025-10-17 15:05:00', FALSE, 'VALID'),
+('OTP002', 'CU002', '849201', '2025-10-17 15:10:00', '2025-10-17 15:15:00', TRUE, 'USED'),
+('OTP003', 'CU003', '123456', '2025-10-18 16:10:00', '2025-10-18 16:15:00', FALSE, 'VALID'),
+('OTP004', 'CU004', '987654', '2025-10-18 16:20:00', '2025-10-18 16:25:00', TRUE, 'USED');

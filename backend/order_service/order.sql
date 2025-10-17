@@ -4,7 +4,7 @@
 create table ORDERS
 (
    ORDER_ID             varchar(10) not null  comment '',
-   CUSTOMER_ID             varchar(10)  comment '',
+   CUSTOMER_ID          varchar(10)  comment '',
    RESERVATION_ID       varchar(10)  comment '',
    PROMO_ID             varchar(10)  comment '',
    ORDER_TIME           datetime  comment '',
@@ -34,6 +34,7 @@ create table PAYMENTS
 (
    PAYMENT_ID           varchar(10) not null  comment '',
    ORDER_ID             varchar(10)  comment '',
+   CUSTOMER_ID          varchar(10)  comment '',
    AMOUNT               numeric(8,0)  comment '',
    PAYMENT_METHOD       text  comment '',
    TRANSACTION_ID       varchar(10)  comment '',
