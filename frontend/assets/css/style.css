@@ -14,7 +14,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -49,9 +49,8 @@ body {
     margin-bottom: 25px;
 }
 
-.logo i {
-    font-size: 36px;
-    color: var(--primary);
+.logo img {
+  margin-right: -10px;
 }
 
 .logo h2 {
@@ -468,15 +467,23 @@ body {
     box-shadow: 4px 0 15px rgba(0,0,0,0.5);
 }
 
-.menu ul li:hover,
-.menu ul li.active {
-    background: linear-gradient(90deg, #ffb84d, #ff9500);
-    color: #000;
-    transform: translateX(5px);
-    box-shadow: 0 3px 10px rgba(255,149,0,0.3);
+.menu ul li a {
+  color: #fff;              /* chữ trắng */
+  text-decoration: none;    /* bỏ gạch chân */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  transition: color 0.3s ease;
 }
 
-/* ========== HEADER ========== */
+.menu ul li:hover a,
+.menu ul li.active a {
+  color: #000;              /* khi hover hoặc active thì chữ chuyển đen */
+}
+
+
+/*HEADER*/
 
 .admin-header {
     background: linear-gradient(90deg, #1a1a1a, #121212);

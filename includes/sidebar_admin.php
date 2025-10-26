@@ -7,28 +7,35 @@ $page = $page ?? ($_GET['page'] ?? 'dashboard');
   <nav class="menu">
     <ul>
       <li class="<?= ($page == 'dashboard') ? 'active' : ''; ?>">
-        <i data-lucide="layout-dashboard"></i> Tổng quan
+        <a href="?page=dashboard";><i data-lucide="layout-dashboard"></i> Tổng quan</a>
       </li>
+
       <li class="<?= ($page == 'events') ? 'active' : ''; ?>">
-        <i data-lucide="calendar-days"></i> Sự kiện
+        <a href="?page=events"><i data-lucide="calendar-days"></i> Sự kiện</a>
       </li>
+
       <li class="<?= ($page == 'locations') ? 'active' : ''; ?>">
-        <i data-lucide="map-pin"></i> Địa điểm
+        <a href="?page=venues"><i data-lucide="map-pin"></i> Địa điểm</a>
       </li>
+
       <li class="<?= ($page == 'menu') ? 'active' : ''; ?>">
-        <i data-lucide="utensils"></i> Thực đơn
+        <a href="?page=menu"><i data-lucide="utensils"></i> Thực đơn</a>
       </li>
+
       <li class="<?= ($page == 'orders') ? 'active' : ''; ?>">
-        <i data-lucide="shopping-cart"></i> Đơn hàng
+        <a href="?page=orders"><i data-lucide="shopping-cart"></i> Đơn hàng</a>
       </li>
+
       <li class="<?= ($page == 'users') ? 'active' : ''; ?>">
-        <i data-lucide="user"></i> Người dùng
+        <a href="?page=users"><i data-lucide="user"></i> Người dùng</a>
       </li>
+
       <li class="<?= ($page == 'promotions') ? 'active' : ''; ?>">
-        <i data-lucide="gift"></i> Khuyến mãi
+        <a href="?page=promotions"><i data-lucide="gift"></i> Khuyến mãi</a>
       </li>
+
       <li class="<?= ($page == 'reports') ? 'active' : ''; ?>">
-        <i data-lucide="bar-chart-3"></i> Thống kê
+        <a href="?page=reports"><i data-lucide="bar-chart-3"></i> Thống kê</a>
       </li>
     </ul>
   </nav>

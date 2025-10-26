@@ -12,7 +12,7 @@ $user = ['full_name' => $_SESSION['ADMIN_NAME'] ?? 'Admin'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LYZY - <?php echo isset($namePage) ? $namePage : ''; ?></title>
-    <link rel="icon" type="image/png" href="../frontend/assets/images/logo.png">
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo_L.png">
 
     <!-- CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
@@ -25,7 +25,7 @@ $user = ['full_name' => $_SESSION['ADMIN_NAME'] ?? 'Admin'];
 <header class="admin-header">
   <div class="header-left">
       <div class="logo">
-    <i class="ri-music-2-fill"></i>
+        <img src="<?php echo BASE_URL; ?>assets/images/logo_L.png" alt="Logo" width="60" height="60">
     <div>
         <h2>LYZY Admin</h2>
     </div>

@@ -1,8 +1,4 @@
 <main class="main-content">
-    <!-- <header class="header">
-        <h1>Tổng quan hệ thống</h1>
-        <p>Chào mừng trở lại! Đây là tổng quan hoạt động của bạn.</p>
-    </header> -->
 
     <section class="stats">
         <div class="card">
