@@ -1,4 +1,4 @@
-<main class="main-content">
+<main class="main-content menu-page">
     <section class="section-header">
         <h2>Thực đơn</h2>
         <button class="btn-add">+ Thêm món</button>

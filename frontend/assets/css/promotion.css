@@ -1,0 +1,15 @@
+.main-content.promotion-page .section-header h2 {
+  color: #ffa000;
+}
+
+.data-table th {
+  color: #ffc107;
+}
+
+.status.active {
+  background-color: #43a047;
+}
+
+.status.inactive {
+  background-color: #9e9e9e;
+}

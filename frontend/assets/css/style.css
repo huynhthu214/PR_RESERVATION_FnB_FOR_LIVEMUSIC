@@ -14,12 +14,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
   background-color: var(--bg-dark);
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
   color: var(--text-light);
   display: flex;
   flex-direction: column;
@@ -294,61 +294,6 @@ body {
 .card-info p {
   font-size: 13px;
   color: var(--success);
-}
-
-/* Events */
-.events {
-  background-color: var(--bg-card);
-  border-radius: 12px;
-  margin-top: 30px;
-  padding: 20px;
-}
-
-.events h2 {
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-.event-card {
-  background-color: #181818;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.event-info h3 {
-  font-size: 16px;
-}
-
-.event-info p {
-  color: var(--text-gray);
-  font-size: 13px;
-}
-
-.event-status p {
-  font-size: 14px;
-  color: var(--text-gray);
-}
-
-.status {
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.status.selling {
-  background-color: #5a460b;
-  color: #d4a833;
-}
-
-.status.soldout {
-  background-color: #3b1210;
-  color: #ff4e3d;
 }
 
 /* ========== Footer (Admin) ========== */

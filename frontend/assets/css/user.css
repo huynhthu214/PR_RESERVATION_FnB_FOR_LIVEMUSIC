@@ -1,0 +1,16 @@
+/* user.css */
+.main-content.user-page .section-header h2 {
+  color: #ff7043;
+}
+
+.main-content.user-page .btn-add {
+  background: linear-gradient(90deg, #ff7043, #ff5722);
+}
+
+.main-content.user-page .status.active {
+  background-color: #43a047;
+}
+
+.main-content.user-page .status.inactive {
+  background-color: #b71c1c;
+}

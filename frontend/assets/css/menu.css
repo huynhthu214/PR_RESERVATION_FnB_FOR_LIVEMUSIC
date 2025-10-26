@@ -1,0 +1,12 @@
+    /* menu.css */
+.main-content.menu-page .section-header h2 {
+  color: #ffb300;
+}
+
+.main-content.menu-page .data-table th {
+  color: #ffcc33;
+}
+
+.main-content.menu-page .btn-add {
+  background: linear-gradient(90deg, #ffb300, #ff9500);
+}

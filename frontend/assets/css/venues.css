@@ -1,0 +1,15 @@
+.main-content.venue-page .section-header h2 {
+  color: #ff9800;
+}
+
+.data-table th {
+  color: #fbc02d;
+}
+
+.status.active {
+  background-color: #4caf50;
+}
+
+.status.inactive {
+  background-color: #f44336;
+}

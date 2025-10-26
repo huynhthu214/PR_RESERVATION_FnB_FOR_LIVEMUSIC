@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(160deg, #1a1a1a, #2b1a0a);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.login-card {
+  background: linear-gradient(145deg, #26221c, #14110e);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(255, 170, 40, 0.15);
+  width: 380px;
+  text-align: center;
+  border: 1px solid rgba(255, 165, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #ffb300;
+  margin-bottom: 15px;
+}
+
+.logo i {
+  font-size: 36px;
+  background: linear-gradient(90deg, #ffb84d, #ff9500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffb84d;
+}
+
+.logo span {
+  color: #f7c46c;
+  font-weight: 400;
+}
+
+h2 {
+  margin-bottom: 25px;
+  margin-top: -15px;
+  color: #ffb84d;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #f0c874;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #3a3a3a;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #ffb84d;
+  box-shadow: 0 0 5px rgba(255, 184, 77, 0.3);
+}
+
+.btn-login {
+  display: block;
+  margin: 20px auto 10px auto; /* canh giữa nút */
+  padding: 10px 28px; /* giảm chiều ngang */
+  background: linear-gradient(135deg, #ffb300, #ff8c00);
+  color: #000;
+  font-size: 20px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: fit-content; /* nút chỉ dài bằng nội dung */
+  min-width: 130px; /* đảm bảo không quá nhỏ */
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #ffd54f, #ffa000);
+  transform: translateY(-2px);
+}
+
+
+.error {
+  color: #ff5c5c;
+  background: rgba(255, 92, 92, 0.1);
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+.note {
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+/* Fix autofill (khi trình duyệt tự điền email/mật khẩu) */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #2a2a2a inset !important; /* Giữ nền tối */
+  -webkit-text-fill-color: #fff !important; /* Chữ trắng */
+  transition: background-color 5000s ease-in-out 0s; /* Tránh nhấp nháy */
+}
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #2a2a2a inset !important;
+  -webkit-text-fill-color: #fff !important;
+}

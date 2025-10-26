@@ -1,5 +1,6 @@
+/* base.css */
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: #0e0e0e;
   color: #fff;
   margin: 0;
@@ -24,8 +25,8 @@ body {
   color: #fff;
 }
 
-.btn-add,
-.btn-export {
+/* Buttons */
+.btn-add, .btn-export {
   background-color: #ffb300;
   border: none;
   color: #000;
@@ -35,11 +36,11 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-.btn-add:hover,
-.btn-export:hover {
+.btn-add:hover, .btn-export:hover {
   background-color: #ffd54f;
 }
 
+/* Table styles */
 .table-section {
   background: #1a1a1a;
   padding: 20px;
@@ -52,52 +53,32 @@ body {
   border-collapse: collapse;
   color: #ddd;
 }
-
 .data-table th,
 .data-table td {
   padding: 12px 16px;
   text-align: left;
   border-bottom: 1px solid #333;
 }
-
 .data-table th {
   color: #ffb300;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.data-table tr:hover {
-  background-color: #1f1f1f;
-}
-
+/* Status tag */
 .status {
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 13px;
   font-weight: 600;
 }
-.status.selling,
-.status.success {
-  background-color: #ffb300;
-  color: #000;
-}
-.status.soldout,
-.status.inactive {
-  background-color: #e53935;
-  color: #fff;
-}
-.status.pending {
-  background-color: #ffa726;
-  color: #000;
-}
-.status.active {
-  background-color: #43a047;
-  color: #fff;
-}
+.status.selling, .status.success { background-color: #ffb300; color: #000; }
+.status.soldout, .status.inactive { background-color: #e53935; color: #fff; }
+.status.pending { background-color: #ffa726; color: #000; }
+.status.active { background-color: #43a047; color: #fff; }
 
-.btn-edit,
-.btn-delete,
-.btn-detail {
+/* Buttons in tables */
+.btn-edit, .btn-delete, .btn-detail {
   background: none;
   border: none;
   color: #ffb300;
@@ -105,11 +86,7 @@ body {
   font-weight: 600;
   margin-right: 10px;
 }
-.btn-delete {
-  color: #e53935;
-}
-.btn-edit:hover,
-.btn-delete:hover,
-.btn-detail:hover {
+.btn-delete { color: #e53935; }
+.btn-edit:hover, .btn-delete:hover, .btn-detail:hover {
   text-decoration: underline;
 }

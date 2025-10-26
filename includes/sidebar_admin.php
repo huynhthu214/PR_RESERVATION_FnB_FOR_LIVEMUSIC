@@ -44,12 +44,6 @@ $page = $page ?? ($_GET['page'] ?? 'dashboard');
           <i data-lucide="gift"></i> Khuyến mãi
         </a>
       </li>
-
-      <li class="<?= ($page == 'reports') ? 'active' : ''; ?>">
-        <a href="index.php?page=reports">
-          <i data-lucide="bar-chart-3"></i> Thống kê
-        </a>
-      </li>
     </ul>
   </nav>
 </aside>

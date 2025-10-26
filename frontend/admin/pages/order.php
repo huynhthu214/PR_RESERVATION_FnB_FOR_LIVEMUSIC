@@ -1,7 +1,7 @@
-<main class="main-content">
+<main class="main-content order-page">
     <section class="section-header">
         <h2>Đơn hàng</h2>
-        <button class="btn-export">📦 Xuất CSV</button>
+        <button class="btn-export">Xuất</button>
     </section>
 
     <section class="table-section">

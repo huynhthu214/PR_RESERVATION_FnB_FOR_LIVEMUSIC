@@ -1,0 +1,15 @@
+.main-content.event-page .section-header h2 {
+  color: #ffb300;
+}
+
+.data-table th {
+  color: #ffca28;
+}
+
+.status.active {
+  background-color: #43a047;
+}
+
+.status.soldout {
+  background-color: #e53935;
+}

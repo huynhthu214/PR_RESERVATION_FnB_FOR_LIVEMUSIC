@@ -1,4 +1,4 @@
-<main class="main-content">
+<main class="main-content user-page">
     <section class="section-header">
         <h2>Người dùng</h2>
         <button class="btn-add">+ Thêm người dùng</button>

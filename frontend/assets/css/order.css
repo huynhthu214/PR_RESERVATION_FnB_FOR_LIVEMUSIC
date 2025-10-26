@@ -1,0 +1,17 @@
+/* order.css */
+.main-content.order-page .section-header h2 {
+  color: #00e676;
+}
+
+.main-content.order-page .btn-export {
+  background-color: #00e676;
+  color: #000;
+}
+
+.main-content.order-page .status.success {
+  background-color: #4caf50;
+}
+
+.main-content.order-page .status.pending {
+  background-color: #ffb300;
+}
