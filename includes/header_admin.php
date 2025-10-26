@@ -15,6 +15,7 @@ $user = ['full_name' => $_SESSION['ADMIN_NAME'] ?? 'Admin'];
     <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo_L.png">
 
     <!-- CSS -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/vi_pages_style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
     <script src="https://unpkg.com/lucide@latest"></script>
