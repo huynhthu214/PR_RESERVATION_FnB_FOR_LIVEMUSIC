@@ -1,19 +1,16 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../../config.php';
 
-// Nếu admin đã đăng nhập thì chuyển hướng luôn
 if (isset($_SESSION['ADMIN_ID'])) {
     header("Location: index.php?page=dashboard");
     exit();
 }
 
-// Xử lý khi nhấn nút đăng nhập
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
-    // Giả lập xác thực (sau này thay bằng truy vấn DB)
     if ($email === 'admin@lyzy.com' && $password === '123456') {
         $_SESSION['ADMIN_ID'] = 1;
         $_SESSION['ADMIN_NAME'] = 'Admin LYZY';
@@ -24,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -33,34 +29,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Đăng nhập Admin - LYZY</title>
   <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo_L.png">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/login.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div class="login-container">
-    <div class="login-card">
-      <div class="logo">
-        <img src="<?php echo BASE_URL; ?>assets/images/logo_L.png" alt="Logo" width="60" height="60">
-        <h1>LYZY <span>ADMIN</span></h1>
-      </div>
+    <div class="welcome-side">
+      <h1>LYZY ADMIN</h1>
+      <p>Bước vào không gian quản trị của LYZY.<br>Hãy cùng tạo nên trải nghiệm tốt nhất cho người dùng.</p>
+    </div>
 
-      <h2>ĐĂNG NHẬP</h2>
-      <?php if (!empty($error)) echo "<p class='error'>$error</p>"; ?>
+    <div class="form-side">
+      <div class="login-card">
+        <h2>Đăng nhập</h2>
 
-      <form method="POST" class="login-form">
-        <div class="form-group">
+        <?php if (!empty($error)): ?>
+          <p class="error-msg"><i class="fa fa-exclamation-circle"></i> <?php echo htmlspecialchars($error); ?></p>
+        <?php endif; ?>
+
+        <form method="POST">
           <label>Email</label>
           <input type="email" name="email" placeholder="Nhập email..." required>
-        </div>
 
-        <div class="form-group">
           <label>Mật khẩu</label>
-          <input type="password" name="password" placeholder="••••••" required>
-        </div>
+          <input type="password" name="password" placeholder="••••••••" required>
 
-        <button type="submit" class="btn-login">Đăng nhập</button>
-      </form>
-
-      <p class="note">© <?php echo date('Y'); ?> LYZY Music. All rights reserved.</p>
+          <button type="submit" class="btn-submit">Đăng nhập</button>
+          <p class="footer-note">© <?php echo date('Y'); ?> LYZY Music. All rights reserved.</p>
+        </form>
+      </div>
     </div>
   </div>
 </body>

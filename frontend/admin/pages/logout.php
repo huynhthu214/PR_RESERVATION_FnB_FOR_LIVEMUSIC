@@ -1,11 +1,12 @@
 <?php
 session_start();
+require_once __DIR__ . '/../../config.php'; // đường dẫn ra tới file config trong frontend
 
-// Xoá toàn bộ session của admin
+// Xóa toàn bộ session
 session_unset();
 session_destroy();
 
-// Chuyển hướng về trang đăng nhập
-header("Location: login.php");
+// Chuyển hướng thẳng về trang login
+header("Location: " . BASE_URL . "admin/pages/login.php");
 exit();
 ?>
