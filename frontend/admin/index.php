@@ -1,4 +1,14 @@
 <?php
+session_start(); // BẮT BUỘC phải có để đọc session
+
+// Kiểm tra đăng nhập
+if (!isset($_SESSION['admin_id']) || empty($_SESSION['admin_id'])) {
+    // Nếu chưa đăng nhập thì quay lại trang login
+    header("Location: pages/login.php");
+    exit();
+}
+
+// Xác định trang đang hiển thị
 $page = $_GET['page'] ?? 'dashboard';
 $namePage = ucfirst($page);
 
@@ -11,6 +21,7 @@ require_once __DIR__ . '../../../includes/header_admin.php';
 
     <main class="main-content">
         <?php
+        // Kiểm tra file trang con có tồn tại không
         $file = __DIR__ . "/pages/$page.php";
         if (file_exists($file)) {
             include $file;

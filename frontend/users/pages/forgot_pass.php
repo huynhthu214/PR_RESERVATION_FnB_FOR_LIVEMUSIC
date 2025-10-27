@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label>Email</label>
           <input type="email" name="email" placeholder="Nhập email của bạn..." required>
           <button type="submit" class="btn-submit">Gửi mã xác nhận</button>
+          <p class="signup-note"><a href="forgot_pass.php">← Quay lại</a></p>
         </form>
       </div>
     </div>

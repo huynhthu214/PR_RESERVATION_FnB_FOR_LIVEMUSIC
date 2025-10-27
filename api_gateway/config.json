@@ -1,0 +1,7 @@
+{
+  "ADMIN_SERVICE": "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/backend/admin_service",
+  "CUSTOMER_SERVICE": "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/backend/customer_service",
+  "NOTIFICATION_SERVICE": "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/backend/notification_service",
+  "ORDER_SERVICE": "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/backend/order_service",
+  "RESERVATION_SERVICE": "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/backend/reservation_service"
+}

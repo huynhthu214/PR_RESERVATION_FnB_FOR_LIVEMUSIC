@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="text" name="otp" placeholder="Nhập mã OTP..." required maxlength="6">
           <button type="submit" class="btn-submit">Xác nhận</button>
         </form>
-        <p class="signup-note"><a href="forgot_password.php">← Quay lại</a></p>
+        <p class="signup-note"><a href="reset_pass.php">← Quay lại</a></p>
       </div>
     </div>
   </div>
