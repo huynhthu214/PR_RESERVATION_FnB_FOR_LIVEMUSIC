@@ -11,10 +11,10 @@
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 body {
@@ -189,14 +189,14 @@ body {
   cursor: pointer;
 }
 
-.notification i {
+.notification a {
   width: 26px;
   height: 26px;
   color: var(--text-gray);
   transition: color 0.2s ease;
 }
 
-.notification:hover i {
+.notification:hover a {
   color: var(--primary);
 }
 
@@ -426,9 +426,8 @@ body {
 
 .menu ul li:hover a,
 .menu ul li.active a {
-  color: #000;              /* khi hover hoặc active thì chữ chuyển đen */
+  color: #000; /* khi hover hoặc active thì chữ chuyển đen */
 }
-
 
 /*HEADER*/
 
