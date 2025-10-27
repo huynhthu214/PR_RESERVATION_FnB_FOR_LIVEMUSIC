@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng nhập người dùng - LYZY</title>
+  <title>Đăng nhập - LYZY</title>
   <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo_L.png">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/login_user.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
