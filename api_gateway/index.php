@@ -10,6 +10,66 @@ if (empty($service) || empty($action)) {
     exit;
 }
 
+
+// /* ====== HELPER: JSON RESPONSE ====== */
+// function jsonResponse($success, $data)
+// {
+//     echo json_encode(["success" => $success, "data" => $data]);
+//     exit;
+// }
+
+// /* ====== MIDDLEWARE: CHECK ROLE ====== */
+// function checkRole(array $allowed_roles)
+// {
+//     if (!isset($_SESSION['ROLE'])) {
+//         jsonResponse(false, "Bạn chưa đăng nhập.");
+//     }
+//     if (!in_array($_SESSION['ROLE'], $allowed_roles)) {
+//         jsonResponse(false, "Bạn không có quyền truy cập chức năng này.");
+//     }
+// }
+
+// /* ====== MIDDLEWARE: CHECK OWNERSHIP ====== */
+// function checkOwnership($conn, $event_id)
+// {
+//     if ($_SESSION['ROLE'] === 'Admin') return;
+//     $admin_id = $_SESSION['ADMIN_ID'];
+//     $stmt = $conn->prepare("SELECT ADMIN_ID FROM EVENTS WHERE EVENT_ID = ?");
+//     $stmt->bind_param("s", $event_id);
+//     $stmt->execute();
+//     $result = $stmt->get_result()->fetch_assoc();
+//     if (!$result || $result['ADMIN_ID'] !== $admin_id) {
+//         jsonResponse(false, "Bạn không có quyền truy cập sự kiện này.");
+//     }
+// }
+
+/* ====== ROUTER CHÍNH ====== */
+switch ($service) {
+    case 'admin':
+        routeAdminService($action, $backendPath);
+        break;
+
+    case 'customer':
+        routeCustomerService($action, $backendPath);
+        break;
+
+    case 'order':
+        routeOrderService($action, $backendPath);
+        break;
+
+    case 'reservation':
+        routeReservationService($action, $backendPath);
+        break;
+
+    case 'notification':
+        routeNotificationService($action, $backendPath);
+        break;
+
+    default:
+        echo json_encode(["error" => "Service không hợp lệ"]);
+        break;
+}
+
 switch ($service) {
     case 'admin':
         routeAdminService($action, $backendPath);
@@ -44,7 +104,8 @@ function routeAdminService($action, $base)
     return;
     }
     $path_menu = $base . "admin_service/menu/";
-    $path_dash = $base . "admin_service/dashboard";
+    $path_dash = $base . "admin_service/dashboard/";
+    $path_event = $base . "admin_service/events/";
     switch ($action) {
         case 'get_menu_items':
             include_once $path_menu . "get_menu.php";
@@ -68,6 +129,10 @@ function routeAdminService($action, $base)
 
         case 'get_dashboard_data':
             include_once $path_dash . "get_dashboard_data.php";
+            break;
+
+        case 'get_events':
+            include_once $path_event . "get_events.php";
             break;
 
         default:

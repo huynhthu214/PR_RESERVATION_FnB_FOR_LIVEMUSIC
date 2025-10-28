@@ -1,3 +1,13 @@
+<?php
+require_once __DIR__ . '/../../config.php';
+
+
+$api_url = "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_events";
+$response = file_get_contents($api_url);
+$data = json_decode($response, true);
+$events = $data['data'] ?? [];
+?>
+
 <main class="main-content event-page">
   <section class="section-header">
       <h2>Sự kiện</h2>
@@ -9,7 +19,7 @@
           <thead>
               <tr>
                   <th>ID</th>
-                  <th>Tên sự kiện</th>
+                  <th>Địa điểm</th>
                   <th>Ban nhạc</th>
                   <th>Ngày diễn</th>
                   <th>Giá vé</th>
@@ -18,30 +28,24 @@
               </tr>
           </thead>
           <tbody>
-              <tr>
-                  <td>EV001</td>
-                  <td>Live Jazz Night</td>
-                  <td>Saigon Swing Band</td>
-                  <td>15/10/2025</td>
-                  <td>200,000 VNĐ</td>
-                  <td><span class="status active">Đang bán</span></td>
-                  <td>
-                      <button class="btn-edit">Sửa</button>
-                      <button class="btn-delete">Xóa</button>
-                  </td>
-              </tr>
-              <tr>
-                  <td>EV002</td>
-                  <td>Rock Concert</td>
-                  <td>Thunder Band</td>
-                  <td>20/10/2025</td>
-                  <td>250,000 VNĐ</td>
-                  <td><span class="status soldout">Hết vé</span></td>
-                  <td>
-                      <button class="btn-edit">Sửa</button>
-                      <button class="btn-delete">Xóa</button>
-                  </td>
-              </tr>
+              <?php if (!empty($events)): ?>
+                  <?php foreach ($events as $ev): ?>
+                      <tr>
+                          <td><?= htmlspecialchars($ev['id']) ?></td>
+                          <td><?= htmlspecialchars($ev['venue']) ?></td>
+                          <td><?= htmlspecialchars($ev['band']) ?></td>
+                          <td><?= date('d/m/Y', strtotime($ev['date'])) ?></td>
+                          <td><?= number_format($ev['price'], 0, ',', '.') ?> VNĐ</td>
+                          <td><span class="status <?= strtolower($ev['status']) ?>"><?= htmlspecialchars($ev['status']) ?></span></td>
+                          <td>
+                              <button class="btn-edit" data-id="<?= $ev['id'] ?>">Sửa</button>
+                              <button class="btn-delete" data-id="<?= $ev['id'] ?>">Xóa</button>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                  <tr><td colspan="7">Không có sự kiện nào.</td></tr>
+              <?php endif; ?>
           </tbody>
       </table>
   </section>
