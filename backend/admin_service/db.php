@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$user = "root";   // hoặc user MySQL bạn đã tạo
-$pass = "";       // password MySQL
-$db   = "admindb"; // database của user_service
+$user = "root"; 
+$pass = "";     
+$db   = "admindb";
 
 $conn = new mysqli($host, $user, $pass, $db);
 

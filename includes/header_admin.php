@@ -53,8 +53,10 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
 
   <div class="header-right">
     <div class="notification">
-      <i data-lucide="bell"></i>
-      <span class="badge">3</span>
+      <a href="index.php?page=notification" class="notification-link" title="Thông báo">
+        <i data-lucide="bell"></i>
+        <span class="badge">3</span>
+      </a>
     </div>
 
     <div class="user-info">

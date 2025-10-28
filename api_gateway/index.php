@@ -1,43 +1,139 @@
 <?php
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=UTF-8");
 
-// Load config service
-$config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
-
-// Lấy service và action
+$backendPath = __DIR__ . '/../backend/';
 $service = $_GET['service'] ?? '';
 $action  = $_GET['action'] ?? '';
 
-if (!$service || !$action) {
+if (empty($service) || empty($action)) {
     echo json_encode(["error" => "Thiếu tham số service hoặc action"]);
     exit;
 }
 
-// Tạo key dạng ADMIN_SERVICE, CUSTOMER_SERVICE,...
-$serviceKey = strtoupper($service) . "_SERVICE";
+switch ($service) {
+    case 'admin':
+        routeAdminService($action, $backendPath);
+        break;
 
-if (!isset($config[$serviceKey])) {
-    echo json_encode(["error" => "Service không tồn tại: $service"]);
-    exit;
+    case 'customer':
+        routeCustomerService($action, $backendPath);
+        break;
+
+    case 'order':
+        routeOrderService($action, $backendPath);
+        break;
+
+    case 'reservation':
+        routeReservationService($action, $backendPath);
+        break;
+
+    case 'notification':
+        routeNotificationService($action, $backendPath);
+        break;
+
+    default:
+        echo json_encode(["error" => "Service không hợp lệ"]);
+        break;
 }
 
-// Lấy URL base
-$serviceBase = $config[$serviceKey];
-$url = "$serviceBase/index.php?action=$action";
+/* -------------------- ADMIN SERVICE -------------------- */
+function routeAdminService($action, $base)
+{
+    $path = $base . "admin_service/menu/";
 
-// Nếu có dữ liệu POST từ client (frontend)
-$method = $_SERVER['REQUEST_METHOD'];
-if ($method === 'POST') {
-    $context = stream_context_create([
-        "http" => [
-            "method" => "POST",
-            "header" => "Content-Type: application/json",
-            "content" => file_get_contents("php://input")
-        ]
-    ]);
-    $response = file_get_contents($url, false, $context);
-} else {
-    $response = file_get_contents($url);
+    switch ($action) {
+        case 'get_menu_items':
+            include_once $path . "get_menu.php";
+            break;
+
+        case 'add_menu_item':
+            include_once $path . "add_menu.php";
+            break;
+
+        case 'update_menu_item':
+            include_once $path . "update_menu.php";
+            break;
+
+        case 'delete_menu_item':
+            include_once $path . "delete_menu.php";
+            break;
+
+        case 'get_menu_detail':
+            include_once $path . "get_menu_detail.php";
+            break;
+
+        default:
+            echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);
+            break;
+    }
 }
 
-echo $response;
+
+/* -------------------- CUSTOMER SERVICE -------------------- */
+function routeCustomerService($action, $base)
+{
+    $path = $base . "customer_service/";
+    switch ($action) {
+        case 'get_customers':
+            include_once $path . "get_customers.php";
+            break;
+        case 'add_customer':
+            include_once $path . "add_customer.php";
+            break;
+        default:
+            echo json_encode(["error" => "Hành động không hợp lệ trong customer_service"]);
+            break;
+    }
+}
+
+/* -------------------- ORDER SERVICE -------------------- */
+function routeOrderService($action, $base)
+{
+    $path = $base . "order_service/";
+    switch ($action) {
+        case 'get_orders':
+            include_once $path . "get_orders.php";
+            break;
+        case 'add_order':
+            include_once $path . "add_order.php";
+            break;
+        default:
+            echo json_encode(["error" => "Hành động không hợp lệ trong order_service"]);
+            break;
+    }
+}
+
+/* -------------------- RESERVATION SERVICE -------------------- */
+function routeReservationService($action, $base)
+{
+    $path = $base . "reservation_service/";
+    switch ($action) {
+        case 'get_reservations':
+            include_once $path . "get_reservations.php";
+            break;
+        case 'add_reservation':
+            include_once $path . "add_reservation.php";
+            break;
+        default:
+            echo json_encode(["error" => "Hành động không hợp lệ trong reservation_service"]);
+            break;
+    }
+}
+
+/* -------------------- NOTIFICATION SERVICE -------------------- */
+function routeNotificationService($action, $base)
+{
+    $path = $base . "notification_service/";
+    switch ($action) {
+        case 'get_notifications':
+            include_once $path . "get_notifications.php";
+            break;
+        case 'add_notification':
+            include_once $path . "add_notification.php";
+            break;
+        default:
+            echo json_encode(["error" => "Hành động không hợp lệ trong notification_service"]);
+            break;
+    }
+}
+?>

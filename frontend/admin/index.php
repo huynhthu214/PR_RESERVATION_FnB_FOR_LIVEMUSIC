@@ -3,7 +3,6 @@ session_start(); // BẮT BUỘC phải có để đọc session
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION['ADMIN_ID']) || empty($_SESSION['ADMIN_ID'])) {
-    // Nếu chưa đăng nhập thì quay lại trang login
     header("Location: pages/login.php");
     exit();
 }
@@ -13,11 +12,11 @@ $page = $_GET['page'] ?? 'dashboard';
 $namePage = ucfirst($page);
 
 // Include header
-require_once __DIR__ . '../../../includes/header_admin.php';
+require_once __DIR__ . '/../../includes/header_admin.php';
 ?>
 
 <div class="main-container">
-    <?php require_once __DIR__ . '../../../includes/sidebar_admin.php'; ?>
+    <?php require_once __DIR__ . '/../../includes/sidebar_admin.php'; ?>
 
     <main class="main-content">
         <?php
@@ -36,4 +35,4 @@ require_once __DIR__ . '../../../includes/header_admin.php';
     </main>
 </div>
 
-<?php require_once __DIR__ . '../../../includes/footer_admin.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer_admin.php'; ?>
