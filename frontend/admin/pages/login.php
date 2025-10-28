@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === 'admin@lyzy.com' && $password === '123456') {
         $_SESSION['ADMIN_ID'] = 1;
         $_SESSION['ADMIN_NAME'] = 'Admin LYZY';
-        header("Location: index.php?page=dashboard");
+        header("Location: ../index.php?page=dashboard");
         exit();
     } else {
         $error = "Email hoặc mật khẩu không đúng!";
