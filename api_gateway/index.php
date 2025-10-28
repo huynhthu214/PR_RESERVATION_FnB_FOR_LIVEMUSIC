@@ -39,6 +39,10 @@ switch ($service) {
 /* -------------------- ADMIN SERVICE -------------------- */
 function routeAdminService($action, $base)
 {
+    if ($action === 'login') {
+    include_once $base . "admin_service/index.php"; 
+    return;
+    }
     $path = $base . "admin_service/menu/";
 
     switch ($action) {
