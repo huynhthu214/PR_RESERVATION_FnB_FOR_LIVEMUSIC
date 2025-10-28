@@ -20,7 +20,7 @@ $user = ['full_name' => $_SESSION['ADMIN_NAME'] ?? 'Admin'];
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
-        <!-- CSS RIÊNG CHO MỖI TRANG -->
+    <!-- CSS RIÊNG CHO MỖI TRANG -->
     <?php
     $pageCssPath = __DIR__ . "/../assets/css/{$page}.css";
     if (!empty($page) && file_exists($pageCssPath)) {
