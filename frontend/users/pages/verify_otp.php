@@ -1,13 +1,12 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../config.php';
-$error = '';
+$error = '';  
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $otp = trim($_POST['otp']);
     if (empty($otp)) {
         $error = "Vui lòng nhập mã xác nhận!";
     } else {
-        // kiểm tra OTP ở đây...
         header("Location: reset_password.php");
         exit();
     }

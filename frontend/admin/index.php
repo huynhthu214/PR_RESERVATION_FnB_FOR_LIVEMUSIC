@@ -2,7 +2,7 @@
 session_start(); // BẮT BUỘC phải có để đọc session
 
 // Kiểm tra đăng nhập
-if (!isset($_SESSION['admin_id']) || empty($_SESSION['admin_id'])) {
+if (!isset($_SESSION['ADMIN_ID']) || empty($_SESSION['ADMIN_ID'])) {
     // Nếu chưa đăng nhập thì quay lại trang login
     header("Location: pages/login.php");
     exit();

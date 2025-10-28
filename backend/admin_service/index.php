@@ -1,38 +1,27 @@
 <?php
 require_once 'db.php';
-header("Content-Type: application/json");
+header('Content-Type: application/json');
 
 $action = $_GET['action'] ?? '';
 
-switch ($action) {
+if ($action === 'login') {
+    $input = json_decode(file_get_contents("php://input"), true);
+    $email = $input['email'] ?? '';
+    $password = $input['password'] ?? '';
 
-    case 'get_all_events':
-        $sql = "SELECT EVENT_ID, BAND_NAME, EVENT_DATE, TICKET_PRICE, STATUS FROM EVENTS";
-        $result = $conn->query($sql);
-        $events = [];
-        while ($row = $result->fetch_assoc()) $events[] = $row;
-        echo json_encode($events);
-        break;
+    $stmt = $conn->prepare("SELECT ADMIN_ID, USERNAME, PASSWORD FROM ADMIN_USERS WHERE EMAIL = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    case 'get_dashboard_stats':
-        $stats = [
-            "revenue" => 142500000,
-            "events" => 28,
-            "orders" => 1247,
-            "customers" => 3892
-        ];
-        echo json_encode($stats);
-        break;
-
-    case 'get_promotions':
-        $sql = "SELECT * FROM PROMOTIONS";
-        $result = $conn->query($sql);
-        $promos = [];
-        while ($row = $result->fetch_assoc()) $promos[] = $row;
-        echo json_encode($promos);
-        break;
-
-    default:
-        echo json_encode(["error" => "Action không hợp lệ trong admin_service"]);
+    if ($row = $result->fetch_assoc()) {
+        if ($password === $row['PASSWORD']) {
+            echo json_encode(["success" => true, "data" => $row]);
+        } else {
+            echo json_encode(["success" => false, "error" => "Sai mật khẩu!"]);
+        }
+    } else {
+        echo json_encode(["success" => false, "error" => "Không tìm thấy email!"]);
+    }
+    exit;
 }
-$conn->close();
