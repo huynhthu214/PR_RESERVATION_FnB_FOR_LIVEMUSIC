@@ -43,27 +43,31 @@ function routeAdminService($action, $base)
     include_once $base . "admin_service/index.php"; 
     return;
     }
-    $path = $base . "admin_service/menu/";
-
+    $path_menu = $base . "admin_service/menu/";
+    $path_dash = $base . "admin_service/dashboard";
     switch ($action) {
         case 'get_menu_items':
-            include_once $path . "get_menu.php";
+            include_once $path_menu . "get_menu.php";
             break;
 
         case 'add_menu_item':
-            include_once $path . "add_menu.php";
+            include_once $path_menu . "add_menu.php";
             break;
 
         case 'update_menu_item':
-            include_once $path . "update_menu.php";
+            include_once $path_menu . "update_menu.php";
             break;
 
         case 'delete_menu_item':
-            include_once $path . "delete_menu.php";
+            include_once $path_menu . "delete_menu.php";
             break;
 
         case 'get_menu_detail':
-            include_once $path . "get_menu_detail.php";
+            include_once $path_menu . "get_menu_detail.php";
+            break;
+
+        case 'get_dashboard_data':
+            include_once $path_dash . "get_dashboard_data.php";
             break;
 
         default:
