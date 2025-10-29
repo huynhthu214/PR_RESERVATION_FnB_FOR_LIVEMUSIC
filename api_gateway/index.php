@@ -228,10 +228,10 @@ function routeReservationService($action, $base)
 /* -------------------- NOTIFICATION SERVICE -------------------- */
 function routeNotificationService($action, $base)
 {
-    $path = $base . "notification_service/";
+    $path = $base . "notification_service/notification/";
     switch ($action) {
         case 'get_notifications':
-            include_once $path . "get_notifications.php";
+            include_once $path . "get_notification.php";
             break;
         case 'add_notification':
             include_once $path . "add_notification.php";
