@@ -180,14 +180,28 @@ function routeCustomerService($action, $base)
 /* -------------------- ORDER SERVICE -------------------- */
 function routeOrderService($action, $base)
 {
-    $path = $base . "order_service/";
+    $path = $base . "order_service/order";
     switch ($action) {
-        case 'get_orders':
-            include_once $path . "get_orders.php";
+        case 'get_order':
+            include_once $path . "get_order.php";
             break;
+
         case 'add_order':
             include_once $path . "add_order.php";
             break;
+
+        case 'update_order':
+            include_once $path . "update_order.php";
+            break;
+
+        case 'delete_order':
+            include_once $path . "delete_order.php";
+            break;
+
+        case 'get_order_detail':
+            include_once $path . "get_order_detail.php";
+            break;
+
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong order_service"]);
             break;
