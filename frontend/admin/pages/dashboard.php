@@ -21,12 +21,13 @@ if (!$data || !isset($data['success']) || !$data['success']) {
 ?>
 
 <main class="main-content">
+<section class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Thống kê</h2>
 
-  <section class="section-header">
-      <h2>Thống kê</h2>
-      <button class="btn-export">Xuất báo cáo</button>
-  </section>
-
+    <form action="export_dashboard.php" method="POST" style="margin: 0;">
+        <button type="submit" class="btn-export">Xuất báo cáo</button>
+    </form>
+</section>
   <!--THỐNG KÊ CHUNG-->
   <section class="stats">
       <div class="card">

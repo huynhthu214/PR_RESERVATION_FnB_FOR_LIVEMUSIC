@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 
-
 $api_url = "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_events";
 $response = file_get_contents($api_url);
+
 $data = json_decode($response, true);
-$events = $data['data'] ?? [];
+$events = $data['data'] ?? []; 
 ?>
 
 <main class="main-content event-page">
@@ -28,8 +28,11 @@ $events = $data['data'] ?? [];
               </tr>
           </thead>
           <tbody>
-              <?php if (!empty($events)): ?>
-                  <?php foreach ($events as $ev): ?>
+                <?php
+                $events = $data['data'] ?? []; // lấy đúng mảng con chứa sự kiện
+                ?>
+                <?php if (!empty($events)): ?>
+                <?php foreach ($events as $ev): ?>
                       <tr>
                           <td><?= htmlspecialchars($ev['id']) ?></td>
                           <td><?= htmlspecialchars($ev['venue']) ?></td>
