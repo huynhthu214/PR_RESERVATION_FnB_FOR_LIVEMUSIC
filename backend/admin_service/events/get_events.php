@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../db.php';
 header('Content-Type: application/json');
+require_once __DIR__ . '/../db.php';
 
 // Nếu có session admin → có thể lọc theo người tạo
 session_start();
@@ -12,10 +12,10 @@ $sql = "SELECT E.EVENT_ID, V.NAME AS VENUE_NAME, E.BAND_NAME, E.EVENT_DATE,
         FROM EVENTS E
         LEFT JOIN VENUES V ON E.VENUE_ID = V.VENUE_ID";
 
-if ($role === 'Staff') {
-    // Staff chỉ được xem sự kiện của họ
-    $sql .= " WHERE E.ADMIN_ID = '$admin_id'";
-}
+// if ($role === 'Staff') {
+//     // Staff chỉ được xem sự kiện của họ
+//     $sql .= " WHERE E.ADMIN_ID = '$admin_id'";
+// }
 
 $sql .= " ORDER BY E.EVENT_DATE DESC";
 

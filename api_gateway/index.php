@@ -106,6 +106,8 @@ function routeAdminService($action, $base)
     $path_menu = $base . "admin_service/menu/";
     $path_dash = $base . "admin_service/dashboard/";
     $path_event = $base . "admin_service/events/";
+    $path_venue = $base . "admin_service/venues/";
+    $path_promo = $base . "admin_service/promotions/";
     switch ($action) {
         case 'get_menu_items':
             include_once $path_menu . "get_menu.php";
@@ -133,6 +135,14 @@ function routeAdminService($action, $base)
 
         case 'get_events':
             include_once $path_event . "get_events.php";
+            break;
+
+        case 'get_venues':
+            include_once $path_venue . "get_venues.php";
+            break;
+
+        case 'get_promotions':
+            include_once $path_promo . "get_promotions.php";
             break;
 
         default:
