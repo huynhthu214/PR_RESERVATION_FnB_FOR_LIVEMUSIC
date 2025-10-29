@@ -145,16 +145,34 @@ function routeAdminService($action, $base)
 /* -------------------- CUSTOMER SERVICE -------------------- */
 function routeCustomerService($action, $base)
 {
-    $path = $base . "customer_service/";
+    if ($action === 'login') {
+    include_once $base . "customer_service/index.php"; 
+    return;
+    }
+    $path_user = $base . "customer_service/user/";
     switch ($action) {
-        case 'get_customers':
-            include_once $path . "get_customers.php";
+        case 'get_user':
+            include_once $path_user . "get_user.php";
             break;
-        case 'add_customer':
-            include_once $path . "add_customer.php";
+
+        case 'add_user':
+            include_once $path_user . "add_user.php";
             break;
+
+        case 'update_user':
+            include_once $path_user . "update_user.php";
+            break;
+
+        case 'delete_user':
+            include_once $path_user . "delete_user.php";
+            break;
+
+        case 'get_user_detail':
+            include_once $path_user . "get_user_detail.php";
+            break;
+
         default:
-            echo json_encode(["error" => "Hành động không hợp lệ trong customer_service"]);
+            echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);
             break;
     }
 }
