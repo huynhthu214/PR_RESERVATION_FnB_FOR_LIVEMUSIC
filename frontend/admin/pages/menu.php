@@ -1,7 +1,7 @@
 <main class="main-content menu-page">
     <section class="section-header">
         <h2>Thực đơn</h2>
-        <button class="btn-add" onclick="window.location.href='add-menu-item.php'">+ Thêm món</button>
+        <button class="btn-add" onclick="window.location.href='add_menu.php'">+ Thêm món</button>
     </section>
 
     <section class="table-section">
@@ -96,7 +96,6 @@ function loadMenuItems() {
 
 let selectedItemId = null;
 
-// 🟩 Mở modal và tải dữ liệu chi tiết
 function editItem(id) {
     selectedItemId = id;
     console.log("Đang chỉnh sửa:", id);
@@ -125,12 +124,10 @@ function editItem(id) {
         });
 }
 
-// 🔻 Đóng modal
 function closeModal() {
     document.getElementById('editModal').style.display = 'none';
 }
 
-// 🟨 Xử lý lưu cập nhật
 document.getElementById('editForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -156,7 +153,7 @@ document.getElementById('editForm').addEventListener('submit', function(e) {
         if (result.success || result.message) {
             alert('Cập nhật món thành công!');
             closeModal();
-            loadMenuItems(); // 🔄 reload lại bảng mà không cần reload trang
+            loadMenuItems();
         } else {
             alert('Cập nhật thất bại: ' + (result.error || 'Không xác định'));
         }
@@ -167,7 +164,6 @@ document.getElementById('editForm').addEventListener('submit', function(e) {
     });
 });
 
-// 🔴 Xóa món ăn
 function deleteItem(id) {
     if (!confirm('Bạn có chắc muốn xóa món này?')) return;
 

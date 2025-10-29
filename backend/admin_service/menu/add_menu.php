@@ -9,11 +9,11 @@ include_once __DIR__ . '/../db.php';
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (empty($data['NAME']) || empty($data['PRICE'])) {
-    echo json_encode(["error" => "Thiếu dữ liệu bắt buộc (NAME hoặc PRICE)"]);
+    echo json_encode(["error" => "Thiếu dữ liệu bắt buộc"]);
     exit;
 }
 
-$ITEM_ID = $data['ITEM_ID'] ?? uniqid("MN");
+$ITEM_ID = $data['ITEM_ID'] ?? uniqid("M");
 $ADMIN_ID = $data['ADMIN_ID'] ?? "AD001";
 $NAME = $conn->real_escape_string($data['NAME']);
 $DESCRIPTION = $conn->real_escape_string($data['DESCRIPTION'] ?? "");

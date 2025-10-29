@@ -155,16 +155,34 @@ function routeAdminService($action, $base)
 /* -------------------- CUSTOMER SERVICE -------------------- */
 function routeCustomerService($action, $base)
 {
-    $path = $base . "customer_service/";
+    if ($action === 'login') {
+    include_once $base . "customer_service/index.php"; 
+    return;
+    }
+    $path_user = $base . "customer_service/user/";
     switch ($action) {
-        case 'get_customers':
-            include_once $path . "get_customers.php";
+        case 'get_user':
+            include_once $path_user . "get_user.php";
             break;
-        case 'add_customer':
-            include_once $path . "add_customer.php";
+
+        case 'add_user':
+            include_once $path_user . "add_user.php";
             break;
+
+        case 'update_user':
+            include_once $path_user . "update_user.php";
+            break;
+
+        case 'delete_user':
+            include_once $path_user . "delete_user.php";
+            break;
+
+        case 'get_user_detail':
+            include_once $path_user . "get_user_detail.php";
+            break;
+
         default:
-            echo json_encode(["error" => "Hành động không hợp lệ trong customer_service"]);
+            echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);
             break;
     }
 }
@@ -172,14 +190,28 @@ function routeCustomerService($action, $base)
 /* -------------------- ORDER SERVICE -------------------- */
 function routeOrderService($action, $base)
 {
-    $path = $base . "order_service/";
+    $path = $base . "order_service/order";
     switch ($action) {
-        case 'get_orders':
-            include_once $path . "get_orders.php";
+        case 'get_order':
+            include_once $path . "get_order.php";
             break;
+
         case 'add_order':
             include_once $path . "add_order.php";
             break;
+
+        case 'update_order':
+            include_once $path . "update_order.php";
+            break;
+
+        case 'delete_order':
+            include_once $path . "delete_order.php";
+            break;
+
+        case 'get_order_detail':
+            include_once $path . "get_order_detail.php";
+            break;
+
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong order_service"]);
             break;
@@ -206,10 +238,10 @@ function routeReservationService($action, $base)
 /* -------------------- NOTIFICATION SERVICE -------------------- */
 function routeNotificationService($action, $base)
 {
-    $path = $base . "notification_service/";
+    $path = $base . "notification_service/notification/";
     switch ($action) {
         case 'get_notifications':
-            include_once $path . "get_notifications.php";
+            include_once $path . "get_notification.php";
             break;
         case 'add_notification':
             include_once $path . "add_notification.php";
