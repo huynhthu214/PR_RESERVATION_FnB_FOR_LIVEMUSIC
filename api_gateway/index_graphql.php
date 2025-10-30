@@ -10,8 +10,7 @@ header('Content-Type: application/json; charset=UTF-8');
 
 // Đọc dữ liệu truy vấn từ request body
 $rawInput = file_get_contents('php://input');
-}
-$input = json_decode($rawInput, true);ã
+$input = json_decode($rawInput, true);
 $query = $input['query'] ?? '';
 $variableValues = $input['variables'] ?? null;
 
