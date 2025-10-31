@@ -114,7 +114,7 @@ function routeAdminService($action, $base)
             break;
 
         case 'add_menu_item':
-            include_once $path_menu . "add_menu.php";
+            include_once $path_menu . "add_menu_item.php";
             break;
 
         case 'update_menu_item':
