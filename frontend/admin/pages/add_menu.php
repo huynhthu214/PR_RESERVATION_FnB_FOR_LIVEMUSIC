@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ?>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/menu.css">
 
-<main class="main-content menu-page">
+<main class="main-content add-menu-page">
   <section class="section-header">
     <h2>Thêm món mới</h2>
     <button class="btn-add" onclick="window.location.href='index.php?page=menu'">
@@ -39,7 +39,10 @@ ini_set('display_errors', 1);
         <option value="0">Ngừng bán</option>
       </select>
 
-      <button type="submit" class="btn-add">+ Thêm món</button>
+      <div class="form-actions">
+        <button type="submit" class="btn-add">Lưu</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_menu'">Hủy</button>
+      </div>
     </form>
   </section>
 </main>

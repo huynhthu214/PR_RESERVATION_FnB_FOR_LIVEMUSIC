@@ -1,4 +1,4 @@
-/* menu.css */
+/* ====================== MENU PAGE ====================== */
 .main-content.menu-page .section-header h2 {
   color: #ffb300;
 }
@@ -11,7 +11,18 @@
   background: linear-gradient(90deg, #ffb300, #ff9500);
 }
 
-/* Modal chung (chỉnh sửa + xóa) */
+/* ====================== STATUS ====================== */
+.main-content.menu-page .status.active {
+  color: #43a047;
+  font-weight: 600;
+}
+
+.main-content.menu-page .status.inactive {
+  color: #ff6b00;
+  font-weight: 600;
+}
+
+/* ====================== MODAL (Chỉnh sửa + Xóa) ====================== */
 .modal {
   display: none;
   position: fixed;
@@ -80,7 +91,7 @@
   width: 100%;
   margin-top: 18px;
   padding: 10px;
-  background-color: #ffb300;
+  background: linear-gradient(90deg, #ffb300, #ff9500);
   border: none;
   color: #000;
   font-weight: 700;
@@ -89,7 +100,7 @@
   transition: 0.3s;
 }
 .modal-content button[type="submit"]:hover {
-  background-color: #ffd54f;
+  background: linear-gradient(90deg, #ffd54f, #ffb300);
 }
 
 .close {
@@ -105,17 +116,7 @@
   color: #ffd54f;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
+/* ====================== MODAL XÁC NHẬN XÓA ====================== */
 #deleteModal .modal-content .btn {
   padding: 8px 16px;
   border-radius: 6px;
@@ -142,25 +143,26 @@
   background-color: #ffd54f;
 }
 
+/* ====================== TOAST ====================== */
 #toast-container {
   position: fixed;
-  top: 110px;
+  top: 20px;
   right: 20px;
-  z-index: 9999;
+  z-index: 3000;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .toast {
   position: relative;
   background-color: #1a1a1a;
   color: #ffb300;
-  padding: 16px 24px 16px 20px;
+  padding: 14px 22px 14px 18px;
   border-radius: 10px;
   min-width: 250px;
   max-width: 350px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   opacity: 0;
   transform: translateX(120%);
@@ -198,15 +200,12 @@
   line-height: 1;
   transition: 0.2s;
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(0);
+.toast .close-toast:hover {
+  color: #ffd54f;
 }
 
-/* Add_menu.php */
-/* ========== FORM THÊM MÓN ========== */
-.add-form {
+/* ====================== FORM THÊM/SỬA MENU ====================== */
+.add-menu-page .form-section {
   background: #1e1e1e;
   padding: 25px 35px;
   border-radius: 12px;
@@ -218,7 +217,7 @@
   animation: fadeIn 0.4s ease-in-out;
 }
 
-.add-form h3 {
+.add-menu-page .section-header h2 {
   text-align: center;
   color: #ffb300;
   font-size: 22px;
@@ -227,7 +226,7 @@
   letter-spacing: 0.5px;
 }
 
-.add-form label {
+.add-menu-page label {
   display: block;
   color: #ccc;
   margin-top: 14px;
@@ -236,9 +235,9 @@
 }
 
 /* ===== INPUT, TEXTAREA, SELECT ===== */
-.add-form input,
-.add-form textarea,
-.add-form select {
+.add-menu-page input,
+.add-menu-page textarea,
+.add-menu-page select {
   width: 100%;
   padding: 9px 12px;
   margin-top: 6px;
@@ -255,13 +254,9 @@
   -moz-appearance: none;
 }
 
-/* Khi focus – KHÔNG đổi nền */
-.add-form input:focus,
-.add-form textarea:focus,
-.add-form select:focus,
-.add-form input:active,
-.add-form textarea:active,
-.add-form select:active {
+.add-menu-page input:focus,
+.add-menu-page textarea:focus,
+.add-menu-page select:focus {
   background-color: #121212 !important;
   border-color: #ffb300;
   color: #fff !important;
@@ -269,82 +264,93 @@
   box-shadow: 0 0 4px rgba(255, 179, 0, 0.3);
 }
 
-/* Ngăn Chrome đổi màu autofill */
-.add-form input:-webkit-autofill,
-.add-form input:-webkit-autofill:focus,
-.add-form input:-webkit-autofill:hover,
-.add-form input:-webkit-autofill:active {
+/* Ngăn autofill */
+.add-menu-page input:-webkit-autofill,
+.add-menu-page input:-webkit-autofill:focus,
+.add-menu-page input:-webkit-autofill:hover,
+.add-menu-page input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 1000px #121212 inset !important;
   -webkit-text-fill-color: #fff !important;
   transition: background-color 9999s ease-in-out 0s !important;
 }
 
-/* Firefox autofill */
-.add-form input:-moz-autofill {
-  box-shadow: 0 0 0 1000px #121212 inset !important;
-  -moz-text-fill-color: #fff !important;
-}
-
-/* Nút thêm món */
-.add-form button[type="submit"] {
-  margin-top: 24px;
-  width: 100%;
-  background: linear-gradient(90deg, #ffb300, #ff9500);
-  border: none;
-  padding: 12px;
-  color: #000;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-  letter-spacing: 0.5px;
-}
-
-.add-form button[type="submit"]:hover {
-  background: linear-gradient(90deg, #ffd54f, #ffb300);
-}
-
-/* Khung giá có chữ VNĐ */
+/* ===== INPUT GIÁ CÓ ĐƠN VỊ VNĐ ===== */
 .price-input {
   position: relative;
+  width: 100%;
 }
 
 .price-input input {
-  padding-right: 55px;
+  width: 100%;
+  padding-right: 60px; /* chừa khoảng cho chữ VNĐ */
+  background-color: #121212 !important;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  padding: 9px 12px;
+  margin-top: 6px;
+  outline: none !important;
+  transition: none !important;
+  box-shadow: none !important;
 }
 
-.price-input span {
+.price-input input:focus {
+  border-color: #ffb300;
+  box-shadow: 0 0 4px rgba(255, 179, 0, 0.3);
+}
+
+.price-input .currency-label {
   position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #ffb300;
-  font-weight: 600;
-  pointer-events: none;
+  color: #ccc;
   font-size: 14px;
+  font-weight: 500;
+  pointer-events: none;
 }
 
-/* Nút quay lại */
-.add-form .btn-back {
-  display: inline-block;
-  margin-top: 15px;
-  text-align: center;
-  background: #2c2c2c;
-  color: #ffb300;
+/* ===== NÚT LƯU + HỦY ===== */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.btn-save {
+  background: linear-gradient(90deg, #ffb300, #ff9500);
+  color: #000;
+  border: none;
   padding: 10px 20px;
   border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.btn-save:hover {
+  background: linear-gradient(90deg, #ffd54f, #ffb300);
+}
+
+.btn-cancel {
+  background: #2c2c2c;
+  color: #ffb300;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
   font-weight: 600;
-  text-decoration: none;
   transition: 0.3s;
 }
 
-.add-form .btn-back:hover {
+.btn-cancel:hover {
   background: #3a3a3a;
   color: #ffd54f;
 }
 
-/* Hiệu ứng hiện form */
+/* ====================== ANIMATION ====================== */
 @keyframes fadeIn {
   from {
     opacity: 0;
