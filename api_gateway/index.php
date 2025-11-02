@@ -144,6 +144,10 @@ function routeAdminService($action, $base)
         case 'get_promotions':
             include_once $path_promo . "get_promotions.php";
             break;
+            
+        case 'export_dashboard':
+            include_once $path_dash . "export_dashboard.php";
+            break;
 
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);
