@@ -36,7 +36,9 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-.btn-add:hover, .btn-export:hover {
+.btn-add:hover,
+.btn-export:hover,
+.btn-refresh:hover {
   background-color: #ffd54f;
 }
 
@@ -72,13 +74,29 @@ body {
   font-size: 13px;
   font-weight: 600;
 }
-.status.selling, .status.success { background-color: #ffb300; color: #000; }
-.status.soldout, .status.inactive { background-color: #e53935; color: #fff; }
-.status.pending { background-color: #ffa726; color: #000; }
-.status.active { background-color: #43a047; color: #fff; }
+.status.selling,
+.status.success {
+  background-color: #ffb300;
+  color: #000;
+}
+.status.soldout,
+.status.inactive {
+  background-color: #e53935;
+  color: #fff;
+}
+.status.pending {
+  background-color: #ffa726;
+  color: #000;
+}
+.status.active {
+  background-color: #43a047;
+  color: #fff;
+}
 
 /* Buttons in tables */
-.btn-edit, .btn-delete, .btn-detail {
+.btn-edit,
+.btn-delete,
+.btn-detail {
   background: none;
   border: none;
   color: #ffb300;
@@ -86,7 +104,11 @@ body {
   font-weight: 600;
   margin-right: 10px;
 }
-.btn-delete { color: #e53935; }
-.btn-edit:hover, .btn-delete:hover, .btn-detail:hover {
+.btn-delete {
+  color: #e53935;
+}
+.btn-edit:hover,
+.btn-delete:hover,
+.btn-detail:hover {
   text-decoration: underline;
 }

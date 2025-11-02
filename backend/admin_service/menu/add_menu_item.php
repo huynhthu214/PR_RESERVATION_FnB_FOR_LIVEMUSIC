@@ -13,7 +13,19 @@ if (empty($data['NAME']) || empty($data['PRICE'])) {
     exit;
 }
 
-$ITEM_ID = $data['ITEM_ID'] ?? uniqid("M");
+/* ===== TỰ ĐỘNG TẠO ITEM_ID DẠNG M001, M002,... ===== */
+$sql_get_id = "SELECT ITEM_ID FROM MENU_ITEMS ORDER BY ITEM_ID DESC LIMIT 1";
+$result = $conn->query($sql_get_id);
+
+if ($result && $result->num_rows > 0) {
+    $last_id = $result->fetch_assoc()['ITEM_ID'];
+    $num = intval(substr($last_id, 1)) + 1; // bỏ 'M' và cộng 1
+    $ITEM_ID = 'M' . str_pad($num, 3, '0', STR_PAD_LEFT); // luôn có 3 chữ số
+} else {
+    $ITEM_ID = 'M001'; // nếu chưa có món nào
+}
+
+/* ===== DỮ LIỆU KHÁC ===== */
 $ADMIN_ID = $data['ADMIN_ID'] ?? "AD001";
 $NAME = $conn->real_escape_string($data['NAME']);
 $DESCRIPTION = $conn->real_escape_string($data['DESCRIPTION'] ?? "");
@@ -22,6 +34,7 @@ $CATEGORY = $conn->real_escape_string($data['CATEGORY'] ?? "Khác");
 $STOCK_QUANTITY = intval($data['STOCK_QUANTITY'] ?? 0);
 $IS_AVAILABLE = isset($data['IS_AVAILABLE']) ? intval($data['IS_AVAILABLE']) : 1;
 
+/* ===== THÊM VÀO DATABASE ===== */
 $sql = "INSERT INTO MENU_ITEMS (ITEM_ID, ADMIN_ID, NAME, DESCRIPTION, PRICE, CATEGORY, STOCK_QUANTITY, IS_AVAILABLE)
         VALUES ('$ITEM_ID', '$ADMIN_ID', '$NAME', '$DESCRIPTION', $PRICE, '$CATEGORY', $STOCK_QUANTITY, $IS_AVAILABLE)";
 
