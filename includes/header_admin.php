@@ -55,7 +55,7 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
     <div class="notification">
       <a href="index.php?page=notification" class="notification-link" title="Thông báo">
         <i data-lucide="bell"></i>
-        <span class="badge">3</span>
+        <span class="badge">1</span>
       </a>
     </div>
 
@@ -67,3 +67,45 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
     <button class="logout-btn" onclick="window.location.href='pages/logout.php'">Đăng xuất</button>
   </div>
 </header>
+
+<script>
+document.addEventListener("DOMContentLoaded", loadNotificationCount);
+
+function loadNotificationCount() {
+    const badge = document.querySelector(".notification .badge");
+
+    // --- Lấy thông tin người đăng nhập ---
+    // (ở backend PHP, ta có thể in sẵn SESSION ra JS)
+    const receiverId = "<?php echo isset($_SESSION['ADMIN_ID']) ? $_SESSION['ADMIN_ID'] : (isset($_SESSION['CUSTOMER_ID']) ? $_SESSION['CUSTOMER_ID'] : ''); ?>";
+    const receiverType = "<?php echo isset($_SESSION['ADMIN_ID']) ? 'ADMIN' : (isset($_SESSION['CUSTOMER_ID']) ? 'CUSTOMER' : ''); ?>";
+
+    if (!receiverId || !receiverType) {
+        badge.style.display = "none";
+        return;
+    }
+
+    // --- Gọi API qua API Gateway ---
+    fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=get_notifications&receiver_id=${receiverId}&receiver_type=${receiverType}`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) {
+                badge.style.display = "none";
+                return;
+            }
+
+            const notifications = data.data || [];
+            const unreadCount = notifications.filter(n => !n.IS_READ).length;
+
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = "inline-block";
+            } else {
+                badge.style.display = "none";
+            }
+        })
+        .catch(err => {
+            console.error("Lỗi khi tải số lượng thông báo:", err);
+            badge.style.display = "none";
+        });
+}
+</script>

@@ -1,9 +1,13 @@
-INSERT INTO NOTIFICATIONS VALUES
-('N001', 'CU001', 'Đặt chỗ thành công tại Chill Sky Lounge.', 'RESERVATION', '2025-10-17 15:01:00', FALSE),
-('N002', 'CU001', 'Thanh toán thành công đơn hàng O001.', 'PAYMENT', '2025-10-17 16:06:00', TRUE),
-('N003', 'CU002', 'Đặt chỗ thành công tại Acoustic Vibes.', 'RESERVATION', '2025-10-17 15:31:00', FALSE),
-('N004', 'CU003', 'Đơn hàng đang chờ thanh toán cho Jazz in Sunset.', 'ORDER', '2025-10-18 17:01:00', FALSE),
-('N005', 'CU004', 'Thanh toán thành công đơn hàng O004.', 'PAYMENT', '2025-10-18 17:21:00', TRUE);
+INSERT INTO NOTIFICATIONS 
+(NOTIFICATION_ID, SENDER_ID, RECEIVER_ID, RECEIVER_TYPE, TITLE, MESSAGE, TYPE, LINK, SENT_AT, IS_READ)
+VALUES
+('N001', 'SYSTEM', 'CU001', 'CUSTOMER', 'Đặt chỗ thành công', 'Đặt chỗ tại Chill Sky Lounge của bạn đã được xác nhận.', 'RESERVATION', 'reservation-detail.php?id=R001', '2025-10-17 15:01:00', FALSE),
+('N002', 'SYSTEM', 'CU001', 'CUSTOMER', 'Thanh toán thành công', 'Đơn hàng O001 của bạn đã được thanh toán thành công.', 'PAYMENT', 'order-detail.php?id=O001', '2025-10-17 16:06:00', TRUE),
+('N003', 'SYSTEM', 'CU002', 'CUSTOMER', 'Đặt chỗ thành công', 'Đặt chỗ tại Acoustic Vibes của bạn đã được xác nhận.', 'RESERVATION', 'reservation-detail.php?id=R002', '2025-10-17 15:31:00', FALSE),
+
+('N004', 'CU001', 'AD001', 'ADMIN', 'Đặt chỗ mới', 'Khách hàng CU001 vừa đặt chỗ tại Chill Sky Lounge.', 'RESERVATION', 'admin/reservation-detail.php?id=R001', '2025-10-17 15:01:05', FALSE),
+('N005', 'CU001', 'AD001', 'ADMIN', 'Thanh toán thành công', 'Khách hàng CU001 đã thanh toán đơn hàng O001.', 'PAYMENT', 'admin/order-detail.php?id=O001', '2025-10-17 16:06:10', FALSE),
+('N006', 'CU002', 'AD001', 'ADMIN', 'Đặt chỗ mới', 'Khách hàng CU002 vừa đặt chỗ tại Acoustic Vibes.', 'RESERVATION', 'admin/reservation-detail.php?id=R002', '2025-10-17 15:31:10', FALSE);
 
 INSERT INTO EMAIL_LOG VALUES
 ('EL001', 'CU001', 'thutrang@gmail.com', 'Xác nhận đặt chỗ Chill Sky Lounge', '2025-10-17 15:01:00', 'SENT', NULL),
