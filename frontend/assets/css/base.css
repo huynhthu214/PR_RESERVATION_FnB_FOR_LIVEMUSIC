@@ -26,9 +26,7 @@ body {
 }
 
 /* Buttons */
-.btn-add,
-.btn-export,
-.btn-refresh {
+.btn-add, .btn-export, .btn-refresh {
   background-color: #ffb300;
   border: none;
   color: #000;

@@ -24,7 +24,7 @@ if (!$data || !isset($data['success']) || !$data['success']) {
 <section class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
     <h2>Thống kê</h2>
 
-    <form action="export_dashboard.php" method="POST" style="margin: 0;">
+    <form action="http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=export_dashboard" method="POST" style="margin: 0;">
         <button type="submit" class="btn-export">Xuất báo cáo</button>
     </form>
 </section>
