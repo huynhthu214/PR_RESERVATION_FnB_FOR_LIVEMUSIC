@@ -112,3 +112,13 @@ body {
 .btn-detail:hover {
   text-decoration: underline;
 }
+
+.btn-detail {
+    background: #333130;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 8px;
+    display:inline-block;
+}

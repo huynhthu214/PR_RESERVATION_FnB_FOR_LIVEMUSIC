@@ -99,55 +99,32 @@ switch ($service) {
 /* -------------------- ADMIN SERVICE -------------------- */
 function routeAdminService($action, $base)
 {
-    if ($action === 'login') {
-    include_once $base . "admin_service/index.php"; 
-    return;
+    if ($action === 'login' || $action === 'add_event' || $action === 'get_events') {
+        include_once $base . "admin_service/index.php"; 
+        return;
     }
+
     $path_menu = $base . "admin_service/menu/";
     $path_dash = $base . "admin_service/dashboard/";
     $path_event = $base . "admin_service/events/";
     $path_venue = $base . "admin_service/venues/";
     $path_promo = $base . "admin_service/promotions/";
+    
     switch ($action) {
-        case 'get_menu_items':
-            include_once $path_menu . "get_menu.php";
-            break;
+        // Menu
+        case 'get_menu_items': include_once $path_menu . "get_menu.php"; break;
+        case 'add_menu_item': include_once $path_menu . "add_menu_item.php"; break;
+        case 'update_menu_item': include_once $path_menu . "update_menu.php"; break;
+        case 'delete_menu_item': include_once $path_menu . "delete_menu.php"; break;
+        case 'get_menu_detail': include_once $path_menu . "get_menu_detail.php"; break;
 
-        case 'add_menu_item':
-            include_once $path_menu . "add_menu_item.php";
-            break;
+        // Dashboard
+        case 'get_dashboard_data': include_once $path_dash . "get_dashboard_data.php"; break;
+        case 'export_dashboard': include_once $path_dash . "export_dashboard.php"; break;
 
-        case 'update_menu_item':
-            include_once $path_menu . "update_menu.php";
-            break;
-
-        case 'delete_menu_item':
-            include_once $path_menu . "delete_menu.php";
-            break;
-
-        case 'get_menu_detail':
-            include_once $path_menu . "get_menu_detail.php";
-            break;
-
-        case 'get_dashboard_data':
-            include_once $path_dash . "get_dashboard_data.php";
-            break;
-
-        case 'get_events':
-            include_once $path_event . "get_events.php";
-            break;
-
-        case 'get_venues':
-            include_once $path_venue . "get_venues.php";
-            break;
-
-        case 'get_promotions':
-            include_once $path_promo . "get_promotions.php";
-            break;
-            
-        case 'export_dashboard':
-            include_once $path_dash . "export_dashboard.php";
-            break;
+        // Events / Venues / Promotions
+        case 'get_venues': include_once $path_venue . "get_venues.php"; break;
+        case 'get_promotions': include_once $path_promo . "get_promotions.php"; break;
 
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);

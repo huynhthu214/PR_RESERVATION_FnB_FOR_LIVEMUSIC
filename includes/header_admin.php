@@ -28,15 +28,15 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
     <!-- CSS CHUNG -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/base.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- CSS RIÊNG CHO MỖI TRANG -->
     <?php
-    $pageCssPath = __DIR__ . "/../../assets/css/{$page}.css";
-    if (!empty($page) && file_exists($pageCssPath)) {
-        echo '<link rel="stylesheet" href="' . BASE_URL . 'assets/css/' . $page . '.css">';
-    }
+      if (!empty($page) && file_exists(...)) {
+          echo '<link rel="stylesheet" href="' . BASE_URL . 'assets/css/' . $page . '.css">';
+      }
     ?>
 </head>
 <body>
