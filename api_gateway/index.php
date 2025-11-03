@@ -224,9 +224,12 @@ function routeNotificationService($action, $base)
         case 'get_notifications':
             include_once $path . "get_notification.php";
             break;
-        case 'add_notification':
-            include_once $path . "add_notification.php";
+        case 'get_notification_detail':
+            include_once $path . "get_notification_detail.php";
             break;
+        case 'mark_as_read':
+            include_once $path . "mark_as_read.php";
+            break; 
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong notification_service"]);
             break;

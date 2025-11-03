@@ -2,34 +2,37 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once __DIR__ . '/../db.php';
+include_once __DIR__ . '/../db.php'; // Kết nối DB
 
-$sql = "SELECT NOTIFICATION_ID, CUSTOMER_ID, MESSAGE, TYPE, SENT_AT, IS_READ FROM NOTIFICATIONS";
-$result = $conn->query($sql);
+$receiver_id = $_GET['receiver_id'] ?? null;
+$receiver_type = $_GET['receiver_type'] ?? 'CUSTOMER';
 
-$notifications = [];
-
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $notifications[] = [
-            "NOTIFICATION_ID" => $row["NOTIFICATION_ID"],
-            "CUSTOMER_ID" => $row["CUSTOMER_ID"],
-            "MESSAGE" => $row["MESSAGE"],
-            "TYPE" => $row["TYPE"],
-            "SENT_AT" => $row["SENT_AT"],
-            "IS_READ" => $row["IS_READ"] ? true : false
-        ];
-    }
-    echo json_encode([
-        "success" => true,
-        "data" => $notifications
-    ], JSON_UNESCAPED_UNICODE);
-} else {
-    echo json_encode([
-        "success" => true,
-        "data" => []
-    ]);
+if (!$receiver_id) {
+    echo json_encode(["success" => false, "message" => "Thiếu receiver_id"]);
+    exit;
 }
 
+$sql = "SELECT NOTIFICATION_ID, TITLE, MESSAGE, TYPE, LINK, SENT_AT, IS_READ 
+        FROM NOTIFICATIONS 
+        WHERE RECEIVER_ID = ? AND RECEIVER_TYPE = ?
+        ORDER BY SENT_AT DESC";
+
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    echo json_encode(["success" => false, "message" => "Lỗi chuẩn bị SQL: " . $conn->error]);
+    exit;
+}
+
+$stmt->bind_param("ss", $receiver_id, $receiver_type);
+
+if ($stmt->execute()) {
+    $result = $stmt->get_result();
+    $notifications = $result->fetch_all(MYSQLI_ASSOC);
+    echo json_encode(["success" => true, "data" => $notifications]);
+} else {
+    echo json_encode(["success" => false, "message" => "Lỗi truy vấn SQL: " . $conn->error]);
+}
+
+$stmt->close();
 $conn->close();
 ?>
