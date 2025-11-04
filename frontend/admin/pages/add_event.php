@@ -1,63 +1,96 @@
-<?php
-require_once __DIR__ . '/../../config.php';
-?>
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/events.css">
 
 <main class="main-content add-event-page">
   <section class="section-header">
-      <h2>Thêm sự kiện mới</h2>
-      <a href="index.php?page=events" class="btn-back">← Quay lại</a>
+    <h2>Thêm sự kiện mới</h2>
+    <button class="btn-back" onclick="window.location.href='index.php?page=events'">
+        ← Quay lại danh sách
+    </button>
   </section>
 
   <section class="form-section">
-      <form id="addEventForm" class="event-form">
-          <label>Ban nhạc:</label>
-          <input type="text" name="band_name" required>
+    <form id="add-event-form" class="event-form">
+      <div class="form-group">
+        <label for="band_name">Tên ban nhạc:</label>
+        <input type="text" id="band_name" name="band_name" placeholder="Nhập tên ban nhạc..." required>
+      </div>
 
-          <label>ID địa điểm:</label>
-          <input type="text" name="venue_id" required>
+      <div class="form-group">
+        <label for="venue_id">ID địa điểm:</label>
+        <input type="text" id="venue_id" name="venue_id" placeholder="VD: V001" required>
+      </div>
 
-          <label>Ngày diễn:</label>
-          <input type="datetime-local" name="event_date" required>
+      <div class="form-group">
+        <label for="event_date">Ngày diễn:</label>
+        <input type="datetime-local" id="event_date" name="event_date" required>
+      </div>
 
-          <label>Giá vé:</label>
-          <input type="number" name="ticket_price" required>
+      <div class="form-group">
+        <label for="ticket_price">Giá vé:</label>
+        <input type="number" id="ticket_price" name="ticket_price" placeholder="Nhập giá vé..." required>
+      </div>
 
-          <label>Trạng thái:</label>
-          <select name="status">
-              <option value="ACTIVE">ACTIVE</option>
-              <option value="INACTIVE">INACTIVE</option>
-          </select>
+      <div class="form-group">
+        <label for="status">Trạng thái:</label>
+        <select id="status" name="status">
+          <option value="ACTIVE">ACTIVE</option>
+          <option value="INACTIVE">INACTIVE</option>
+        </select>
+      </div>
 
-          <button type="submit" class="btn-save">Lưu</button>
-      </form>
+      <div class="form-actions">
+        <button type="submit" class="btn-save">Lưu</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=events'">Hủy</button>
+      </div>
+    </form>
   </section>
 
-  <script>
-  document.getElementById('addEventForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const payload = Object.fromEntries(formData.entries());
-
-      try {
-          const res = await fetch(
-              'http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_event',
-              {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(payload)
-              }
-          );
-          const data = await res.json();
-          if (data.success) {
-              alert('Thêm sự kiện thành công!');
-              window.location.href = "index.php?page=events";
-          } else {
-              alert('Thêm sự kiện thất bại: ' + (data.error || 'Lỗi không xác định.'));
-          }
-      } catch (err) {
-          console.error(err);
-          alert('Có lỗi xảy ra khi gửi dữ liệu.');
-      }
-  });
-  </script>
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
 </main>
+
+<script>
+document.getElementById("add-event-form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const band_name = document.getElementById("band_name").value.trim();
+  const venue_id = document.getElementById("venue_id").value.trim();
+  const event_date = document.getElementById("event_date").value.trim();
+  const ticket_price = document.getElementById("ticket_price").value.trim();
+  const status = document.getElementById("status").value;
+
+  if (!band_name || !venue_id || !event_date || !ticket_price) {
+    showToast("Vui lòng nhập đầy đủ thông tin!", "error");
+    return;
+  }
+
+  const data = { band_name, venue_id, event_date, ticket_price, status };
+
+  try {
+    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      showToast("Thêm sự kiện thành công!", "success");
+      setTimeout(() => window.location.href = "index.php?page=events", 1500);
+    } else {
+      showToast(result.message || "Thêm sự kiện thất bại!", "error");
+    }
+  } catch (error) {
+    console.error("Lỗi:", error);
+    showToast("Lỗi khi gửi yêu cầu!", "error");
+  }
+});
+
+function showToast(message, type = "info") {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.className = `toast show ${type}`;
+  setTimeout(() => { toast.className = "toast"; }, 2500);
+}
+</script>

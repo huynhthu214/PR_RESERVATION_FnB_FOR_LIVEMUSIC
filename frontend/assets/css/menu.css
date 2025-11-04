@@ -254,6 +254,17 @@
   -moz-appearance: none;
 }
 
+.add-menu-page .btn-back {
+  background: #2c2c2c;
+  color: #ffb300;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
 .add-menu-page input:focus,
 .add-menu-page textarea:focus,
 .add-menu-page select:focus {

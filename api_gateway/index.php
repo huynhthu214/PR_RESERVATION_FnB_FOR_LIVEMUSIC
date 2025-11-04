@@ -139,16 +139,52 @@ function routeAdminService($action, $base)
             include_once $path_event . "get_events.php";
             break;
 
+        case 'update_event':
+            include_once $path_event . "update_event.php";
+            break;
+
+        case 'get_event_detail':
+            include_once $path_event . "get_event_detail.php";
+            break;
+
         case 'add_event':
             include_once $path_event . "add_event.php";
+            break;
+
+        case 'delete_event':
+            include_once $path_event . "delete_event.php";
             break;
 
         case 'get_venues':
             include_once $path_venue . "get_venues.php";
             break;
 
+        case 'update_venue':
+            include_once $path_venue. "update_venue.php";
+            break;
+
+        case 'delete_venue':
+            include_once $path_venue . "delete_venue.php";
+            break;
+        
+        case 'get_venue_detail':
+            include_once $path_venue . "get_venue_detail.php";
+            break;
+
         case 'get_promotions':
             include_once $path_promo . "get_promotions.php";
+            break;
+
+        case 'update_promo':
+            include_once $path_menu . "update_promo.php";
+            break;
+
+        case 'delete_promo':
+            include_once $path_promo . "delete_promo.php";
+            break;
+
+        case 'get_promo_detail':
+           include_once $path_promo . "get_promo_detail.php";
             break;
             
         case 'export_dashboard':

@@ -3,7 +3,7 @@
 <main class="main-content add-user-page">
   <section class="section-header">
     <h2>Thêm người dùng</h2>
-    <button class="btn-add" onclick="window.location.href='index.php?page=users'">
+    <button class="btn-back" onclick="window.location.href='index.php?page=users'">
         ← Quay lại danh sách
     </button>
   </section>

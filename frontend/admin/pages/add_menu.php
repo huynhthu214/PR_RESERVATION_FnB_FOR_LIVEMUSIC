@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 <main class="main-content add-menu-page">
   <section class="section-header">
     <h2>Thêm món mới</h2>
-    <button class="btn-add" onclick="window.location.href='index.php?page=menu'">
+    <button class="btn-back" onclick="window.location.href='index.php?page=menu'">
         ← Quay lại danh sách
     </button>
   </section>
