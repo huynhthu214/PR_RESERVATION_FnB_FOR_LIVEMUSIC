@@ -133,7 +133,7 @@ function loadPromotions() {
                             </span>
                         </td>
                         <td>
-                            <button class="btn-edit" onclick="editPromotion('${promo.id}')">Sửa</button>
+                            <button class="btn-edit" onclick="editPromo('${promo.id}')">Sửa</button>
                             <button class="btn-delete" onclick="deletePromotion('${promo.id}')">Xóa</button>
                         </td>
                     </tr>
@@ -223,7 +223,7 @@ document.getElementById('editPromoForm').addEventListener('submit', function(e){
 // ---------------- Xóa sự kiện ----------------
 let deletePromoId = null;
 
-function deletePromo(id){
+function deletePromotion(id){
     deletePromoId = id;
     document.getElementById('deleteModal').style.display = 'flex';
 }
@@ -241,8 +241,12 @@ document.getElementById('confirmDelete').addEventListener('click', function(){
     })
     .then(res => res.json())
     .then(result => {
-        showToast(result.success ? "Xóa món thành công!" : "Xóa thất bại!", result.success ? "success" : "error");
-        loadMenuItems();
+        showToast(result.success ? "Xóa mã khuyến mãi thành công!" : "Xóa thất bại!", result.success ? "success" : "error");
+        loadPromotions(); 
+    })
+    .catch(error => {
+        console.error("Lỗi khi xóa:", error);
+        showToast("Không thể kết nối tới server!", "error");
     });
 });
 </script>

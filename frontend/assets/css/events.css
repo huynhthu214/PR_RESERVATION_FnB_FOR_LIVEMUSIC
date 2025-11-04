@@ -104,6 +104,120 @@
 .close:hover {
   color: #ffd54f;
 }
+/* ====================== MODAL CHỈNH SỬA SỰ KIỆN ====================== */
+#editEventModal .modal-content {
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 30px 35px;
+  background: #1e1e1e;
+  border: 1px solid #ffb30040;
+  box-shadow: 0 0 20px rgba(255, 179, 0, 0.25);
+}
+
+/* Thanh cuộn vàng nhẹ */
+#editEventModal .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+#editEventModal .modal-content::-webkit-scrollbar-thumb {
+  background: #ffb30080;
+  border-radius: 8px;
+}
+
+/* Form 2 cột cho desktop */
+#editEventModal form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px 25px;
+}
+
+/* Label và input */
+#editEventModal label {
+  display: block;
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#editEventModal input,
+#editEventModal select,
+#editEventModal textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #121212;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+#editEventModal input:focus,
+#editEventModal select:focus,
+#editEventModal textarea:focus {
+  border-color: #ffb300;
+  outline: none;
+  box-shadow: 0 0 4px #ffb30060;
+}
+
+/* Các phần tử chiếm nguyên hàng */
+#editEventModal textarea,
+#editEventModal .price-input,
+#editEventModal input[type="text"]#editImageUrl,
+#editEventModal button[type="submit"] {
+  grid-column: span 2;
+}
+
+/* Ô giá vé với đơn vị VNĐ */
+#editEventModal .price-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#editEventModal .price-input input {
+  flex: 1;
+}
+
+#editEventModal .currency-label {
+  background: #2a2a2a;
+  color: #ffb300;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Nút lưu */
+#editEventModal button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px;
+  background: linear-gradient(90deg, #ffb300, #ff9500);
+  border: none;
+  color: #000;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#editEventModal button[type="submit"]:hover {
+  background: linear-gradient(90deg, #ffd54f, #ffb300);
+}
+
+/* Responsive - 1 cột khi màn hình nhỏ */
+@media (max-width: 650px) {
+  #editEventModal form {
+    grid-template-columns: 1fr;
+  }
+  #editEventModal textarea,
+  #editEventModal button,
+  #editEventModal .price-input {
+    grid-column: 1;
+  }
+}
+
 
 /* ====================== MODAL XÁC NHẬN XÓA ====================== */
 #deleteModal .modal-content .btn {
@@ -193,7 +307,7 @@
   color: #ffd54f;
 }
 
-/* ====================== FORM THÊM/SỬA MENU ====================== */
+/* ====================== FORM THÊM/SỬA EVENT ====================== */
 .add-event-page .form-section {
   background: #1e1e1e;
   padding: 25px 35px;

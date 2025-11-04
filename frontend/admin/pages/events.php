@@ -68,8 +68,9 @@
       <label for="editDescription">Mô tả:</label>
       <textarea id="editDescription" rows="3"></textarea>
 
-      <label for="editImageUrl">URL hình ảnh:</label>
-      <input type="text" id="editImageUrl">
+        <label for="editImageUrl">URL hình ảnh:</label>
+        <input type="text" id="editImageUrl" placeholder="Chọn hình ảnh..." readonly style="cursor: pointer;">
+        <input type="file" id="editImageFile" accept="image/*" style="display: none;">
 
       <button type="submit">Lưu thay đổi</button>
     </form>
@@ -92,6 +93,21 @@
     document.addEventListener("DOMContentLoaded", function() {
         loadEvents();
     });
+    
+    // Khi nhấn vào ô URL -> mở hộp chọn ảnh
+document.getElementById('editImageUrl').addEventListener('click', function () {
+  document.getElementById('editImageFile').click();
+});
+
+// Khi người dùng chọn ảnh -> hiển thị tên file
+document.getElementById('editImageFile').addEventListener('change', function (event) {
+  const file = event.target.files[0];
+  if (file) {
+    document.getElementById('editImageUrl').value = file.name;
+  } else {
+    document.getElementById('editImageUrl').value = '';
+  }
+});
 // ---------------- Toast ----------------
 function showToast(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toast-container');

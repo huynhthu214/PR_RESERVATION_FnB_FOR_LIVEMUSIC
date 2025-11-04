@@ -11,14 +11,14 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$VENUE_ID = $conn->real_escape_string($_GET['id']);
+$VENUE_ID = $conn_admin->real_escape_string($_GET['id']);
 $sql = "DELETE FROM VENUES WHERE VENUE_ID = '$VENUE_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["success" => true, "message" => "Xóa địa điểm thành công"]);
 } else {
     echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

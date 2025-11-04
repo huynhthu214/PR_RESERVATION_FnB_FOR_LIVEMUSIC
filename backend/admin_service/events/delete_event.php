@@ -11,14 +11,14 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$EVENT_ID = $conn->real_escape_string($_GET['id']);
+$EVENT_ID = $conn_admin->real_escape_string($_GET['id']);
 $sql = "DELETE FROM EVENTS WHERE EVENT_ID = '$EVENT_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["success" => true, "message" => "Xóa sự kiện thành công"]);
 } else {
     echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>
