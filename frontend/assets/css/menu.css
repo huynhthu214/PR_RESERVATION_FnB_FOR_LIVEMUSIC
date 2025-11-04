@@ -4,11 +4,11 @@
 }
 
 .main-content.menu-page .data-table th {
-  color: #ffcc33;
+  color: #fff;
 }
 
 .main-content.menu-page .btn-add {
-  background: linear-gradient(90deg, #ffb300, #ff9500);
+  background: linear-gradient(135deg, #ff7b00, #b30000);
 }
 
 /* ====================== STATUS ====================== */

@@ -100,14 +100,16 @@ switch ($service) {
 function routeAdminService($action, $base)
 {
     if ($action === 'login') {
-    include_once $base . "admin_service/index.php"; 
-    return;
+        include_once $base . "admin_service/index.php"; 
+        return;
     }
+
     $path_menu = $base . "admin_service/menu/";
     $path_dash = $base . "admin_service/dashboard/";
     $path_event = $base . "admin_service/events/";
     $path_venue = $base . "admin_service/venues/";
     $path_promo = $base . "admin_service/promotions/";
+    
     switch ($action) {
         case 'get_menu_items':
             include_once $path_menu . "get_menu.php";
@@ -137,6 +139,10 @@ function routeAdminService($action, $base)
             include_once $path_event . "get_events.php";
             break;
 
+        case 'add_event':
+            include_once $path_event . "add_event.php";
+            break;
+
         case 'get_venues':
             include_once $path_venue . "get_venues.php";
             break;
@@ -148,7 +154,6 @@ function routeAdminService($action, $base)
         case 'export_dashboard':
             include_once $path_dash . "export_dashboard.php";
             break;
-
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);
             break;

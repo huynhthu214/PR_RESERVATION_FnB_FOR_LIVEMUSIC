@@ -11,7 +11,7 @@ $events = $data['data'] ?? [];
 <main class="main-content event-page">
   <section class="section-header">
       <h2>Sự kiện</h2>
-      <button class="btn-add">+ Thêm sự kiện</button>
+      <button class="btn-add" onclick="window.location.href='index.php?page=add_event'"> + Thêm sự kiện
   </section>
 
   <section class="table-section">
@@ -29,7 +29,7 @@ $events = $data['data'] ?? [];
           </thead>
           <tbody>
                 <?php
-                $events = $data['data'] ?? []; // lấy đúng mảng con chứa sự kiện
+                $events = $data['data'] ?? []; 
                 ?>
                 <?php if (!empty($events)): ?>
                 <?php foreach ($events as $ev): ?>
