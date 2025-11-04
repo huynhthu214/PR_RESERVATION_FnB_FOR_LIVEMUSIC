@@ -13,13 +13,13 @@ if (!isset($input["username"], $input["email"], $input["password"])) {
     exit;
 }
 
-$username = $conn->real_escape_string($input["username"]);
-$email = $conn->real_escape_string($input["email"]);
-$password = $conn->real_escape_string($input["password"]);
+$username = $conn_customer->real_escape_string($input["username"]);
+$email = $conn_customer->real_escape_string($input["email"]);
+$password = $conn_customer->real_escape_string($input["password"]);
 
 // Lấy ID lớn nhất hiện có
 $query = "SELECT CUSTOMER_ID FROM CUSTOMER_USERS ORDER BY CUSTOMER_ID DESC LIMIT 1";
-$result = $conn->query($query);
+$result = $conn_customer->query($query);
 
 if ($result && $result->num_rows > 0) {
     $lastID = $result->fetch_assoc()["CUSTOMER_ID"];
@@ -33,11 +33,11 @@ if ($result && $result->num_rows > 0) {
 $sql = "INSERT INTO CUSTOMER_USERS (CUSTOMER_ID, USERNAME, EMAIL, PASSWORD, CREATED_AT)
         VALUES ('$newID', '$username', '$email', '$password', NOW())";
 
-if ($conn->query($sql)) {
+if ($conn_customer->query($sql)) {
     echo json_encode(["success" => true, "message" => "Thêm người dùng thành công", "CUSTOMER_ID" => $newID]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi khi thêm người dùng: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi khi thêm người dùng: " . $conn_customer->error]);
 }
 
-$conn->close();
+$conn_customer->close();
 ?>

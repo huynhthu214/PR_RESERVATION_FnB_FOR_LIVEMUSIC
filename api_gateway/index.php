@@ -194,7 +194,7 @@ function routeCustomerService($action, $base)
 /* -------------------- ORDER SERVICE -------------------- */
 function routeOrderService($action, $base)
 {
-    $path = $base . "order_service/order";
+    $path = $base . "order_service/order/";
     switch ($action) {
         case 'get_order':
             include_once $path . "get_order.php";

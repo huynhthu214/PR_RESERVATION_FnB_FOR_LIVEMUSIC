@@ -11,14 +11,14 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$ITEM_ID = $conn->real_escape_string($_GET['id']);
+$ITEM_ID = $conn_admin->real_escape_string($_GET['id']);
 $sql = "DELETE FROM MENU_ITEMS WHERE ITEM_ID = '$ITEM_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["success" => true, "message" => "Xóa món thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn_admin->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

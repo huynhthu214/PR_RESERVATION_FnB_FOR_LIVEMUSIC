@@ -10,7 +10,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     exit;
 }
 
-$customer_id = $conn->real_escape_string($_GET['id']);
+$customer_id = $conn_customer->real_escape_string($_GET['id']);
 
 // Câu lệnh truy vấn
 $sql = "SELECT CUSTOMER_ID, USERNAME, EMAIL, CREATED_AT 
@@ -18,7 +18,7 @@ $sql = "SELECT CUSTOMER_ID, USERNAME, EMAIL, CREATED_AT
         WHERE CUSTOMER_ID = '$customer_id' 
         LIMIT 1";
 
-$result = $conn->query($sql);
+$result = $conn_customer->query($sql);
 
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -33,5 +33,5 @@ if ($result && $result->num_rows > 0) {
     echo json_encode(["error" => "Không tìm thấy người dùng"]);
 }
 
-$conn->close();
+$conn_customer->close();
 ?>

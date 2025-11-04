@@ -15,7 +15,7 @@ if (empty($data['NAME']) || empty($data['PRICE'])) {
 
 /* ===== TỰ ĐỘNG TẠO ITEM_ID DẠNG M001, M002,... ===== */
 $sql_get_id = "SELECT ITEM_ID FROM MENU_ITEMS ORDER BY ITEM_ID DESC LIMIT 1";
-$result = $conn->query($sql_get_id);
+$result = $conn_admin->query($sql_get_id);
 
 if ($result && $result->num_rows > 0) {
     $last_id = $result->fetch_assoc()['ITEM_ID'];
@@ -27,10 +27,10 @@ if ($result && $result->num_rows > 0) {
 
 /* ===== DỮ LIỆU KHÁC ===== */
 $ADMIN_ID = $data['ADMIN_ID'] ?? "AD001";
-$NAME = $conn->real_escape_string($data['NAME']);
-$DESCRIPTION = $conn->real_escape_string($data['DESCRIPTION'] ?? "");
+$NAME = $conn_admin->real_escape_string($data['NAME']);
+$DESCRIPTION = $conn_admin->real_escape_string($data['DESCRIPTION'] ?? "");
 $PRICE = floatval($data['PRICE']);
-$CATEGORY = $conn->real_escape_string($data['CATEGORY'] ?? "Khác");
+$CATEGORY = $conn_admin->real_escape_string($data['CATEGORY'] ?? "Khác");
 $STOCK_QUANTITY = intval($data['STOCK_QUANTITY'] ?? 0);
 $IS_AVAILABLE = isset($data['IS_AVAILABLE']) ? intval($data['IS_AVAILABLE']) : 1;
 
@@ -38,11 +38,11 @@ $IS_AVAILABLE = isset($data['IS_AVAILABLE']) ? intval($data['IS_AVAILABLE']) : 1
 $sql = "INSERT INTO MENU_ITEMS (ITEM_ID, ADMIN_ID, NAME, DESCRIPTION, PRICE, CATEGORY, STOCK_QUANTITY, IS_AVAILABLE)
         VALUES ('$ITEM_ID', '$ADMIN_ID', '$NAME', '$DESCRIPTION', $PRICE, '$CATEGORY', $STOCK_QUANTITY, $IS_AVAILABLE)";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["message" => "Thêm món thành công", "ITEM_ID" => $ITEM_ID]);
 } else {
-    echo json_encode(["error" => "Lỗi khi thêm món: " . $conn->error]);
+    echo json_encode(["error" => "Lỗi khi thêm món: " . $conn_admin->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 require_once __DIR__ . '/../db.php';
 
 $sql = "SELECT VENUE_ID, NAME, ADDRESS, CAPACITY FROM VENUES ORDER BY NAME ASC";
-$result = $conn->query($sql);
+$result = $conn_admin->query($sql);
 
 $venues = [];
 
@@ -22,4 +22,4 @@ if ($result && $result->num_rows > 0) {
     echo json_encode(["success" => false, "data" => [], "message" => "Không có địa điểm nào."]);
 }
 
-$conn->close();
+$conn_admin->close();

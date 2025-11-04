@@ -27,9 +27,9 @@ if (empty($data['CUSTOMER_ID'])) {
     exit;
 }
 
-$CUSTOMER_ID = $conn->real_escape_string($data['CUSTOMER_ID']);
-$USERNAME = isset($data['USERNAME']) ? $conn->real_escape_string($data['USERNAME']) : null;
-$EMAIL = isset($data['EMAIL']) ? $conn->real_escape_string($data['EMAIL']) : null;
+$CUSTOMER_ID = $conn_customer->real_escape_string($data['CUSTOMER_ID']);
+$USERNAME = isset($data['USERNAME']) ? $conn_customer->real_escape_string($data['USERNAME']) : null;
+$EMAIL = isset($data['EMAIL']) ? $conn_customer->real_escape_string($data['EMAIL']) : null;
 $PASSWORD_RAW = isset($data['PASSWORD']) ? $data['PASSWORD'] : null;
 
 // Build dynamic update query (chỉ cập nhật các trường thực sự có)
@@ -50,11 +50,11 @@ if (count($updates) === 0) {
 $set_clause = implode(', ', $updates);
 $sql = "UPDATE CUSTOMER_USERS SET $set_clause WHERE CUSTOMER_ID = '$CUSTOMER_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_customer->query($sql)) {
     echo json_encode(["success" => true, "message" => "Cập nhật người dùng thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi khi cập nhật: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi khi cập nhật: " . $conn_customer->error]);
 }
 
-$conn->close();
+$conn_customer->close();
 ?>
