@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once __DIR__ . '/../db.php';
 
 $sql = "SELECT CUSTOMER_ID, USERNAME, EMAIL, CREATED_AT FROM CUSTOMER_USERS";
-$result = $conn->query($sql);
+$result = $conn_customer->query($sql);
 
 $Customer = [];
 
@@ -23,5 +23,5 @@ if ($result && $result->num_rows > 0) {
     echo json_encode([]);
 }
 
-$conn->close();
+$conn_customer->close();
 ?>

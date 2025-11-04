@@ -17,9 +17,9 @@ $sql = "SELECT NOTIFICATION_ID, TITLE, MESSAGE, TYPE, LINK, SENT_AT, IS_READ
         WHERE RECEIVER_ID = ? AND RECEIVER_TYPE = ?
         ORDER BY SENT_AT DESC";
 
-$stmt = $conn->prepare($sql);
+$stmt = $conn_noti->prepare($sql);
 if (!$stmt) {
-    echo json_encode(["success" => false, "message" => "Lỗi chuẩn bị SQL: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi chuẩn bị SQL: " . $conn_noti->error]);
     exit;
 }
 
@@ -30,9 +30,9 @@ if ($stmt->execute()) {
     $notifications = $result->fetch_all(MYSQLI_ASSOC);
     echo json_encode(["success" => true, "data" => $notifications]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi truy vấn SQL: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi truy vấn SQL: " . $conn_noti->error]);
 }
 
 $stmt->close();
-$conn->close();
+$conn_noti->close();
 ?>

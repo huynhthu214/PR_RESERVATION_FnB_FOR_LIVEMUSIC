@@ -1,17 +1,191 @@
-/* order.css */
+/* ====================== ORDER PAGE ====================== */
+.main-content.order-page .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
 .main-content.order-page .section-header h2 {
-  color: #ffbf00;
+  color: #ffb300;
+  font-size: 22px;
+  font-weight: 700;
 }
 
-.main-content.order-page .btn-export {
-  background-color: #00e676;
+.main-content.order-page .btn-export,
+.btn-detail {
+  background: linear-gradient(90deg, #ffb300, #ff9500);
+  border: none;
+  color: #000;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.main-content.order-page .btn-export:hover {
+  background: linear-gradient(90deg, #ffd54f, #ffb300);
+}
+
+/* ====================== ORDER LIST ====================== */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-item {
+  background: #1e1e1e;
+  border: 1px solid #ffb30040;
+  border-radius: 12px;
+  padding: 18px 22px;
+  box-shadow: 0 0 10px rgba(255, 179, 0, 0.15);
   color: #fff;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
-.main-content.order-page .status.success {
-  background-color: #4caf50;
+.order-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255, 179, 0, 0.3);
 }
 
-.main-content.order-page .status.pending {
-  background-color: #ffb300;
+.order-item .order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-item .order-header strong {
+  color: #ffcc33;
+  font-size: 16px;
+}
+
+.order-item .order-date {
+  font-size: 13px;
+  color: #bbb;
+}
+
+.order-item .order-body {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.order-item .order-body strong {
+  color: #ffb300;
+}
+
+.order-item .status {
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* ====================== STATUS COLOR ====================== */
+.status-success {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+  border: 1px solid #4caf5060;
+}
+
+.status-warning {
+  background: rgba(255, 179, 0, 0.15);
+  color: #ffb300;
+  border: 1px solid #ffb30060;
+}
+
+.status-danger {
+  background: rgba(255, 87, 34, 0.15);
+  color: #ff5722;
+  border: 1px solid #ff572260;
+}
+
+.status-default {
+  background: rgba(158, 158, 158, 0.15);
+  color: #9e9e9e;
+  border: 1px solid #9e9e9e60;
+}
+
+/* ====================== LOADING TEXT ====================== */
+.loading-text {
+  text-align: center;
+  color: #aaa;
+  margin-top: 40px;
+  font-style: italic;
+}
+
+/* ====================== TOAST ====================== */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  position: relative;
+  background-color: #1a1a1a;
+  color: #ffb300;
+  padding: 14px 22px 14px 18px;
+  border-radius: 10px;
+  min-width: 250px;
+  max-width: 350px;
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(120%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 6px 15px rgba(255, 179, 0, 0.3);
+  border-left: 6px solid #ffb300;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.success {
+  border-left-color: #ffb300;
+  color: #ffb300;
+}
+.toast.error {
+  border-left-color: #ff6b00;
+  color: #ff6b00;
+}
+.toast.info {
+  border-left-color: #ffa726;
+  color: #ffa726;
+}
+
+.toast .close-toast {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #ffb300;
+  font-weight: bold;
+  line-height: 1;
+  transition: 0.2s;
+}
+.toast .close-toast:hover {
+  color: #ffd54f;
+}
+
+/* ====================== ANIMATION ====================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

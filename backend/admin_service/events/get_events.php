@@ -10,7 +10,7 @@ $sql = "SELECT E.EVENT_ID, V.NAME AS VENUE_NAME, E.BAND_NAME, E.EVENT_DATE,
 
 $sql .= " ORDER BY E.EVENT_DATE DESC";
 
-$result = $conn->query($sql);
+$result = $conn_admin->query($sql);
 $events = [];
 
 while ($row = $result->fetch_assoc()) {

@@ -12,12 +12,12 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$CUSTOMER_ID = $conn->real_escape_string($_GET['id']);
+$CUSTOMER_ID = $conn_customer->real_escape_string($_GET['id']);
 
 // Câu lệnh xóa người dùng theo ID
 $sql = "DELETE FROM CUSTOMER_USERS WHERE CUSTOMER_ID = '$CUSTOMER_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_customer->query($sql)) {
     echo json_encode([
         "success" => true,
         "message" => "Xóa người dùng thành công"
@@ -25,9 +25,9 @@ if ($conn->query($sql)) {
 } else {
     echo json_encode([
         "success" => false,
-        "message" => "Lỗi khi xóa người dùng: " . $conn->error
+        "message" => "Lỗi khi xóa người dùng: " . $conn_customer->error
     ]);
 }
 
-$conn->close();
+$conn_customer->close();
 ?>

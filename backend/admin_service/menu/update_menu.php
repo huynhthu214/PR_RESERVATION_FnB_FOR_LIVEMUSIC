@@ -13,11 +13,11 @@ if (!isset($data['ITEM_ID'])) {
     exit;
 }
 
-$ITEM_ID = $conn->real_escape_string($data['ITEM_ID']);
-$NAME = $conn->real_escape_string($data['NAME'] ?? '');
-$DESCRIPTION = $conn->real_escape_string($data['DESCRIPTION'] ?? '');
+$ITEM_ID = $conn_admin->real_escape_string($data['ITEM_ID']);
+$NAME = $conn_admin->real_escape_string($data['NAME'] ?? '');
+$DESCRIPTION = $conn_admin->real_escape_string($data['DESCRIPTION'] ?? '');
 $PRICE = floatval($data['PRICE'] ?? 0);
-$CATEGORY = $conn->real_escape_string($data['CATEGORY'] ?? '');
+$CATEGORY = $conn_admin->real_escape_string($data['CATEGORY'] ?? '');
 $STOCK_QUANTITY = intval($data['STOCK_QUANTITY'] ?? 0);
 $IS_AVAILABLE = intval($data['IS_AVAILABLE'] ?? 1);
 
@@ -26,11 +26,11 @@ $sql = "UPDATE MENU_ITEMS
             STOCK_QUANTITY=$STOCK_QUANTITY, IS_AVAILABLE=$IS_AVAILABLE
         WHERE ITEM_ID='$ITEM_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["success" => true, "message" => "Cập nhật món ăn thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn_admin->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

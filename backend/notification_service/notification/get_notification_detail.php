@@ -15,9 +15,9 @@ $sql = "SELECT NOTIFICATION_ID, SENDER_ID, RECEIVER_ID, RECEIVER_TYPE, TITLE, ME
         FROM NOTIFICATIONS 
         WHERE NOTIFICATION_ID = ?";
 
-$stmt = $conn->prepare($sql);
+$stmt = $conn_noti->prepare($sql);
 if (!$stmt) {
-    echo json_encode(["success" => false, "message" => "Lỗi chuẩn bị SQL: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi chuẩn bị SQL: " . $conn_noti->error]);
     exit;
 }
 
@@ -33,7 +33,7 @@ if (!$notification) {
 
 // Nếu chưa đọc thì tự động đánh dấu là đã đọc
 if (!$notification['IS_READ']) {
-    $update = $conn->prepare("UPDATE NOTIFICATIONS SET IS_READ = TRUE WHERE NOTIFICATION_ID = ?");
+    $update = $conn_noti->prepare("UPDATE NOTIFICATIONS SET IS_READ = TRUE WHERE NOTIFICATION_ID = ?");
     $update->bind_param("s", $notification_id);
     $update->execute();
     $update->close();
@@ -42,5 +42,5 @@ if (!$notification['IS_READ']) {
 echo json_encode(["success" => true, "data" => $notification]);
 
 $stmt->close();
-$conn->close();
+$conn_noti->close();
 ?>

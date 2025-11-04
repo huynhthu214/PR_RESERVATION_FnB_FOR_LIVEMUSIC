@@ -1,12 +1,11 @@
 <?php
-$host = "localhost";
-$user = "root";   // hoặc user MySQL bạn đã tạo
-$pass = "";       // password MySQL
-$db   = "orderdb"; // database của user_service
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "orderdb";
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
+$conn_order = new mysqli($servername, $username, $password, $database);
+if ($conn_order->connect_error) {
+    die("Connection failed (orderdb): " . $conn_order->connect_error);
 }
 ?>

@@ -8,7 +8,7 @@ if (!$id) {
     exit;
 }
 
-$stmt = $conn->prepare("SELECT * FROM MENU_ITEMS WHERE ITEM_ID = ?");
+$stmt = $conn_admin->prepare("SELECT * FROM MENU_ITEMS WHERE ITEM_ID = ?");
 $stmt->bind_param("s", $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -21,5 +21,5 @@ if ($result->num_rows > 0) {
 }
 
 $stmt->close();
-$conn->close();
+$conn_admin->close();
 ?>
