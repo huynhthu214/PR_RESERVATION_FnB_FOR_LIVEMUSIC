@@ -1,11 +1,11 @@
 /* order.css */
 .main-content.order-page .section-header h2 {
-  color: #00e676;
+  color: #ffbf00;
 }
 
 .main-content.order-page .btn-export {
   background-color: #00e676;
-  color: #000;
+  color: #fff;
 }
 
 .main-content.order-page .status.success {

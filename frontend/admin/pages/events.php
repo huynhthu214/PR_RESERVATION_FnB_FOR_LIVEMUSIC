@@ -11,40 +11,7 @@ $events = $data['data'] ?? [];
 <main class="main-content event-page">
   <section class="section-header">
       <h2>Sự kiện</h2>
-      <button class="btn-add">+ Thêm sự kiện</button>
-
-      <!-- Modal thêm sự kiện -->
-        <div id="addEventModal" class="modal hidden">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <h3>Thêm sự kiện mới</h3>
-            <form id="addEventForm">
-            <label>Ban nhạc:</label>
-            <input type="text" name="band_name" required>
-
-            <label>Địa điểm:</label>
-            <input type="number" name="venue_id" required>
-
-            <label>Ngày diễn:</label>
-            <input type="datetime-local" name="event_date" required>
-
-            <label>Giá vé:</label>
-            <input type="number" name="ticket_price" required>
-
-            <label>Trạng thái:</label>
-            <select name="status">
-                <option value="ACTIVE">ACTIVE</option>
-                <option value="INACTIVE">INACTIVE</option>
-            </select>
-
-            <div class="modal-actions">
-                <button type="submit" class="btn-save">Lưu</button>
-                <button type="button" class="btn-cancel">Hủy</button>
-            </div>
-            </form>
-        </div>
-        </div>
-
+      <button class="btn-add" onclick="window.location.href='index.php?page=add_event'"> + Thêm sự kiện
   </section>
 
   <section class="table-section">
@@ -62,7 +29,7 @@ $events = $data['data'] ?? [];
           </thead>
           <tbody>
                 <?php
-                $events = $data['data'] ?? []; // lấy đúng mảng con chứa sự kiện
+                $events = $data['data'] ?? []; 
                 ?>
                 <?php if (!empty($events)): ?>
                 <?php foreach ($events as $ev): ?>
@@ -85,48 +52,4 @@ $events = $data['data'] ?? [];
           </tbody>
       </table>
   </section>
-  <script>
-        document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector('.btn-add').addEventListener('click', () => {
-            document.getElementById('addEventModal').classList.remove('hidden');
-        });
-
-        document.querySelector('.btn-cancel').addEventListener('click', () => {
-            document.getElementById('addEventModal').classList.add('hidden');
-        });
-
-        document.querySelector('.modal-close').addEventListener('click', () => {
-            document.getElementById('addEventModal').classList.add('hidden');
-        });
-        });
-        document.getElementById('addEventForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-        const payload = Object.fromEntries(formData.entries());
-
-        try {
-            const res = await fetch(
-            'http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_event',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }
-            );
-            const data = await res.json();
-
-            if (data.success) {
-            alert('Thêm sự kiện thành công!');
-            location.reload();
-            } else {
-            alert('Thêm sự kiện thất bại: ' + data.error);
-            }
-        } catch (err) {
-            console.error(err);
-            alert('Có lỗi xảy ra khi gửi dữ liệu.');
-        }
-        });
-
-</script>
 </main>

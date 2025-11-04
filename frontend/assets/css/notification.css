@@ -15,7 +15,6 @@
   color: #ffb300;
 }
 
-.btn-refresh,
 .btn-back {
   background: #ffb300;
   border: none;
@@ -27,8 +26,7 @@
   transition: 0.3s;
 }
 
-.btn-refresh:hover,
-.btn-back {
+.btn-back:hover{
   background: #e0a000;
 }
 

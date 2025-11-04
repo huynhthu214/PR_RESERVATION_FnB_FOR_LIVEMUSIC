@@ -1,183 +1,164 @@
-.main-content.event-page .section-header h2 {
-  color: #ffb300;
+/* ========== EVENT PAGE ========== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #c38b59;
+  padding-bottom: 10px;
+}
+
+.main-content.event-page .btn-add {
+  background: linear-gradient(135deg, #ff7b00, #b30000);
+}
+
+.section-header h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffbf00;
+}
+
+.btn-back {
+  background: linear-gradient(135deg, #ff7b00, #b30000);
+  border: none;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255, 90, 0, 0.3);
+}
+
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(255, 60, 0, 0.5);
+}
+
+.btn-back {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* ========== TABLE STYLING ========== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #2c1c15;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 .data-table th {
-  color: #ffca28;
+  background: #7f3e01;
+  color: #fff;
+  padding: 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+}
+
+.data-table td {
+  padding: 14px;
+  color: #fff;
+  border-bottom: 1px solid #3d2b21;
+}
+
+.data-table tr:hover {
+  background: #3d2b21;
+  transition: 0.3s;
 }
 
 .status.active {
-  background-color: #43a047;
+  color: #010b07;
+  font-weight: 600;
 }
-
+.status.inactive,
 .status.soldout {
-  background-color: #e53935;
+  color: #ff4444;
+  font-weight: 600;
 }
 
-/* =============== MODAL TONE NÂU - CAM - VÀNG - ĐỎ =============== */
-
-.hidden {
-  display: none !important;
-}
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(rgba(0, 0, 0, 0.8), rgba(30, 15, 5, 0.95));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  animation: fadeIn 0.4s ease;
-}
-
-/* Khung chính */
-.modal-content {
-  position: relative;
-  background: linear-gradient(145deg, #3b2410, #1f1309);
-  border: 2px solid rgba(217, 119, 6, 0.6);
-  border-radius: 18px;
-  width: 420px;
-  padding: 28px 34px;
-  color: #fcd34d;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6),
-              0 0 25px rgba(255, 180, 50, 0.15);
-  transform: scale(0.95);
-  animation: popUp 0.35s ease forwards;
+/* ========== ADD EVENT PAGE ========== */
+.add-event-page {
+  padding: 40px;
+  background: linear-gradient(135deg, #1a1a1a, #2d1b12);
+  color: #f9f9f9;
+  min-height: 100vh;
   font-family: "Poppins", sans-serif;
 }
 
-/* Tiêu đề */
-.modal-content h3 {
-  text-align: center;
-  font-size: 22px;
-  color: #ffcc00;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
-}
-
-/* Label */
-.modal-content label {
-  display: block;
-  margin-top: 12px;
-  font-size: 14px;
-  color: #f8d77c;
-  font-weight: 600;
-}
-
-/* Input & Select */
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  margin-top: 6px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 193, 7, 0.4);
-  background: #2a1b0c;
-  color: #f9fafb;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-
-.modal-content input:focus,
-.modal-content select:focus {
-  border-color: #ffcc00;
-  box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
-  outline: none;
-}
-
-/* Nút hành động */
-.modal-actions {
+.form-section {
   display: flex;
-  justify-content: space-between;
-  margin-top: 25px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 30px;
 }
 
-.modal-actions button {
-  flex: 1;
-  padding: 10px 14px;
+.event-form {
+  background: #2c1c15;
+  padding: 35px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 550px;
+}
+
+.event-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #ffbf00;
+}
+
+.event-form input,
+.event-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 14px;
+  background: #3d2b21;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
   transition: all 0.3s ease;
-  margin: 0 5px;
 }
 
-/* Nút Lưu */
+.event-form input:focus,
+.event-form select:focus {
+  background: #4a3429;
+  box-shadow: 0 0 0 2px #ff7b00;
+}
+
 .btn-save {
-  background: linear-gradient(145deg, #d97706, #b45309);
+  width: 100%;
+  background: linear-gradient(135deg, #ff7b00, #b30000);
   color: #fff;
-  box-shadow: 0 3px 10px rgba(217, 119, 6, 0.3);
+  border: none;
+  padding: 14px 0;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  box-shadow: 0 6px 12px rgba(255, 90, 0, 0.3);
 }
+
 .btn-save:hover {
-  background: linear-gradient(145deg, #ffcc00, #d97706);
-  color: #2e1b0e;
-  box-shadow: 0 0 12px rgba(255, 204, 0, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(255, 60, 0, 0.5);
 }
 
-/* Nút Hủy */
-.btn-cancel {
-  background: linear-gradient(145deg, #7f1d1d, #991b1b);
-  color: #fff;
-  box-shadow: 0 3px 10px rgba(239, 68, 68, 0.25);
-}
-.btn-cancel:hover {
-  background: linear-gradient(145deg, #dc2626, #ef4444);
-  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
-}
-
-/* =============== HIỆU ỨNG =============== */
-@keyframes fadeIn {
-  from {
-    background-color: rgba(0, 0, 0, 0);
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+  .event-form {
+    padding: 25px 20px;
   }
-  to {
-    background-color: rgba(0, 0, 0, 0.85);
+  .section-header h2 {
+    font-size: 22px;
   }
-}
-
-@keyframes popUp {
-  from {
-    opacity: 0;
-    transform: scale(0.8) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Nút đóng góc trên (tùy chọn) */
-.modal-content::after {
-  content: "✕";
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  color: #ffcc00;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.modal-content::after:hover {
-  color: #ef4444;
-  transform: scale(1.1);
-}
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  color: #ffcc00;
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.modal-close:hover {
-  color: #ef4444;
-  transform: scale(1.15);
 }
