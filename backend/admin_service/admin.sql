@@ -77,5 +77,6 @@ create table PROMOTIONS
    VALID_TO             datetime  comment '',
    IS_ACTIVE            bool  comment '',
    APPLY_TO             text  comment '',
+   DESCRIPTION          text  comment '',
    primary key (PROMO_ID)
 );
