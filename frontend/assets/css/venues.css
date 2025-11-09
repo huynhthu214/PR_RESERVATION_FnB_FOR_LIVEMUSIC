@@ -135,7 +135,7 @@
 /* ====================== TOAST ====================== */
 #toast-container {
   position: fixed;
-  top: 20px;
+  top: 120px;
   right: 20px;
   z-index: 3000;
   display: flex;

@@ -218,7 +218,6 @@
   }
 }
 
-
 /* ====================== MODAL XÁC NHẬN XÓA ====================== */
 #deleteModal .modal-content .btn {
   padding: 8px 16px;
@@ -249,7 +248,7 @@
 /* ====================== TOAST ====================== */
 #toast-container {
   position: fixed;
-  top: 20px;
+  top: 120px;
   right: 20px;
   z-index: 3000;
   display: flex;
