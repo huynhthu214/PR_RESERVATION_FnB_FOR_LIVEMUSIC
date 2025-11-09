@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once __DIR__ . '/../db.php';
 
 $sql = "SELECT ITEM_ID, NAME, CATEGORY, DESCRIPTION, PRICE, IS_AVAILABLE FROM MENU_ITEMS";
-$result = $conn->query($sql);
+$result = $conn_admin->query($sql);
 
 $menuItems = [];
 
@@ -25,5 +25,5 @@ if ($result && $result->num_rows > 0) {
     echo json_encode([]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

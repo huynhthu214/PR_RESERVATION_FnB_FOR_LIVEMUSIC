@@ -6,7 +6,7 @@ $sql = "SELECT PROMO_ID, CODE, DISCOUNT_PERCENT, DESCRIPTION, VALID_FROM, VALID_
         FROM PROMOTIONS
         ORDER BY VALID_FROM DESC";
 
-$result = $conn->query($sql);
+$result = $conn_admin->query($sql);
 
 $promotions = [];
 
@@ -33,4 +33,4 @@ if ($result && $result->num_rows > 0) {
     echo json_encode(["success" => false, "data" => [], "message" => "Không có khuyến mãi nào."]);
 }
 
-$conn->close();
+$conn_admin->close();
