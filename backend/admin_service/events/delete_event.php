@@ -17,7 +17,7 @@ $sql = "DELETE FROM EVENTS WHERE EVENT_ID = '$EVENT_ID'";
 if ($conn->query($sql)) {
     echo json_encode(["success" => true, "message" => "Xóa sự kiện thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn_admin->error]);
 }
 
 $conn->close();

@@ -39,11 +39,11 @@ if (isset($_FILES['seat_layout']) && $_FILES['seat_layout']['error'] == 0) {
             WHERE VENUE_ID='$VENUE_ID'";
 }
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["success" => true, "message" => "Cập nhật địa điểm thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn_admin->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

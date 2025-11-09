@@ -17,7 +17,7 @@ $sql = "DELETE FROM VENUES WHERE VENUE_ID = '$VENUE_ID'";
 if ($conn->query($sql)) {
     echo json_encode(["success" => true, "message" => "Xóa địa điểm thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn_admin->error]);
 }
 
 $conn->close();

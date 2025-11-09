@@ -110,17 +110,22 @@ $conn_customer->close();
 
 echo json_encode([
     "success" => true,
-    "order" => [
-        "order_id"       => $order['ORDER_ID'],
-        "customer_id"    => $order['CUSTOMER_ID'],
-        "customer_name"  => $customer_name,
-        "reservation_id" => $order['RESERVATION_ID'],
-        "promo_id"       => $order['PROMO_ID'],
-        "order_time"     => $order['ORDER_TIME'],
-        "total_amount"   => $order['TOTAL_AMOUNT'],
-        "status"         => $order['STATUS'],
-        "delivery_notes" => $order['DELIVERY_NOTES']
-    ],
-    "items" => $items
+    "data" => [
+        "ORDER_ID"      => $order['ORDER_ID'],
+        "CUSTOMER_NAME" => $customer_name,
+        "EMAIL"         => "", // hoặc lấy thêm từ CUSTOMER_USERS nếu có
+        "ORDER_DATE"    => $order['ORDER_TIME'],
+        "STATUS"        => strtolower($order['STATUS']),
+        "TOTAL_AMOUNT"  => $order['TOTAL_AMOUNT'],
+        "ITEMS"         => array_map(function($i) {
+            return [
+                "PRODUCT_NAME" => $i['item_name'],
+                "QUANTITY"     => $i['quantity'],
+                "UNIT_PRICE"   => $i['unit_price'],
+                "SUBTOTAL"     => $i['quantity'] * $i['unit_price']
+            ];
+        }, $items)
+    ]
 ]);
+
 ?>

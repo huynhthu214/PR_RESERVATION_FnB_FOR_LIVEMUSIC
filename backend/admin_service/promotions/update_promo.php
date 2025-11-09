@@ -13,8 +13,8 @@ if (!isset($data['PROMO_ID'])) {
     exit;
 }
 
-$PROMO_ID = $conn->real_escape_string($data['PROMO_ID']);
-$CODE = $conn->real_escape_string($data['CODE'] ?? '');
+$PROMO_ID = $conn_admin->real_escape_string($data['PROMO_ID']);
+$CODE = $conn_admin->real_escape_string($data['CODE'] ?? '');
 $DISCOUNT_PERCENT = floatval($data['DISCOUNT_PERCENT'] ?? 0);
 $DESCRIPTION = $conn->real_escape_string($data['DESCRIPTION']);
 $VALID_FROM = $conn->real_escape_string($data['VALID_FROM'] ?? null);
@@ -27,11 +27,11 @@ $sql = "UPDATE PROMOTIONS
             VALID_FROM='$VALID_FROM', VALID_TO='$VALID_TO', IS_ACTIVE=$IS_ACTIVE, APPLY_TO = '$APPLY_TO'
         WHERE PROMO_ID='$PROMO_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["success" => true, "message" => "Cập nhật khuyến mãi thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn_admin->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>
