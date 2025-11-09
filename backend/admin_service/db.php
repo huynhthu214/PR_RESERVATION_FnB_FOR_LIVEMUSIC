@@ -4,9 +4,9 @@ $user = "root";
 $pass = "";     
 $db   = "admindb";
 
-$conn = new mysqli($host, $user, $pass, $db);
+$conn_admin = new mysqli($host, $user, $pass, $db);
 
-if ($conn->connect_error) {
+if ($conn_admin->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
 ?>

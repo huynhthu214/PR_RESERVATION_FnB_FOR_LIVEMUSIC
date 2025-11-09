@@ -13,9 +13,9 @@ if (!isset($data['VENUE_ID'])) {
     exit;
 }
 
-$VENUE_ID = $conn->real_escape_string($data['VENUE_ID']);
-$NAME = $conn->real_escape_string($data['NAME'] ?? '');
-$ADDRESS = $conn->real_escape_string($data['ADDRESS'] ?? '');
+$VENUE_ID = $conn_admin->real_escape_string($data['VENUE_ID']);
+$NAME = $conn_admin->real_escape_string($data['NAME'] ?? '');
+$ADDRESS = $conn_admin->real_escape_string($data['ADDRESS'] ?? '');
 $CAPACITY = intval($data['CAPACITY'] ?? 0);
 $STATUS = intval($data['STATUS'] ?? 1);
 
@@ -23,11 +23,11 @@ $sql = "UPDATE VENUES
         SET NAME='$NAME', ADDRESS='$ADDRESS', CAPACITY=$CAPACITY, STATUS=$STATUS
         WHERE VENUE_ID='$VENUE_ID'";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     echo json_encode(["success" => true, "message" => "Cập nhật địa điểm thành công"]);
 } else {
-    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
+    echo json_encode(["success" => false, "message" => "Lỗi: " . $conn_admin->error]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>
