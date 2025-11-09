@@ -104,7 +104,7 @@
 .close:hover {
   color: #ffd54f;
 }
-/* ====================== MODAL CHỈNH SỬA SỰ KIỆN ====================== */
+/* Modal content */
 #editEventModal .modal-content {
   width: 90%;
   max-width: 800px;
@@ -116,7 +116,7 @@
   box-shadow: 0 0 20px rgba(255, 179, 0, 0.25);
 }
 
-/* Thanh cuộn vàng nhẹ */
+/* Scrollbar */
 #editEventModal .modal-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -125,14 +125,13 @@
   border-radius: 8px;
 }
 
-/* Form 2 cột cho desktop */
+/* Form grid */
 #editEventModal form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px 25px;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
 }
 
-/* Label và input */
+/* Labels */
 #editEventModal label {
   display: block;
   color: #ccc;
@@ -140,6 +139,7 @@
   font-weight: 500;
 }
 
+/* Inputs, select, textarea */
 #editEventModal input,
 #editEventModal select,
 #editEventModal textarea {
@@ -153,7 +153,6 @@
   font-size: 14px;
   transition: 0.2s;
 }
-
 #editEventModal input:focus,
 #editEventModal select:focus,
 #editEventModal textarea:focus {
@@ -162,15 +161,16 @@
   box-shadow: 0 0 4px #ffb30060;
 }
 
-/* Các phần tử chiếm nguyên hàng */
+/* Elements spanning 2 columns */
 #editEventModal textarea,
 #editEventModal .price-input,
-#editEventModal input[type="text"]#editImageUrl,
+#editEventModal .file-input,
 #editEventModal button[type="submit"] {
   grid-column: span 2;
 }
 
-/* Ô giá vé với đơn vị VNĐ */
+/* Price input */
+/* Giá vé ngang hàng với label, không box riêng cho VNĐ */
 #editEventModal .price-input {
   display: flex;
   align-items: center;
@@ -179,18 +179,44 @@
 
 #editEventModal .price-input input {
   flex: 1;
-}
-
-#editEventModal .currency-label {
-  background: #2a2a2a;
-  color: #ffb300;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
+  border: 1px solid #444;
+  background: #121212;
+  color: #fff;
+  font-size: 14px;
 }
 
-/* Nút lưu */
+#editEventModal .price-input .currency-label {
+  font-size: 14px;
+  color: #ccc;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* File input with browse button */
+#editEventModal .file-input {
+  display: flex;
+  gap: 8px;
+}
+#editEventModal .file-input input[type="text"] {
+  flex: 1;
+  cursor: pointer;
+}
+#editEventModal .file-input .btn-browse {
+  padding: 8px 14px;
+  background: #ffb300;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+#editEventModal .file-input .btn-browse:hover {
+  background: #ffd54f;
+}
+
+/* Submit button */
 #editEventModal button[type="submit"] {
   margin-top: 10px;
   padding: 10px;
@@ -206,18 +232,18 @@
   background: linear-gradient(90deg, #ffd54f, #ffb300);
 }
 
-/* Responsive - 1 cột khi màn hình nhỏ */
+/* Responsive */
 @media (max-width: 650px) {
   #editEventModal form {
     grid-template-columns: 1fr;
   }
   #editEventModal textarea,
-  #editEventModal button,
-  #editEventModal .price-input {
+  #editEventModal .price-input,
+  #editEventModal .file-input,
+  #editEventModal button {
     grid-column: 1;
   }
 }
-
 
 /* ====================== MODAL XÁC NHẬN XÓA ====================== */
 #deleteModal .modal-content .btn {
@@ -474,3 +500,32 @@
     transform: scale(1);
   }
 }
+/* ====================== INPUT ADD EVENT ====================== */
+/* ---- Sửa lỗi màu nền và icon cho input date/time ---- */
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"] {
+  background-color: #fff;   /* nền trắng */
+  color: #000;              /* chữ đen cho rõ */
+  border-radius: 6px;
+  padding: 8px;
+  width: 100%;
+  font-size: 14px;
+}
+
+/* ---- Đổi màu icon lịch/đồng hồ thành sáng rõ ---- */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* đảo màu icon để hiện trắng nếu nền tối */
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* ---- Hover icon rõ hơn ---- */
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+

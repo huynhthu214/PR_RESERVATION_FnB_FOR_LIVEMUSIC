@@ -372,3 +372,14 @@
     transform: scale(1);
   }
 }
+
+.data-table td.promo-description {
+  text-align: left;
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* đảo màu icon để hiện trắng nếu nền tối */
+  opacity: 0.8;
+  cursor: pointer;
+}

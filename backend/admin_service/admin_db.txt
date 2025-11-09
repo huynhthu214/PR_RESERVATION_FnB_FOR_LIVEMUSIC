@@ -11,16 +11,17 @@ INSERT INTO ADMIN_USERS VALUES
 ('AD010', 'senior_mgr', 'senior@livemusic.vn', '123456', 'Manager', NOW());
 
 INSERT INTO VENUES VALUES
-('V001', 'AD001', 'Chill Sky Lounge', '26 Nguyễn Huệ, Q.1, TP.HCM', 120, 'LayoutA'),
-('V002', 'AD002', 'Acoustic Vibes', '85 Trần Hưng Đạo, Q.5, TP.HCM', 80, 'LayoutB'),
-('V003', 'AD003', 'Sunset Sound Bar', '45 Võ Văn Tần, Q.3, TP.HCM', 100, 'LayoutC'),
-('V004', 'AD001', 'The Rooftop Bar', '100 Tôn Đức Thắng, Q.1, TP.HCM', 150, 'LayoutA'),
-('V005', 'AD002', 'Indika Saigon', '43 Nguyễn Văn Giai, Q.1, TP.HCM', 90, 'LayoutB'),
-('V006', 'AD004', 'Lush Bar', '2 Lý Tự Trọng, Q.1, TP.HCM', 200, 'LayoutC'),
-('V007', 'AD005', 'Carmen Bar', '8 Lý Tự Trọng, Q.1, TP.HCM', 70, 'LayoutA'),
-('V008', 'AD001', 'Yoko Cafe', '22 Nguyễn Thị Diệu, Q.3, TP.HCM', 60, 'LayoutB'),
-('V009', 'AD003', 'Saigon Opera House', '7 Công Trường Lam Sơn, Q.1, TP.HCM', 500, 'LayoutC'),
-('V010', 'AD002', 'Envy Club', '74 Nam Kỳ Khởi Nghĩa, Q.1, TP.HCM', 300, 'LayoutA');
+('V001', 'AD001', 'Chill Sky Lounge', '26 Nguyễn Huệ, Q.1, TP.HCM', 120, 'seat_layouts/chill_sky.json'),
+('V002', 'AD002', 'Acoustic Vibes', '85 Trần Hưng Đạo, Q.5, TP.HCM', 80, 'seat_layouts/acoustic_vibes.json'),
+('V003', 'AD003', 'Sunset Sound Bar', '45 Võ Văn Tần, Q.3, TP.HCM', 100, 'seat_layouts/sunset_sound_bar.json'),
+('V004', 'AD001', 'The Rooftop Bar', '100 Tôn Đức Thắng, Q.1, TP.HCM', 150, 'seat_layouts/rooftop_bar.json'),
+('V005', 'AD002', 'Indika Saigon', '43 Nguyễn Văn Giai, Q.1, TP.HCM', 90, 'seat_layouts/indika_saigon.json'),
+('V006', 'AD004', 'Lush Bar', '2 Lý Tự Trọng, Q.1, TP.HCM', 200, 'seat_layouts/lush_bar.json'),
+('V007', 'AD005', 'Carmen Bar', '8 Lý Tự Trọng, Q.1, TP.HCM', 70, 'seat_layouts/carmen_bar.json'),
+('V008', 'AD001', 'Yoko Cafe', '22 Nguyễn Thị Diệu, Q.3, TP.HCM', 60, 'seat_layouts/yoko_cafe.json'),
+('V009', 'AD003', 'Saigon Opera House', '7 Công Trường Lam Sơn, Q.1, TP.HCM', 500, 'seat_layouts/opera_house.json'),
+('V010', 'AD002', 'Envy Club', '74 Nam Kỳ Khởi Nghĩa, Q.1, TP.HCM', 300, 'seat_layouts/envy_club.json');
+
 
 INSERT INTO EVENTS VALUES
 ('E001', 'AD001', 'V001', 'The Chill Band', '2025-11-01 20:00:00', '2025-11-01 20:00:00', 350000, 'ACTIVE', 'Đêm acoustic thư giãn cuối tuần.', '2025-11-01 23:00:00', 'chillband.jpg'),

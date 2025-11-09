@@ -158,6 +158,10 @@ function routeAdminService($action, $base)
         case 'get_venues':
             include_once $path_venue . "get_venues.php";
             break;
+    
+        case 'add_venue':
+            include_once $path_venue . "add_venue.php";
+            break;
 
         case 'update_venue':
             include_once $path_venue. "update_venue.php";
@@ -175,8 +179,12 @@ function routeAdminService($action, $base)
             include_once $path_promo . "get_promotions.php";
             break;
 
+        case 'add_promo':
+            include_once $path_promo . "add_promo.php";
+            break;
+            
         case 'update_promo':
-            include_once $path_menu . "update_promo.php";
+            include_once $path_promo . "update_promo.php";
             break;
 
         case 'delete_promo':

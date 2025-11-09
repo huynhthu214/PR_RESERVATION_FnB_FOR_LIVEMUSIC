@@ -11,10 +11,9 @@
   <section class="form-section">
     <form id="add-promotion-form" class="promotion-form">
       <div class="form-group">
-        <label for="promo_code">Mã khuyến mãi:</label>
-        <input type="text" id="promo_code" name="promo_code" placeholder="VD: SALE20" required>
-      </div>
-
+      <label for="promo_code">Mã khuyến mãi:</label>
+      <input type="text" id="promo_code" name="promo_code" placeholder="VD: CHILL20" required>
+    </div>
       <div class="form-group">
         <label for="description">Mô tả:</label>
         <input type="text" id="description" name="description" placeholder="Nhập mô tả khuyến mãi..." required>
@@ -73,7 +72,7 @@ document.getElementById("add-promotion-form").addEventListener("submit", async f
   const data = { promo_code, description, discount_percent, start_date, end_date, status };
 
   try {
-    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_promotion', {
+    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_promo', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -83,7 +82,7 @@ document.getElementById("add-promotion-form").addEventListener("submit", async f
 
     if (result.success) {
       showToast("Thêm khuyến mãi thành công!", "success");
-      setTimeout(() => window.location.href = "index.php?page=promotions", 1500);
+      setTimeout(() => window.location.href = "index.php?page=promotion", 1500);
     } else {
       showToast(result.message || "Thêm khuyến mãi thất bại!", "error");
     }

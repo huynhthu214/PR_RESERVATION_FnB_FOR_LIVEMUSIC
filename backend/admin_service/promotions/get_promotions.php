@@ -2,11 +2,11 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../db.php';
 
-$sql = "SELECT PROMO_ID, CODE, DISCOUNT_PERCENT, VALID_FROM, VALID_TO, IS_ACTIVE 
+$sql = "SELECT PROMO_ID, CODE, DISCOUNT_PERCENT, DESCRIPTION, VALID_FROM, VALID_TO, IS_ACTIVE, APPLY_TO 
         FROM PROMOTIONS
         ORDER BY VALID_FROM DESC";
 
-$result = $conn_admin->query($sql);
+$result = $conn->query($sql);
 
 $promotions = [];
 
@@ -15,16 +15,16 @@ if ($result && $result->num_rows > 0) {
         $now = new DateTime();
         $validTo = new DateTime($row['VALID_TO']);
         $statusText = ($row['IS_ACTIVE'] && $validTo >= $now) ? 'Còn hạn' : 'Hết hạn';
-        $statusClass = ($statusText === 'Còn hạn') ? 'active' : 'inactive';
 
         $promotions[] = [
             "id" => $row['PROMO_ID'],
             "code" => $row['CODE'],
             "discount" => $row['DISCOUNT_PERCENT'],
+            "description" => $row['DESCRIPTION'],
             "start_date" => $row['VALID_FROM'],
             "end_date" => $row['VALID_TO'],
             "status" => $statusText,
-            "status_class" => $statusClass
+            "apply_to" => $row['APPLY_TO']
         ];
     }
 
@@ -33,4 +33,4 @@ if ($result && $result->num_rows > 0) {
     echo json_encode(["success" => false, "data" => [], "message" => "Không có khuyến mãi nào."]);
 }
 
-$conn_admin->close();
+$conn->close();

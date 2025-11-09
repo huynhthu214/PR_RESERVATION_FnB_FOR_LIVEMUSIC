@@ -361,3 +361,81 @@
     transform: scale(1);
   }
 }
+/* Link sơ đồ chỗ ngồi trong bảng */
+.data-table td a.seat-link {
+    text-decoration: none; /* bỏ gạch chân */
+    color: #1E90FF;        /* đổi màu chữ (ví dụ xanh dương) */
+    font-weight: bold;     /* nếu muốn chữ đậm */
+}
+
+.data-table td a.seat-link:hover {
+    color: #dad0cc;        /* màu khi hover (tùy chỉnh) */
+}
+
+.file-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 400px; /* chỉnh độ rộng form */
+}
+
+#seat_layout_text {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+#seat_layout_btn {
+  padding: 6px 12px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#seat_layout_btn:hover {
+  background-color: #333;
+}
+.custom-file-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.seat-layout-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#seatLayoutDisplay {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px; 
+  color: #fff;
+}
+
+#seatLayoutDisplay.link-mode {
+  color: #fff;
+  text-decoration: none ;
+  cursor: pointer;
+}
+
+.btn-upload {
+  background-color: #333;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
