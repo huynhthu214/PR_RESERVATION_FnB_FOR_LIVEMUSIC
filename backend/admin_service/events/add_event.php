@@ -20,7 +20,7 @@ if (empty($data['band_name']) || empty($data['venue_name']) || empty($data['even
 
 /* Tạo EVENT_ID tự động sinh.                   */
 $sql_get_id = "SELECT EVENT_ID FROM EVENTS ORDER BY EVENT_ID DESC LIMIT 1";
-$result = $conn->query($sql_get_id);
+$result = $conn_admin->query($sql_get_id);
 
 if ($result && $result->num_rows > 0) {
     $last_id = $result->fetch_assoc()['EVENT_ID'];
@@ -33,14 +33,14 @@ if ($result && $result->num_rows > 0) {
 if (!isset($_SESSION['ADMIN_ID'])) { 
     http_response_code(401); 
     echo json_encode(["success" => false, "message" => "Chưa đăng nhập. Vui lòng đăng nhập."]);
-    $conn->close();
+    $conn_admin->close();
     exit;
 }
 $ADMIN_ID = $_SESSION['ADMIN_ID']; 
 
-$BAND_NAME = $conn->real_escape_string($data['band_name']);
-$VENUE_NAME = $conn->real_escape_string($data['venue_name']);
-$STATUS = $conn->real_escape_string($data['status']);
+$BAND_NAME = $conn_admin->real_escape_string($data['band_name']);
+$VENUE_NAME = $conn_admin->real_escape_string($data['venue_name']);
+$STATUS = $conn_admin->real_escape_string($data['status']);
 $TICKET_PRICE = floatval($data['ticket_price']);
 
 try {
@@ -56,7 +56,7 @@ try {
 } catch (Exception $e) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Định dạng ngày giờ không hợp lệ."]);
-    $conn->close();
+    $conn_admin->close();
     exit;
 }
 
@@ -65,14 +65,14 @@ $IMAGE_URL = "NULL";
 
 // Tra cứu VENUE_ID từ VENUE_NAME
 $sql_venue = "SELECT VENUE_ID FROM VENUES WHERE NAME = '{$VENUE_NAME}' LIMIT 1";
-$result_venue = $conn->query($sql_venue);
+$result_venue = $conn_admin->query($sql_venue);
 
 if ($result_venue && $result_venue->num_rows > 0) {
     $VENUE_ID = $result_venue->fetch_assoc()['VENUE_ID'];
 } else {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Địa điểm không tồn tại."]);
-    $conn->close();
+    $conn_admin->close();
     exit;
 }
 
@@ -81,18 +81,18 @@ $sql = "INSERT INTO EVENTS
         VALUES 
             ('$EVENT_ID', '$ADMIN_ID', '$VENUE_ID', '$BAND_NAME', '$EVENT_DATE_sql', '$START_TIME_sql', $TICKET_PRICE, '$STATUS', $DESCRIPTION, '$END_TIME_sql', $IMAGE_URL)";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     http_response_code(201); 
     echo json_encode(["success" => true, "message" => "Thêm sự kiện thành công", "EVENT_ID" => $EVENT_ID]);
 } else {
     http_response_code(500); 
     
-    if (str_contains($conn->error, 'foreign key constraint')) {
+    if (str_contains($conn_admin->error, 'foreign key constraint')) {
          echo json_encode(["success" => false, "message" => "Lỗi: ID Địa điểm (Venue ID) không tồn tại hoặc không hợp lệ."]);
     } else {
-         echo json_encode(["success" => false, "message" => "Lỗi khi thêm sự kiện: " . $conn->error]);
+         echo json_encode(["success" => false, "message" => "Lỗi khi thêm sự kiện: " . $conn_admin->error]);
     }
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

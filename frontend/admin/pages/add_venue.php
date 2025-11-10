@@ -42,7 +42,7 @@
   </section>
 
   <!-- Toast -->
-  <div id="toast" class="toast"></div>
+  <div id="toast-container"></div>
 </main>
 
 <script>
@@ -88,10 +88,30 @@ document.getElementById("add-venue-form").addEventListener("submit", async funct
   }
 });
 
-function showToast(message, type = "info") {
-  const toast = document.getElementById("toast");
+function showToast(message, type = 'info', duration = 3000) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
   toast.textContent = message;
-  toast.className = `toast show ${type}`;
-  setTimeout(() => { toast.className = "toast"; }, 2500);
+
+  const closeBtn = document.createElement('span');
+  closeBtn.className = 'close-toast';
+  closeBtn.innerHTML = '&times;';
+  closeBtn.onclick = () => {
+    toast.classList.remove('show');
+    setTimeout(() => container.removeChild(toast), 300);
+  };
+  toast.appendChild(closeBtn);
+  container.appendChild(toast);
+
+  // Hiệu ứng hiển thị
+  setTimeout(() => toast.classList.add('show'), 50);
+  // Tự động ẩn sau duration ms
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      if (container.contains(toast)) container.removeChild(toast);
+    }, 300);
+  }, duration);
 }
 </script>

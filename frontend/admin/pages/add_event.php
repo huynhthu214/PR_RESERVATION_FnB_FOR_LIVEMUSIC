@@ -46,7 +46,7 @@
   </section>
 
   <!-- Toast -->
-  <div id="toast" class="toast"></div>
+  <div id="toast-container"></div>
 </main>
 
 <script>
@@ -88,9 +88,27 @@ document.getElementById("add-event-form").addEventListener("submit", async funct
 });
 
 function showToast(message, type = "info") {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
+  const container = document.getElementById("toast-container");
+  const toast = document.createElement("div");
   toast.className = `toast show ${type}`;
-  setTimeout(() => { toast.className = "toast"; }, 2500);
+  toast.innerHTML = `
+    <span>${message}</span>
+    <span class="close-toast">&times;</span>
+  `;
+
+  container.appendChild(toast);
+
+  // Cho phép đóng thủ công
+  toast.querySelector(".close-toast").addEventListener("click", () => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  });
+
+  // Tự động biến mất sau 3 giây
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
 }
+
 </script>

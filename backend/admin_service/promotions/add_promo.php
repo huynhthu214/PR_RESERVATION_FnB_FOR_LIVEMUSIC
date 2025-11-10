@@ -34,7 +34,7 @@ if (!isset($_SESSION['ADMIN_ID'])) {
         "success" => false,
         "message" => "Chưa đăng nhập. Vui lòng đăng nhập."
     ]);
-    $conn->close();
+    $conn_admin->close();
     exit;
 }
 
@@ -42,7 +42,7 @@ $ADMIN_ID = $_SESSION['ADMIN_ID'];
 
 // Tạo PROMO_ID tự động
 $sql_get_id = "SELECT PROMO_ID FROM PROMOTIONS ORDER BY PROMO_ID DESC LIMIT 1";
-$result = $conn->query($sql_get_id);
+$result = $conn_admin->query($sql_get_id);
 if ($result && $result->num_rows > 0) {
     $last_id = $result->fetch_assoc()['PROMO_ID'];
     $num = intval(substr($last_id, 1)) + 1;
@@ -52,13 +52,13 @@ if ($result && $result->num_rows > 0) {
 }
 
 // Gán dữ liệu
-$CODE = $conn->real_escape_string($data['promo_code']);
-$DESCRIPTION = $conn->real_escape_string($data['description']);
+$CODE = $conn_admin->real_escape_string($data['promo_code']);
+$DESCRIPTION = $conn_admin->real_escape_string($data['description']);
 $DISCOUNT_PERCENT = floatval($data['discount_percent']);
-$VALID_FROM = $conn->real_escape_string($data['start_date']);
-$VALID_TO = $conn->real_escape_string($data['end_date']);
+$VALID_FROM = $conn_admin->real_escape_string($data['start_date']);
+$VALID_TO = $conn_admin->real_escape_string($data['end_date']);
 $IS_ACTIVE = ($data['status'] === "ACTIVE") ? 1 : 0;
-$APPLY_TO = $conn->real_escape_string($data['apply_to']);
+$APPLY_TO = $conn_admin->real_escape_string($data['apply_to']);
 
 // Tuỳ chọn nếu muốn khuyến mãi gắn cho sự kiện cụ thể
 $EVENT_ID = $data['event_id'] ?? null;
@@ -70,7 +70,7 @@ $sql = "INSERT INTO PROMOTIONS
 VALUES 
 (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$stmt = $conn->prepare($sql);
+$stmt = $conn_admin->prepare($sql);
 $stmt->bind_param(
     "ssssdssiss",
     $PROMO_ID,
@@ -101,5 +101,5 @@ if ($stmt->execute()) {
 }
 
 $stmt->close();
-$conn->close();
+$conn_admin->close();
 ?>

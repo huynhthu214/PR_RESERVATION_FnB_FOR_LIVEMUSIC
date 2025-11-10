@@ -12,7 +12,7 @@ switch ($action) {
         $email = $input['email'] ?? '';
         $password = $input['password'] ?? '';
 
-        $stmt = $conn->prepare("SELECT ADMIN_ID, USERNAME, PASSWORD FROM ADMIN_USERS WHERE EMAIL = ?");
+        $stmt = $conn_admin->prepare("SELECT ADMIN_ID, USERNAME, PASSWORD FROM ADMIN_USERS WHERE EMAIL = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -30,4 +30,4 @@ switch ($action) {
         $stmt->close();
         break;
     }
-$conn->close();
+$conn_admin->close();

@@ -40,7 +40,7 @@ $ADMIN_ID = $_SESSION['ADMIN_ID'];
 
 /* Tạo VENUE_ID tự động */
 $sql_get_id = "SELECT VENUE_ID FROM VENUES ORDER BY VENUE_ID DESC LIMIT 1";
-$result = $conn->query($sql_get_id);
+$result = $conn_admin->query($sql_get_id);
 if ($result && $result->num_rows > 0) {
     $last_id = $result->fetch_assoc()['VENUE_ID'];
     $num = intval(substr($last_id, 1)) + 1;
@@ -50,8 +50,8 @@ if ($result && $result->num_rows > 0) {
 }
 
 /* Xử lý dữ liệu */
-$VENUE_NAME = $conn->real_escape_string($data['venue_name']);
-$ADDRESS = $conn->real_escape_string($data['address']);
+$VENUE_NAME = $conn_admin->real_escape_string($data['venue_name']);
+$ADDRESS = $conn_admin->real_escape_string($data['address']);
 $CAPACITY = intval($data['capacity']);
 $SEAT_LAYOUT = "NULL";
 
@@ -79,7 +79,7 @@ if (isset($_FILES['seat_layout']) && !empty($_FILES['seat_layout']['name'])) {
 $sql = "INSERT INTO VENUES (VENUE_ID, ADMIN_ID, NAME, ADDRESS, CAPACITY, SEAT_LAYOUT)
         VALUES ('$VENUE_ID', '$ADMIN_ID', '$VENUE_NAME', '$ADDRESS', $CAPACITY, " . ($SEAT_LAYOUT === 'NULL' ? "NULL" : "'$SEAT_LAYOUT'") . ")";
 
-if ($conn->query($sql)) {
+if ($conn_admin->query($sql)) {
     http_response_code(201);
     echo json_encode([
         "success" => true,
@@ -90,9 +90,9 @@ if ($conn->query($sql)) {
     http_response_code(500);
     echo json_encode([
         "success" => false,
-        "message" => "Lỗi khi thêm địa điểm: " . $conn->error
+        "message" => "Lỗi khi thêm địa điểm: " . $conn_admin->error
     ]);
 }
 
-$conn->close();
+$conn_admin->close();
 ?>

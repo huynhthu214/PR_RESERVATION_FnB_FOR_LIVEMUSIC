@@ -25,7 +25,7 @@ if (isset($_FILES['seat_layout']) && $_FILES['seat_layout']['error'] == 0) {
     $targetFile = $uploadDir . $fileName;
 
     if (move_uploaded_file($_FILES['seat_layout']['tmp_name'], $targetFile)) {
-        $SEAT_LAYOUT = $conn->real_escape_string('uploads/seat_layouts/' . $fileName);
+        $SEAT_LAYOUT = $conn_admin->real_escape_string('uploads/seat_layouts/' . $fileName);
         $sql = "UPDATE VENUES 
                 SET NAME='$NAME', ADDRESS='$ADDRESS', CAPACITY=$CAPACITY, SEAT_LAYOUT='$SEAT_LAYOUT'
                 WHERE VENUE_ID='$VENUE_ID'";

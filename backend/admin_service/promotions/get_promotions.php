@@ -8,6 +8,12 @@ $sql = "SELECT PROMO_ID, CODE, DISCOUNT_PERCENT, DESCRIPTION, VALID_FROM, VALID_
 
 $result = $conn_admin->query($sql);
 
+if (!$result) {
+    echo json_encode(["success" => false, "message" => "Lỗi SQL: " . $conn_admin->error]);
+    exit;
+}
+
+
 $promotions = [];
 
 if ($result && $result->num_rows > 0) {

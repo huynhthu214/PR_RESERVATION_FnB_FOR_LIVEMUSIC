@@ -16,11 +16,11 @@ if (!isset($data['PROMO_ID'])) {
 $PROMO_ID = $conn_admin->real_escape_string($data['PROMO_ID']);
 $CODE = $conn_admin->real_escape_string($data['CODE'] ?? '');
 $DISCOUNT_PERCENT = floatval($data['DISCOUNT_PERCENT'] ?? 0);
-$DESCRIPTION = $conn->real_escape_string($data['DESCRIPTION']);
-$VALID_FROM = $conn->real_escape_string($data['VALID_FROM'] ?? null);
-$VALID_TO = $conn->real_escape_string($data['VALID_TO'] ?? null);
+$DESCRIPTION = $conn_admin->real_escape_string($data['DESCRIPTION']);
+$VALID_FROM = $conn_admin->real_escape_string($data['VALID_FROM'] ?? null);
+$VALID_TO = $conn_admin->real_escape_string($data['VALID_TO'] ?? null);
 $IS_ACTIVE = intval($data['IS_ACTIVE'] ?? 1);
-$APPlY_TO = $conn->real_escape_string($data['APPLY_TO']);
+$APPLY_TO = $conn_admin->real_escape_string($data['APPLY_TO']);
 
 $sql = "UPDATE PROMOTIONS 
         SET CODE='$CODE', DISCOUNT_PERCENT=$DISCOUNT_PERCENT, DESCRIPTION='$DESCRIPTION',
