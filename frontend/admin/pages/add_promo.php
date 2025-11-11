@@ -49,7 +49,7 @@
 
       <div class="form-actions">
         <button type="submit" class="btn-save">Lưu</button>
-        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=promotion'">Hủy</button>
+        <<button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_promo'">Hủy</button>
       </div>
     </form>
   </section>

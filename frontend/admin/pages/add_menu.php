@@ -41,7 +41,8 @@ ini_set('display_errors', 1);
 
       <div class="form-actions">
         <button type="submit" class="btn-add">Lưu</button>
-        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=menu'">Hủy</button>
+          <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_menu'">Hủy</button>
+      </div>
       </div>
     </form>
   </section>

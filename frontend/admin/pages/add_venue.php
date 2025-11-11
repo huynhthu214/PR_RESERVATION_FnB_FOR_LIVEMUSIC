@@ -36,7 +36,7 @@
 
       <div class="form-actions">
         <button type="submit" class="btn-save">Lưu</button>
-        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=venues'">Hủy</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_venue'">Hủy</button>
       </div>
     </form>
   </section>
