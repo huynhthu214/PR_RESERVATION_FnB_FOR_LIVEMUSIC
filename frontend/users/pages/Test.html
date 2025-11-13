@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders | Luxury Food</title>
+<style>
+/* ============ RESET ============ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  background: #0a0a0a;
+  color: #f5f5f5;
+  overflow-x: hidden;
+}
+h1, h2, h3 {
+  font-weight: 600;
+}
+a {
+  text-decoration: none;
+}
+
+/* ============ HERO ============ */
+.hero {
+  position: relative;
+  height: 35vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), #0a0a0a);
+}
+.hero-content {
+  position: relative;
+  z-index: 10;
+  animation: fadeIn 1.5s ease;
+}
+.hero h1 {
+  font-size: 3rem;
+  color: gold;
+  text-shadow: 0 0 20px rgba(255,215,0,0.4);
+}
+.hero p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #b87333;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ CONTAINER ============ */
+.container {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+/* ============ ORDER CARD ============ */
+.order-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(218,165,32,0.15);
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  transition: all 0.4s ease;
+}
+.order-card:hover {
+  border-color: gold;
+  box-shadow: 0 0 25px rgba(255,215,0,0.1);
+  transform: translateY(-4px);
+}
+.order-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(218,165,32,0.15);
+}
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid;
+}
+.status.ready {
+  color: gold;
+  border-color: rgba(255,215,0,0.3);
+  background: rgba(255,215,0,0.1);
+}
+.status.done {
+  color: #00d26a;
+  border-color: rgba(0,210,106,0.3);
+  background: rgba(0,210,106,0.1);
+}
+.order-header h3 {
+  margin-top: 10px;
+  font-size: 1.4rem;
+  color: #fff;
+}
+.order-header p {
+  font-size: 0.9rem;
+  color: #b87333;
+  margin-top: 4px;
+}
+
+/* ============ ORDER BODY ============ */
+.order-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  padding: 20px;
+}
+.order-items {
+  border-right: 1px solid rgba(218,165,32,0.1);
+  padding-right: 20px;
+}
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.item-row span:first-child {
+  font-weight: 500;
+}
+.item-row span:last-child {
+  color: gold;
+  font-weight: 600;
+}
+.order-total {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(218,165,32,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-total span:last-child {
+  font-size: 1.4rem;
+  color: gold;
+  font-weight: bold;
+}
+
+/* ============ PICKUP / QR SECTION ============ */
+.order-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.qr-box {
+  width: 180px;
+  height: 180px;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  flex-direction: column;
+  font-size: 0.8rem;
+}
+.qr-box .emoji {
+  font-size: 3rem;
+}
+.btn-download {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, gold, #b87333);
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,215,0,0.2);
+  transition: all 0.3s ease;
+}
+.btn-download:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255,215,0,0.35);
+}
+
+/* ============ COMPLETED STATE ============ */
+.done-box {
+  text-align: center;
+}
+.done-box .emoji {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+.done-box p {
+  margin: 3px 0;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .order-body {
+    grid-template-columns: 1fr;
+  }
+  .order-items {
+    border: none;
+    padding-right: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>🍿 My Orders</h1>
+    <p>Xem lại các món ăn & đồ uống bạn đã đặt</p>
+  </div>
+</section>
+
+<!-- CONTAINER -->
+<div class="container">
+
+  <!-- ORDER 1 -->
+  <div class="order-card">
+    <div class="order-header">
+      <span class="status ready">🔔 Ready to Pickup</span>
+      <h3>Order #ORD001</h3>
+      <p>📅 Dec 15, 2024 - 2:30 PM</p>
+    </div>
+    <div class="order-body">
+      <div class="order-items">
+        <div class="item-row"><span>Popcorn x2</span><span>100.000đ</span></div>
+        <div class="item-row"><span>Coca Cola x1</span><span>30.000đ</span></div>
+
+        <div class="order-total">
+          <span>Total</span><span>130.000đ</span>
+        </div>
+
+        <div class="pickup">
+          <p style="margin-top:10px;color:#b87333;">📍 Pickup Location</p>
+          <p style="font-weight:600;">Concession Stand A</p>
+        </div>
+      </div>
+
+      <div class="order-side">
+        <div class="qr-box">
+          <div class="emoji">📱</div>
+          <div>QR Code</div>
+          <div style="font-family:monospace;">QR-ORD001</div>
+        </div>
+        <p style="font-size:0.8rem;color:#b87333;text-align:center;">
+          Show this QR code at the pickup counter
+        </p>
+        <button class="btn-download">📥 Download QR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER 2 -->
+  <div class="order-card">
+    <div class="order-header">
+      <span class="status done">✅ Completed</span>
+      <h3>Order #ORD002</h3>
+      <p>📅 Dec 12, 2024 - 7:15 PM</p>
+    </div>
+    <div class="order-body">
+      <div class="order-items">
+        <div class="item-row"><span>Hot Dog x1</span><span>60.000đ</span></div>
+        <div class="item-row"><span>Iced Coffee x1</span><span>50.000đ</span></div>
+
+        <div class="order-total">
+          <span>Total</span><span>110.000đ</span>
+        </div>
+
+        <div class="pickup">
+          <p style="margin-top:10px;color:#b87333;">📍 Pickup Location</p>
+          <p style="font-weight:600;">Concession Stand B</p>
+        </div>
+      </div>
+
+      <div class="order-side">
+        <div class="done-box">
+          <div class="emoji">✅</div>
+          <p class="text-green">Order Completed</p>
+          <p style="color:#b87333;">Enjoy your meal!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

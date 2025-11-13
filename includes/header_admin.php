@@ -44,7 +44,7 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
 <header class="admin-header">
   <div class="header-left">
       <div class="logo">
-        <img src="<?php echo BASE_URL; ?>assets/images/logo_L.png" alt="Logo" width="60" height="60">
+        <img src="<?php echo BASE_URL; ?>assets/images/LYZY.png" alt="Logo" width="60" height="40">
         <div>
             <h2>LYZY Admin</h2>
         </div>

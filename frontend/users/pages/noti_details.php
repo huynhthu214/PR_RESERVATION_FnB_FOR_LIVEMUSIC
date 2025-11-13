@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Details - Luxury Gold Theme</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #fefefe;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      background-image: radial-gradient(circle at top, #1a1a1a, #000);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c6a56a;
+      text-decoration: none;
+      margin-bottom: 30px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #ffcc66;
+      transform: translateX(-3px);
+      text-shadow: 0 0 10px rgba(255, 204, 102, 0.6);
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(255, 204, 102, 0.05), rgba(174, 119, 48, 0.08));
+      border: 1px solid rgba(255, 204, 102, 0.2);
+      border-radius: 18px;
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(139, 69, 19, 0.3);
+      transition: all 0.4s ease;
+    }
+
+    .card:hover {
+      border-color: #ffcc66;
+      box-shadow: 0 0 35px rgba(255, 204, 102, 0.45);
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      background: rgba(255, 204, 102, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: #ffcc66;
+      box-shadow: 0 0 20px rgba(255, 204, 102, 0.2);
+      animation: iconGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes iconGlow {
+      0% { box-shadow: 0 0 10px rgba(255, 204, 102, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(255, 204, 102, 0.6); }
+      100% { box-shadow: 0 0 10px rgba(255, 204, 102, 0.3); }
+    }
+
+    .title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffcc66;
+      margin: 0;
+    }
+
+    .time {
+      color: #a07b3b;
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+
+    .content {
+      color: #c9a86d;
+      font-size: 1.05rem;
+      margin-bottom: 40px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #b8742d, #ffcc66);
+      color: #000;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 204, 102, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #ffdd88, #ffcc33);
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 204, 102, 0.6);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffcc66;
+      border: 1px solid rgba(255, 204, 102, 0.2);
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 204, 102, 0.1);
+      border-color: #ffcc66;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 204, 102, 0.4);
+    }
+
+    .settings {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 204, 102, 0.15);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 30px;
+      color: #c9a86d;
+      font-size: 0.95rem;
+    }
+
+    .settings h3 {
+      color: #ffcc66;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .settings span {
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="notifications_gold.html" class="back-btn">⬅ Back to Notifications</a>
+
+    <div class="card">
+      <div class="header">
+        <div class="icon">🎫</div>
+        <div>
+          <h1 class="title">Event Reminder</h1>
+          <p class="time">2 hours ago</p>
+        </div>
+      </div>
+
+      <div class="content">
+        Your EDM Festival event is coming up soon! The event will start on <strong>November 15, 2025 at 8:00 PM</strong>. 
+        Make sure to arrive early to get the best spots. Don’t forget to bring your ticket QR code for entry.
+      </div>
+
+      <div class="actions">
+        <a href="#" class="btn-primary">View Ticket</a>
+        <a href="notifications_gold.html" class="btn-secondary">Back to List</a>
+      </div>
+    </div>
+
+    <div class="settings">
+      <h3>🔔 Notification Settings</h3>
+      <p>You can manage your notification preferences in your account settings.</p>
+    </div>
+  </div>
+
+</body>
+</html>
