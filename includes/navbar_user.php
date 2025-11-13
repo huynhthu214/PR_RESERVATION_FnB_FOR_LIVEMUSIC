@@ -1,10 +1,48 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once __DIR__ . '/../frontend/config.php';
+
+$userName = '';
+
+if (!empty($_SESSION['USERNAME'])) {
+    $userName = $_SESSION['USERNAME']; // Tên customer đăng nhập
+} else {
+    $userName = 'Khách'; // Fallback
+}
+
+$page = $_GET['page'] ?? 'home';
+
+// Tạo tiêu đề động theo từng trang
+$title = match($page) {
+    'home' => 'LYZY - Trang chủ',
+    'event' => 'LYZY - Sự kiện',
+    'about' => 'LYZY - Giới thiệu',
+    'contact' => 'LYZY - Liên hệ',
+    'event_details' => 'LYZY - Chi tiết sự kiện',
+    'about' => 'LYZY - Giới thiệu',
+    'cart' => 'LYZY - Giỏ hàng',
+    'event' => 'LYZY - Sự kiện',
+    'noti_details' => 'LYZY - Chi tiết thông báo',
+    'notification' => 'LYZY - Thông báo',
+    'order' => 'LYZY - Đặt hàng',
+    'payment' => 'LYZY - Thanh toán',
+    'seat' => 'LYZY - Chỗ ngồi',
+    'tickets' => 'LYZY - Vé',
+    'user_details' => 'LYZY - Thông tin tài khoản',
+    'user_orders' => 'LYZY - Đơn hàng của tôi',
+    default => 'LYZY | ' . ucfirst($page),
+};
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LYZY</title>
-  <link rel="stylesheet" href="../frontend/assets/css/user_style.css">
+  <title><?php echo htmlspecialchars($title); ?></title>
+  <link rel="stylesheet" href="../../frontend/assets/css/user_style.css">
   <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
 </head>
 <body>
@@ -54,7 +92,7 @@
       </div>
 
       <div class="user">
-        <a href="my-tickets.php" class="user-btn" title="Vé của tôi">
+        <button class="user-btn" id="userBtn">
           <svg xmlns="http://www.w3.org/2000/svg"
             width="22" height="22"
             fill="none" stroke="currentColor"
@@ -63,8 +101,12 @@
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
             <circle cx="12" cy="7" r="4"/>
           </svg>
-          <span>User</span>
-        </a>
+          <span class="username"><?php echo htmlspecialchars($userName); ?></span>
+        </button>
+
+        <div class="user-dropdown" id="userDropdown">
+          <a href="pages/logout_user.php" class="logout">Đăng xuất</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -121,6 +163,21 @@
     } else {
       console.warn('Thiếu logo hoặc sidebar (id="logo" hoặc id="sidebar").');
     }
+     // Dropdown User
+      const userBtn = document.getElementById('userBtn');
+      const userDropdown = document.getElementById('userDropdown');
+
+      if (userBtn && userDropdown) {
+        userBtn.addEventListener('click', (e) => {
+          e.stopPropagation(); // chặn lan click ra ngoài
+          userDropdown.classList.toggle('show');
+        });
+
+        // Click ra ngoài thì ẩn dropdown
+        document.addEventListener('click', () => {
+          userDropdown.classList.remove('show');
+        });
+      }
   </script>
 </body>
 </html>

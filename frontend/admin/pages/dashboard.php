@@ -19,7 +19,6 @@ if (!$data || !isset($data['success']) || !$data['success']) {
     ];
 }
 ?>
-
 <main class="main-content">
 <section class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
     <h2>Thống kê</h2>

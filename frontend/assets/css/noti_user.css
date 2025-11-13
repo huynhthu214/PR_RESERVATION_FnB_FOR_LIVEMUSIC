@@ -1,0 +1,166 @@
+    body {
+      background-color: #0a0a0a;
+      font-family: "Poppins", sans-serif;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background-image: radial-gradient(circle at top, #1c1c1c, #000);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      color: #ffcc66;
+      text-shadow: 0 0 20px rgba(255, 204, 102, 0.5);
+      margin-top: 60px;
+      animation: glowTitle 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowTitle {
+      from { text-shadow: 0 0 10px #b8860b, 0 0 20px #ffd700; }
+      to { text-shadow: 0 0 25px #ffcc33, 0 0 50px #ff9900; }
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* ===== Filter Bar ===== */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(25, 25, 25, 0.8);
+      border: 1px solid rgba(255, 204, 102, 0.2);
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 35px;
+      box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
+      backdrop-filter: blur(6px);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+    }
+
+    .tab-btn {
+      background: rgba(255, 204, 102, 0.08);
+      color: #d3b97f;
+      border: 1px solid rgba(255, 204, 102, 0.2);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .tab-btn:hover {
+      color: #000;
+      background: linear-gradient(90deg, #ffcc66, #a97142);
+      box-shadow: 0 0 15px rgba(255, 204, 102, 0.4);
+      transform: scale(1.05);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(90deg, #a97142, #ffcc66);
+      color: #000;
+      box-shadow: 0 0 18px rgba(255, 204, 102, 0.5);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: rgba(255, 204, 102, 0.08);
+      color: #cda55c;
+      border: 1px solid rgba(255, 204, 102, 0.2);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      background: linear-gradient(90deg, #ffcc66, #a97142);
+      color: #000;
+      box-shadow: 0 0 18px rgba(255, 204, 102, 0.5);
+      transform: scale(1.05);
+    }
+
+    /* ===== Notification Cards ===== */
+    .notification {
+      background: rgba(30, 30, 30, 0.85);
+      border: 1px solid rgba(255, 204, 102, 0.2);
+      border-radius: 15px;
+      padding: 20px 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .notification:hover {
+      border-color: #ffcc66;
+      box-shadow: 0 0 25px rgba(255, 204, 102, 0.5), 0 0 8px rgba(255, 204, 102, 0.3);
+      transform: scale(1.02);
+    }
+
+    .notification-title {
+      font-size: 1.2rem;
+      color: #ffcc66;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .notification-message {
+      color: #d3b97f;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .notification-time {
+      font-size: 0.85rem;
+      color: #b08a55;
+    }
+
+    .notification .action-link {
+      display: inline-block;
+      margin-top: 10px;
+      background: linear-gradient(90deg, #a97142, #ffcc66);
+      color: #1a1a1a;
+      font-weight: bold;
+      padding: 8px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 204, 102, 0.3);
+    }
+
+    .notification .action-link:hover {
+      background: linear-gradient(90deg, #ffdd88, #ffd27f);
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 204, 102, 0.5);
+    }
+
+    .no-notifications {
+      text-align: center;
+      color: #b08a55;
+      font-style: italic;
+      margin-top: 50px;
+      font-size: 1.1rem;
+    }

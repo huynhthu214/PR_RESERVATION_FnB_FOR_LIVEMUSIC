@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config.php'; // Gọi file cấu hình chung (chứa BASE_URL, v.v.)
+require_once __DIR__ . '/../../config.php'; 
 
 if (isset($_SESSION['USER_ID'])) {
     header("Location: index.php?page=dashboard");

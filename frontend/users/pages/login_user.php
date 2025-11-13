@@ -1,27 +1,57 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../config.php'; // Gọi tới config chứa BASE_URL, API_GATEWAY_URL,...
 
-// Nếu user đã đăng nhập thì chuyển hướng
-if (isset($_SESSION['USER_ID'])) {
-    header("Location: index.php?page=home");
+// Nếu đã đăng nhập → chuyển về trang home
+if (isset($_SESSION['CUSTOMER_ID'])) {
+    header("Location: ../index.php?page=home");
     exit();
 }
 
-// Xử lý đăng nhập
+$error = "";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
-    if ($email === 'user@lyzy.com' && $password === '123456') {
-        $_SESSION['USER_ID'] = 1001;
-        $_SESSION['USER_NAME'] = 'LYZY User';
-        header("Location: index.php?page=home");
-        exit();
+    if (empty($email) || empty($password)) {
+        $error = "Vui lòng nhập đầy đủ thông tin!";
     } else {
-        $error = "Email hoặc mật khẩu không đúng!";
-    }
-}
+        // Gọi API gateway (tương tự phần admin)
+        $api_url = "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=customer&action=login";
+
+        $payload = json_encode([
+            "email" => $email,
+            "password" => $password
+        ]);
+
+        $options = [
+            "http" => [
+                "header"  => "Content-Type: application/json",
+                "method"  => "POST",
+                "content" => $payload
+            ]
+        ];
+
+        $context = stream_context_create($options);
+        $response = file_get_contents($api_url, false, $context);
+
+        if ($response === FALSE) {
+            $error = "Không thể kết nối đến máy chủ!";
+        } else {
+            $result = json_decode($response, true);
+          if (isset($result['success']) && $result['success'] === true) {
+              $user = $result['user'];
+              $_SESSION['CUSTOMER_ID'] = $user['CUSTOMER_ID'];
+              $_SESSION['USERNAME'] = $user['USERNAME'];
+              header("Location: ../index.php?page=home");
+              exit();
+          } else {
+                          $error = $result['error'] ?? "Email hoặc mật khẩu không đúng!";
+                      }
+                  }
+              }
+          }
 ?>
 <!DOCTYPE html>
 <html lang="vi">
