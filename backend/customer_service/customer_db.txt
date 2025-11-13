@@ -1,11 +1,23 @@
-INSERT INTO CUSTOMER_USERS VALUES 
+INSERT INTO CUSTOMER_USERS VALUES
 ('CU001', 'thutrang', 'thutrang@gmail.com', 'abc123', NOW()),
 ('CU002', 'minhthu', 'minhthu@gmail.com', 'xyz456', NOW()),
 ('CU003', 'hoanganh', 'hoanganh@gmail.com', 'qwe789', NOW()),
-('CU004', 'longnguyen', 'longnguyen@gmail.com', 'lkj321', NOW());
+('CU004', 'longnguyen', 'longnguyen@gmail.com', 'lkj321', NOW()),
+('CU005', 'baotran', 'baotran@gmail.com', 'pass123', NOW()),
+('CU006', 'quocviet', 'quocviet@gmail.com', 'pass456', NOW()),
+('CU007', 'myduyen', 'myduyen@gmail.com', 'pass789', NOW()),
+('CU008', 'thanhtung', 'thanhtung@gmail.com', 'pass321', NOW()),
+('CU009', 'phuongthao', 'phuongthao@gmail.com', 'pass654', NOW()),
+('CU010', 'giahan', 'giahan@gmail.com', 'pass987', NOW());
 
 INSERT INTO OTP VALUES
 ('OTP001', 'CU001', '628391', '2025-10-17 15:00:00', '2025-10-17 15:05:00', FALSE, 'VALID'),
 ('OTP002', 'CU002', '849201', '2025-10-17 15:10:00', '2025-10-17 15:15:00', TRUE, 'USED'),
 ('OTP003', 'CU003', '123456', '2025-10-18 16:10:00', '2025-10-18 16:15:00', FALSE, 'VALID'),
-('OTP004', 'CU004', '987654', '2025-10-18 16:20:00', '2025-10-18 16:25:00', TRUE, 'USED');
+('OTP004', 'CU004', '987654', '2025-10-18 16:20:00', '2025-10-18 16:25:00', TRUE, 'USED'),
+('OTP005', 'CU005', '555111', '2025-10-19 10:00:00', '2025-10-19 10:05:00', FALSE, 'VALID'),
+('OTP006', 'CU006', '222333', '2025-10-19 10:10:00', '2025-10-19 10:15:00', TRUE, 'USED'),
+('OTP007', 'CU007', '444555', '2025-10-19 10:20:00', '2025-10-19 10:25:00', FALSE, 'VALID'),
+('OTP008', 'CU008', '666777', '2025-10-19 10:30:00', '2025-10-19 10:35:00', TRUE, 'USED'),
+('OTP009', 'CU009', '888999', '2025-10-19 10:40:00', '2025-10-19 10:45:00', FALSE, 'EXPIRED'),
+('OTP010', 'CU010', '101010', '2025-10-19 10:50:00', '2025-10-19 10:55:00', FALSE, 'VALID');

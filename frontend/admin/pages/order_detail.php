@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    // 🔹 Gọi API lấy chi tiết đơn hàng
+    // Gọi API lấy chi tiết đơn hàng
     const res = await fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=get_order_detail&order_id=${order_id}`);
     const data = await res.json();
     console.log("Chi tiết đơn hàng:", data);
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     else if (o.STATUS === "pending") statusEl.classList.add("pending");
     else statusEl.classList.add("cancelled");
 
-    // 🔹 Hiển thị sản phẩm
+    // Hiển thị sản phẩm
     const tbody = document.getElementById("order-items");
     tbody.innerHTML = "";
     if (o.ITEMS && o.ITEMS.length > 0) {

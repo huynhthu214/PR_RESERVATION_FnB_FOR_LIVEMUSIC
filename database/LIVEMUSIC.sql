@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     17/10/2025 3:04:25 PM                        */
+/* Created on:     09/11/2025 2:50:40 PM                        */
 /*==============================================================*/
 
 
@@ -354,6 +354,7 @@ create table PROMOTIONS
    VALID_TO             datetime  comment '',
    IS_ACTIVE            bool  comment '',
    APPLY_TO             text  comment '',
+   DESCRIPTION          text  comment '',
    primary key (PROMO_ID)
 );
 

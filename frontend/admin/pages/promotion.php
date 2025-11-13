@@ -3,7 +3,7 @@
 <main class="main-content promotion-page">
   <section class="section-header">
       <h2>Khuyến mãi</h2>
-      <button class="btn-add" onclick="window.location.href='index.php?page=add_promotion'"> + Thêm mã
+      <button class="btn-add" onclick="window.location.href='index.php?page=add_promo'"> + Thêm mã
   </section>
 
   <section class="table-section">
@@ -13,14 +13,16 @@
                   <th>ID</th>
                   <th>Mã code</th>
                   <th>Phần trăm giảm</th>
+                  <th>Mô tả</th>
                   <th>Ngày bắt đầu</th>
                   <th>Ngày kết thúc</th>
                   <th>Trạng thái</th>
+                  <th>Áp dụng cho</th>
                   <th>Thao tác</th>
               </tr>
           </thead>
             <tbody id="promo-body">
-                <tr><td colspan="7" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                <tr><td colspan="9" style="text-align:center;">Đang tải dữ liệu...</td></tr>
             </tbody>
         </table>
     </section>
@@ -41,6 +43,9 @@
 
       <label for="editPromoCode">Mã khuyến mãi:</label>
       <input type="text" id="editPromoCode" required>
+
+      <label for="editPromoCode">Mô tả:</label> 
+      <input type="text" id="editDescription" required>
 
       <label for="editDiscountPercent">Phần trăm giảm giá (%):</label>
       <input type="number" id="editDiscountPercent" required min="0" max="100">
@@ -125,6 +130,7 @@ function loadPromotions() {
                         <td>${promo.id}</td>
                         <td>${promo.code}</td>
                         <td>${promo.discount}%</td>
+                        <td class="promo-description">${promo.description}</td>
                         <td>${promo.start_date ? new Date(promo.start_date).toLocaleDateString("vi-VN") : ''}</td>
                         <td>${promo.end_date ? new Date(promo.end_date).toLocaleDateString("vi-VN") : ''}</td>
                         <td>
@@ -132,6 +138,7 @@ function loadPromotions() {
                                 ${promo.status}
                             </span>
                         </td>
+                        <td>${promo.apply_to}</td>
                         <td>
                             <button class="btn-edit" onclick="editPromo('${promo.id}')">Sửa</button>
                             <button class="btn-delete" onclick="deletePromotion('${promo.id}')">Xóa</button>
@@ -145,7 +152,7 @@ function loadPromotions() {
         .catch(error => {
             console.error('Lỗi khi tải danh sách khuyến mãi:', error);
             document.getElementById('promo-body').innerHTML =
-                '<tr><td colspan="7" style="text-align:center;">Lỗi tải dữ liệu</td></tr>';
+                '<tr><td colspan="9" style="text-align:center;">Lỗi tải dữ liệu</td></tr>';
         });
 }
 
@@ -166,6 +173,7 @@ function editPromo(id) {
             document.getElementById('editPromoId').value = promo.PROMO_ID;
             document.getElementById('editEventIdPromo').value = promo.EVENT_ID || '';
             document.getElementById('editPromoCode').value = promo.CODE || '';
+            document.getElementById('editDescription').value = promo.DESCRIPTION || '';
             document.getElementById('editDiscountPercent').value = promo.DISCOUNT_PERCENT || 0;
             document.getElementById('editValidFrom').value = promo.VALID_FROM ? promo.VALID_FROM.split(' ')[0] : '';
             document.getElementById('editValidTo').value = promo.VALID_TO ? promo.VALID_TO.split(' ')[0] : '';
@@ -191,6 +199,7 @@ document.getElementById('editPromoForm').addEventListener('submit', function(e){
         PROMO_ID: document.getElementById('editPromoId').value,
         EVENT_ID: document.getElementById('editEventIdPromo').value,
         CODE: document.getElementById('editPromoCode').value,
+        DESCRIPTION: document.getElementById('editDescription').value,
         DISCOUNT_PERCENT: parseInt(document.getElementById('editDiscountPercent').value),
         VALID_FROM: document.getElementById('editValidFrom').value,
         VALID_TO: document.getElementById('editValidTo').value,
@@ -219,7 +228,6 @@ document.getElementById('editPromoForm').addEventListener('submit', function(e){
     });
 });
 
-
 // ---------------- Xóa sự kiện ----------------
 let deletePromoId = null;
 
@@ -241,12 +249,8 @@ document.getElementById('confirmDelete').addEventListener('click', function(){
     })
     .then(res => res.json())
     .then(result => {
-        showToast(result.success ? "Xóa mã khuyến mãi thành công!" : "Xóa thất bại!", result.success ? "success" : "error");
-        loadPromotions(); 
-    })
-    .catch(error => {
-        console.error("Lỗi khi xóa:", error);
-        showToast("Không thể kết nối tới server!", "error");
+        showToast(result.success ? "Xóa mã thành công!" : "Xóa thất bại!", result.success ? "success" : "error");
+        loadPromotions();
     });
 });
 </script>

@@ -11,11 +11,6 @@
   <section class="form-section">
     <form id="add-venue-form" class="venue-form">
       <div class="form-group">
-        <label for="venue_id">Mã địa điểm:</label>
-        <input type="text" id="venue_id" name="venue_id" placeholder="VD: V001" required>
-      </div>
-
-      <div class="form-group">
         <label for="venue_name">Tên địa điểm:</label>
         <input type="text" id="venue_name" name="venue_name" placeholder="Nhập tên địa điểm..." required>
       </div>
@@ -27,70 +22,96 @@
 
       <div class="form-group">
         <label for="capacity">Sức chứa:</label>
-        <input type="number" id="capacity" name="capacity" placeholder="Nhập sức chứa..." required>
+        <input type="number" id="capacity" name="capacity" placeholder="Nhập sức chứa..." required step="1" min="0">
       </div>
 
-      <div class="form-group">
-        <label for="status">Trạng thái:</label>
-        <select id="status" name="status">
-          <option value="ACTIVE">ACTIVE</option>
-          <option value="INACTIVE">INACTIVE</option>
-        </select>
+    <div class="form-group file-group">
+      <label for="seat_layout">Sơ đồ chỗ ngồi:</label>
+      <div class="file-input-wrapper">
+        <input type="text" id="seat_layout_text" placeholder="Chọn tệp..." readonly>
+        <button type="button" id="seat_layout_btn">Chọn tệp</button>
+        <input type="file" id="seat_layout" name="seat_layout" accept=".json" hidden>
       </div>
+    </div>
 
       <div class="form-actions">
         <button type="submit" class="btn-save">Lưu</button>
-        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=venues'">Hủy</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_venue'">Hủy</button>
       </div>
     </form>
   </section>
 
   <!-- Toast -->
-  <div id="toast" class="toast"></div>
+  <div id="toast-container"></div>
 </main>
 
 <script>
+
+// ===== xử lý nút chọn file =====
+const fileInput = document.getElementById('seat_layout');
+const fileBtn = document.getElementById('seat_layout_btn');
+const fileText = document.getElementById('seat_layout_text');
+
+fileBtn.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', () => {
+    fileText.value = fileInput.files[0] ? fileInput.files[0].name : '';
+});
+
+// ===== xử lý submit form =====
 document.getElementById("add-venue-form").addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  const venue_id = document.getElementById("venue_id").value.trim();
-  const venue_name = document.getElementById("venue_name").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const capacity = document.getElementById("capacity").value.trim();
-  const status = document.getElementById("status").value;
+  const formData = new FormData();
+  formData.append("venue_name", document.getElementById("venue_name").value.trim());
+  formData.append("address", document.getElementById("address").value.trim());
+  formData.append("capacity", document.getElementById("capacity").value);
 
-  if (!venue_id || !venue_name || !address || !capacity) {
-    showToast("Vui lòng nhập đầy đủ thông tin!", "error");
-    return;
-  }
-
-  const data = { venue_id, venue_name, address, capacity, status };
+  const file = fileInput.files[0];
+  if (file) formData.append("seat_layout", file);
 
   try {
-    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_venue', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+    const res = await fetch("http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_venue", {
+      method: "POST",
+      body: formData
     });
 
     const result = await res.json();
-
     if (result.success) {
       showToast("Thêm địa điểm thành công!", "success");
       setTimeout(() => window.location.href = "index.php?page=venues", 1500);
     } else {
       showToast(result.message || "Thêm địa điểm thất bại!", "error");
     }
-  } catch (error) {
-    console.error("Lỗi:", error);
+  } catch (err) {
+    console.error(err);
     showToast("Lỗi khi gửi yêu cầu!", "error");
   }
 });
 
-function showToast(message, type = "info") {
-  const toast = document.getElementById("toast");
+function showToast(message, type = 'info', duration = 3000) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
   toast.textContent = message;
-  toast.className = `toast show ${type}`;
-  setTimeout(() => { toast.className = "toast"; }, 2500);
+
+  const closeBtn = document.createElement('span');
+  closeBtn.className = 'close-toast';
+  closeBtn.innerHTML = '&times;';
+  closeBtn.onclick = () => {
+    toast.classList.remove('show');
+    setTimeout(() => container.removeChild(toast), 300);
+  };
+  toast.appendChild(closeBtn);
+  container.appendChild(toast);
+
+  // Hiệu ứng hiển thị
+  setTimeout(() => toast.classList.add('show'), 50);
+  // Tự động ẩn sau duration ms
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      if (container.contains(toast)) container.removeChild(toast);
+    }, 300);
+  }, duration);
 }
 </script>

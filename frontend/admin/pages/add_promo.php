@@ -11,10 +11,9 @@
   <section class="form-section">
     <form id="add-promotion-form" class="promotion-form">
       <div class="form-group">
-        <label for="promo_code">Mã khuyến mãi:</label>
-        <input type="text" id="promo_code" name="promo_code" placeholder="VD: SALE20" required>
-      </div>
-
+      <label for="promo_code">Mã khuyến mãi:</label>
+      <input type="text" id="promo_code" name="promo_code" placeholder="VD: CHILL20" required>
+    </div>
       <div class="form-group">
         <label for="description">Mô tả:</label>
         <input type="text" id="description" name="description" placeholder="Nhập mô tả khuyến mãi..." required>
@@ -43,15 +42,20 @@
         </select>
       </div>
 
+      <div class="form-group">
+        <label for="apply_to">Áp dụng cho:</label>
+        <input type="text" id="apply_to" name="apply_to" placeholder="Áp dụng cho..." required>
+      </div>
+
       <div class="form-actions">
         <button type="submit" class="btn-save">Lưu</button>
-        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=promotions'">Hủy</button>
+        <<button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_promo'">Hủy</button>
       </div>
     </form>
   </section>
 
   <!-- Toast -->
-  <div id="toast" class="toast"></div>
+  <div id="toast-container"></div>
 </main>
 
 <script>
@@ -64,16 +68,18 @@ document.getElementById("add-promotion-form").addEventListener("submit", async f
   const start_date = document.getElementById("start_date").value.trim();
   const end_date = document.getElementById("end_date").value.trim();
   const status = document.getElementById("status").value;
+  const apply_to = document.getElementById("apply_to").value.trim();
 
-  if (!promo_code || !description || !discount_percent || !start_date || !end_date) {
+  if (!promo_code || !description || !discount_percent || !start_date || !end_date || !apply_to) {
     showToast("Vui lòng nhập đầy đủ thông tin!", "error");
     return;
   }
 
-  const data = { promo_code, description, discount_percent, start_date, end_date, status };
+ const data = { promo_code, description, discount_percent, start_date, end_date, status, apply_to };
+
 
   try {
-    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_promotion', {
+    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_promo', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -83,7 +89,7 @@ document.getElementById("add-promotion-form").addEventListener("submit", async f
 
     if (result.success) {
       showToast("Thêm khuyến mãi thành công!", "success");
-      setTimeout(() => window.location.href = "index.php?page=promotions", 1500);
+      setTimeout(() => window.location.href = "index.php?page=promotion", 1500);
     } else {
       showToast(result.message || "Thêm khuyến mãi thất bại!", "error");
     }
@@ -93,10 +99,44 @@ document.getElementById("add-promotion-form").addEventListener("submit", async f
   }
 });
 
-function showToast(message, type = "info") {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.className = `toast show ${type}`;
-  setTimeout(() => { toast.className = "toast"; }, 2500);
+function showToast(message, type = "info", duration = 2500) {
+    const container = document.getElementById('toast-container');
+
+    // Nếu chưa có container, tạo container
+    if (!container) {
+        const newContainer = document.createElement('div');
+        newContainer.id = 'toast-container';
+        document.body.appendChild(newContainer);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    // Nút đóng
+    const closeBtn = document.createElement('span');
+    closeBtn.className = 'close-toast';
+    closeBtn.innerHTML = '&times;';
+    closeBtn.onclick = () => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 300);
+    };
+    toast.appendChild(closeBtn);
+
+    document.getElementById('toast-container').appendChild(toast);
+
+    // Hiển thị toast
+    setTimeout(() => toast.classList.add('show'), 50);
+
+    // Ẩn toast sau thời gian duration
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 300);
+    }, duration);
 }
+
 </script>

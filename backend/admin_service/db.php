@@ -1,11 +1,12 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "admindb";
+$host = "localhost";
+$user = "root"; 
+$pass = "";     
+$db   = "admindb";
 
-$conn = new mysqli($servername, $username, $password, $database);
-if ($conn->connect_error) {
-    die("Connection failed (admindb): " . $conn->connect_error);
+$conn_admin = new mysqli($host, $user, $pass, $db);
+
+if ($conn_admin->connect_error) {
+    die("Kết nối thất bại: " . $conn_admin->connect_error);
 }
 ?>

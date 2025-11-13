@@ -16,8 +16,8 @@
       </div>
 
       <div class="form-group">
-        <label for="venue_id">ID địa điểm:</label>
-        <input type="text" id="venue_id" name="venue_id" placeholder="VD: V001" required>
+        <label for="venue_name">Địa điểm</label>
+        <input type="text" id="venue_name" name="venue_name" placeholder="Nhập địa điểm" required>
       </div>
 
       <div class="form-group">
@@ -27,7 +27,7 @@
 
       <div class="form-group">
         <label for="ticket_price">Giá vé:</label>
-        <input type="number" id="ticket_price" name="ticket_price" placeholder="Nhập giá vé..." required>
+        <input type="number" id="ticket_price" name="ticket_price" placeholder="Nhập giá vé..." required step="5000" min="0">
       </div>
 
       <div class="form-group">
@@ -40,13 +40,13 @@
 
       <div class="form-actions">
         <button type="submit" class="btn-save">Lưu</button>
-        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=events'">Hủy</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_event'">Hủy</button>
       </div>
     </form>
   </section>
 
   <!-- Toast -->
-  <div id="toast" class="toast"></div>
+  <div id="toast-container"></div>
 </main>
 
 <script>
@@ -54,17 +54,17 @@ document.getElementById("add-event-form").addEventListener("submit", async funct
   e.preventDefault();
 
   const band_name = document.getElementById("band_name").value.trim();
-  const venue_id = document.getElementById("venue_id").value.trim();
+  const venue_name = document.getElementById("venue_name").value.trim();
   const event_date = document.getElementById("event_date").value.trim();
   const ticket_price = document.getElementById("ticket_price").value.trim();
   const status = document.getElementById("status").value;
 
-  if (!band_name || !venue_id || !event_date || !ticket_price) {
+  if (!band_name || !venue_name || !event_date || !ticket_price) {
     showToast("Vui lòng nhập đầy đủ thông tin!", "error");
     return;
   }
 
-  const data = { band_name, venue_id, event_date, ticket_price, status };
+  const data = { band_name, venue_name, event_date, ticket_price, status };
 
   try {
     const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_event', {
@@ -88,9 +88,27 @@ document.getElementById("add-event-form").addEventListener("submit", async funct
 });
 
 function showToast(message, type = "info") {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
+  const container = document.getElementById("toast-container");
+  const toast = document.createElement("div");
   toast.className = `toast show ${type}`;
-  setTimeout(() => { toast.className = "toast"; }, 2500);
+  toast.innerHTML = `
+    <span>${message}</span>
+    <span class="close-toast">&times;</span>
+  `;
+
+  container.appendChild(toast);
+
+  // Cho phép đóng thủ công
+  toast.querySelector(".close-toast").addEventListener("click", () => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  });
+
+  // Tự động biến mất sau 3 giây
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
 }
+
 </script>

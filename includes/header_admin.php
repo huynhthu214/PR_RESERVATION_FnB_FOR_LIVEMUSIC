@@ -34,9 +34,10 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
 
     <!-- CSS RIÊNG CHO MỖI TRANG -->
     <?php
-      if (!empty($page) && file_exists(...)) {
-          echo '<link rel="stylesheet" href="' . BASE_URL . 'assets/css/' . $page . '.css">';
-      }
+        $pageCssPath = __DIR__ . "/../../assets/css/{$page}.css";
+        if (!empty($page) && file_exists($pageCssPath)) {
+            echo '<link rel="stylesheet" href="' . BASE_URL . 'assets/css/' . $page . '.css">';
+        }
     ?>
 </head>
 <body>

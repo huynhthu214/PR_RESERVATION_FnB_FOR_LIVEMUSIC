@@ -1,26 +1,60 @@
-INSERT INTO ADMIN_USERS VALUES 
+INSERT INTO ADMIN_USERS VALUES
 ('AD001', 'admin', 'admin@livemusic.vn', '123456', 'Manager', NOW()),
 ('AD002', 'staff', 'staff@livemusic.vn', '123456', 'Staff', NOW()),
-('AD003', 'huy', 'huy@livemusic.vn', '123456', 'EventPlanner', NOW());
+('AD003', 'huy', 'huy@livemusic.vn', '123456', 'EventPlanner', NOW()),
+('AD004', 'staff2', 'staff2@livemusic.vn', '123456', 'Staff', NOW()),
+('AD005', 'manager2', 'manager2@livemusic.vn', '123456', 'Manager', NOW()),
+('AD006', 'event_planner2', 'ep2@livemusic.vn', '123456', 'EventPlanner', NOW()),
+('AD007', 'support_team', 'support@livemusic.vn', '123456', 'Staff', NOW()),
+('AD008', 'admin_temp', 'temp_admin@livemusic.vn', '123456', 'Staff', NOW()),
+('AD009', 'lead_planner', 'lead@livemusic.vn', '123456', 'EventPlanner', NOW()),
+('AD010', 'senior_mgr', 'senior@livemusic.vn', '123456', 'Manager', NOW());
 
 INSERT INTO VENUES VALUES
-('V001', 'AD001', 'Chill Sky Lounge', '26 Nguyễn Huệ, Q.1, TP.HCM', 120, 'LayoutA'),
-('V002', 'AD002', 'Acoustic Vibes', '85 Trần Hưng Đạo, Q.5, TP.HCM', 80, 'LayoutB'),
-('V003', 'AD003', 'Sunset Sound Bar', '45 Võ Văn Tần, Q.3, TP.HCM', 100, 'LayoutC');
+('V001', 'AD001', 'Chill Sky Lounge', '26 Nguyễn Huệ, Q.1, TP.HCM', 120, 'seat_layouts/chill_sky.json'),
+('V002', 'AD002', 'Acoustic Vibes', '85 Trần Hưng Đạo, Q.5, TP.HCM', 80, 'seat_layouts/acoustic_vibes.json'),
+('V003', 'AD003', 'Sunset Sound Bar', '45 Võ Văn Tần, Q.3, TP.HCM', 100, 'seat_layouts/sunset_sound_bar.json'),
+('V004', 'AD001', 'The Rooftop Bar', '100 Tôn Đức Thắng, Q.1, TP.HCM', 150, 'seat_layouts/rooftop_bar.json'),
+('V005', 'AD002', 'Indika Saigon', '43 Nguyễn Văn Giai, Q.1, TP.HCM', 90, 'seat_layouts/indika_saigon.json'),
+('V006', 'AD004', 'Lush Bar', '2 Lý Tự Trọng, Q.1, TP.HCM', 200, 'seat_layouts/lush_bar.json'),
+('V007', 'AD005', 'Carmen Bar', '8 Lý Tự Trọng, Q.1, TP.HCM', 70, 'seat_layouts/carmen_bar.json'),
+('V008', 'AD001', 'Yoko Cafe', '22 Nguyễn Thị Diệu, Q.3, TP.HCM', 60, 'seat_layouts/yoko_cafe.json'),
+('V009', 'AD003', 'Saigon Opera House', '7 Công Trường Lam Sơn, Q.1, TP.HCM', 500, 'seat_layouts/opera_house.json'),
+('V010', 'AD002', 'Envy Club', '74 Nam Kỳ Khởi Nghĩa, Q.1, TP.HCM', 300, 'seat_layouts/envy_club.json');
+
 
 INSERT INTO EVENTS VALUES
 ('E001', 'AD001', 'V001', 'The Chill Band', '2025-11-01 20:00:00', '2025-11-01 20:00:00', 350000, 'ACTIVE', 'Đêm acoustic thư giãn cuối tuần.', '2025-11-01 23:00:00', 'chillband.jpg'),
 ('E002', 'AD002', 'V002', 'Rock N Fire', '2025-11-10 19:30:00', '2025-11-10 19:30:00', 400000, 'ACTIVE', 'Đêm nhạc rock nồng nhiệt.', '2025-11-10 22:30:00', 'rocknfire.jpg'),
-('E003', 'AD003', 'V003', 'Jazz in Sunset', '2025-12-05 19:00:00', '2025-12-05 19:00:00', 300000, 'ACTIVE', 'Không gian jazz chill buổi tối.', '2025-12-05 22:00:00', 'jazzinsunset.jpg');
+('E003', 'AD003', 'V003', 'Jazz in Sunset', '2025-12-05 19:00:00', '2025-12-05 19:00:00', 300000, 'ACTIVE', 'Không gian jazz chill buổi tối.', '2025-12-05 22:00:00', 'jazzinsunset.jpg'),
+('E004', 'AD001', 'V004', 'Rooftop EDM Night', '2025-11-15 21:00:00', '2025-11-15 21:00:00', 500000, 'ACTIVE', 'EDM party trên sân thượng.', '2025-11-16 01:00:00', 'edmnight.jpg'),
+('E005', 'AD002', 'V005', 'Indie Music Fest', '2025-11-20 18:00:00', '2025-11-20 18:00:00', 250000, 'ACTIVE', 'Lễ hội nhạc Indie.', '2025-11-20 23:00:00', 'indiemusic.jpg'),
+('E006', 'AD003', 'V006', 'Ladies Night DJ', '2025-11-22 20:30:00', '2025-11-22 20:30:00', 150000, 'ACTIVE', 'Miễn phí vào cửa cho nữ.', '2025-11-23 00:30:00', 'ladiesnight.jpg'),
+('E007', 'AD001', 'V007', 'Flamenco Dance', '2025-11-25 19:00:00', '2025-11-25 19:00:00', 300000, 'ACTIVE', 'Đêm nhạc Tây Ban Nha.', '2025-11-25 22:00:00', 'flamenco.jpg'),
+('E008', 'AD002', 'V008', 'Acoustic Yoko', '2025-11-28 20:00:00', '2025-11-28 20:00:00', 200000, 'ACTIVE', 'Đêm nhạc mộc tại Yoko.', '2025-11-28 22:30:00', 'yoko.jpg'),
+('E009', 'AD003', 'V009', 'Classical Concert', '2025-12-10 19:00:00', '2025-12-10 19:00:00', 800000, 'ACTIVE', 'Hòa nhạc giao hưởng.', '2025-12-10 21:30:00', 'classical.jpg'),
+('E010', 'AD001', 'V010', 'Hip Hop Party', '2025-12-15 21:00:00', '2025-12-15 21:00:00', 450000, 'ACTIVE', 'Tiệc Hip Hop cuồng nhiệt.', '2025-12-16 01:00:00', 'hiphop.jpg');
 
 INSERT INTO MENU_ITEMS VALUES
 ('M001', 'AD001', 'Mojito', 'Cocktail bạc hà mát lạnh', 120000, 'Drink', 50, TRUE),
 ('M002', 'AD001', 'Tequila Shot', 'Rượu mạnh tequila nguyên chất', 150000, 'Drink', 40, TRUE),
 ('M003', 'AD002', 'Snack Platter', 'Khẩu phần snack mix cho 2 người', 180000, 'Food', 25, TRUE),
 ('M004', 'AD003', 'Whiskey Sour', 'Cocktail chua nhẹ cổ điển', 140000, 'Drink', 30, TRUE),
-('M005', 'AD003', 'Cheese Nachos', 'Phô mai nướng giòn, cay nhẹ', 160000, 'Food', 20, TRUE);
+('M005', 'AD003', 'Cheese Nachos', 'Phô mai nướng giòn, cay nhẹ', 160000, 'Food', 20, TRUE),
+('M006', 'AD001', 'Caesar Salad', 'Salad trộn sốt Caesar', 130000, 'Food', 30, TRUE),
+('M007', 'AD002', 'Beer Tiger', 'Bia Tiger chai', 60000, 'Drink', 100, TRUE),
+('M008', 'AD003', 'Fried Chicken', 'Gà rán giòn', 150000, 'Food', 40, TRUE),
+('M009', 'AD001', 'Red Wine (Glass)', 'Rượu vang đỏ (ly)', 180000, 'Drink', 20, TRUE),
+('M010', 'AD002', 'French Fries', 'Khoai tây chiên', 90000, 'Food', 50, TRUE);
 
 INSERT INTO PROMOTIONS VALUES
-('P001', 'E001', 'AD001', 'CHILL20', 20, '2025-10-20', '2025-11-02', TRUE, 'Ticket'),
-('P002', 'E002', 'AD002', 'ROCK10', 10, '2025-10-25', '2025-11-11', TRUE, 'Food'),
-('P003', 'E003', 'AD003', 'JAZZ15', 15, '2025-11-20', '2025-12-06', TRUE, 'Ticket');
+('P001', 'E001', 'AD001', 'CHILL20', 20, '2025-10-20', '2025-11-02', TRUE, 'Ticket', 'Giảm 20% vé sự kiện Chill Sky Lounge'),
+('P002', 'E002', 'AD002', 'ROCK10', 10, '2025-10-25', '2025-11-11', TRUE, 'Food', 'Giảm 10% tất cả món ăn Rock Cafe'),
+('P003', 'E003', 'AD003', 'JAZZ15', 15, '2025-11-20', '2025-12-06', TRUE, 'Ticket', 'Giảm 15% vé sự kiện Jazz Night'),
+('P004', 'E004', 'AD001', 'EDM15', 15, '2025-11-10', '2025-11-16', TRUE, 'Ticket', 'Giảm 15% vé EDM Party'),
+('P005', 'E005', 'AD002', 'INDIE5', 5, '2025-11-15', '2025-11-21', TRUE, 'Ticket', 'Giảm 5% vé Indie Music'),
+('P006', 'E006', 'AD003', 'LADY10', 10, '2025-11-18', '2025-11-23', TRUE, 'Drink', 'Giảm 10% đồ uống Lady Night'),
+('P007', 'E007', 'AD001', 'DANCE10', 10, '2025-11-20', '2025-11-26', TRUE, 'Ticket', 'Giảm 10% vé Dance Party'),
+('P008', 'E008', 'AD002', 'YOKO20', 20, '2025-11-25', '2025-11-29', TRUE, 'Food', 'Giảm 20% món ăn tại Yoko Cafe'),
+('P009', 'E009', 'AD003', 'CLASSIC5', 5, '2025-12-01', '2025-12-11', TRUE, 'Ticket', 'Giảm 5% vé Classical Evening'),
+('P010', 'E010', 'AD001', 'HIPHOP10', 10, '2025-12-10', '2025-12-16', TRUE, 'Drink', 'Giảm 10% đồ uống HipHop Night');
