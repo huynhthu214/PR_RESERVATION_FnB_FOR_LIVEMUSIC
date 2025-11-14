@@ -1,8 +1,11 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     09/11/2025 2:50:40 PM                        */
+/* Created on:     13/11/2025 11:18:53 PM                       */
 /*==============================================================*/
 
+
+alter table CMS_PAGES 
+   drop foreign key FK_CMS_PAGE_ADMIN_CMS_ADMIN_US;
 
 alter table EMAIL_LOG 
    drop foreign key FK_EMAIL_LO_CUSTOMER__CUSTOMER;
@@ -71,6 +74,12 @@ alter table VENUES
    drop foreign key FK_VENUES_ADMIN_VEN_ADMIN_US;
 
 drop table if exists ADMIN_USERS;
+
+
+alter table CMS_PAGES 
+   drop foreign key FK_CMS_PAGE_ADMIN_CMS_ADMIN_US;
+
+drop table if exists CMS_PAGES;
 
 drop table if exists CUSTOMER_USERS;
 
@@ -194,6 +203,20 @@ create table ADMIN_USERS
 );
 
 /*==============================================================*/
+/* Table: CMS_PAGES                                             */
+/*==============================================================*/
+create table CMS_PAGES
+(
+   PAGE_ID              varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
+   SLUG                 text  comment '',
+   TITLE                text  comment '',
+   CONTENT_             text  comment '',
+   UPDATED_AT           datetime  comment '',
+   primary key (PAGE_ID)
+);
+
+/*==============================================================*/
 /* Table: CUSTOMER_USERS                                        */
 /*==============================================================*/
 create table CUSTOMER_USERS
@@ -237,6 +260,8 @@ create table EVENTS
    DESCRIPTION          text  comment '',
    END_TIME             datetime  comment '',
    IMAGE_URL            text  comment '',
+   ARTIST_NAME          text  comment '',
+   IMG_ARTIST           text  comment '',
    primary key (EVENT_ID)
 );
 
@@ -401,6 +426,9 @@ create table VENUES
    SEAT_LAYOUT          text  comment '',
    primary key (VENUE_ID)
 );
+
+alter table CMS_PAGES add constraint FK_CMS_PAGE_ADMIN_CMS_ADMIN_US foreign key (ADMIN_ID)
+      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
 
 alter table EMAIL_LOG add constraint FK_EMAIL_LO_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;

@@ -3,8 +3,8 @@
 <!-- Hero -->
 <section>
   <div class="container">
-    <h1 style="font-size:2.5rem;">LiveMusic - Trải nghiệm âm nhạc sống động</h1>
-    <p>Khám phá những sự kiện âm nhạc đỉnh cao, nơi cảm xúc và giai điệu hòa quyện.</p>
+    <h1 style="font-size:2.5rem; margin-top:-80px;">LiveMusic - Trải nghiệm âm nhạc sống động</h1>
+    <p style="margin-bottom:-100px;">Khám phá những sự kiện âm nhạc đỉnh cao, nơi cảm xúc và giai điệu hòa quyện.</p>
   </div>
 </section>
 
@@ -75,7 +75,7 @@
 <!-- Explore by Genre -->
 <section>
   <div class="container">
-    <h2>Khám phá theo thể loại</h2>
+    <h2 style="margin-top:-100px;">Khám phá theo thể loại</h2>
     <p>Tìm phong cách âm nhạc bạn yêu thích</p>
     <div class="genres">
       <div class="genre">Electronic</div>
@@ -91,7 +91,7 @@
 <!-- Gallery -->
 <section>
   <div class="container">
-    <h2>Khoảnh khắc sân khấu</h2>
+    <h2 style="margin-top:-100px;">Khoảnh khắc sân khấu</h2>
     <p><i>"Mỗi nhịp beat kể một câu chuyện"</i></p>
     <div class="gallery">
       <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=600&h=400&fit=crop" alt="">
@@ -106,7 +106,7 @@
 
 <!-- Newsletter -->
 <section>
-  <div class="newsletter">
+  <div class="newsletter" style="margin-top:-20px;">
     <h2>Đăng ký nhận tin</h2>
     <p>Nhận thông báo về các buổi diễn và ưu đãi mới nhất</p>
     <form>
@@ -119,9 +119,9 @@
 <!-- About -->
 <section>
   <div class="about">
-    <h2>Về LiveMusic</h2>
-    <p>Thành lập năm 2024, LiveMusic kết nối người hâm mộ và nghệ sĩ qua những trải nghiệm âm nhạc sống động. Chúng tôi đam mê lan tỏa sức mạnh của âm nhạc.</p>
-    <a href="#">Tìm hiểu thêm</a>
+    <h2>Về chúng tôi</h2>
+    <p>Thành lập năm 2024, LYZY kết nối người hâm mộ và nghệ sĩ qua những trải nghiệm âm nhạc sống động. Chúng tôi đam mê lan tỏa sức mạnh của âm nhạc.</p>
+    <a href="index.php?page=about">Tìm hiểu thêm</a>
   </div>
 </section>
 
