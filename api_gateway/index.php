@@ -207,6 +207,19 @@ function routeAdminService($action, $base)
         case 'add_cms':
             include_once $path_cms . "add_cms.php";
             break;
+
+        case 'delete_cms':
+            include_once $path_cms . "delete_cms.php";
+            break;
+
+        case 'get_cms_detail':
+            include_once $path_cms . "get_cms_detail.php";
+            break;
+    
+        case 'update_cms':
+            include_once $path_cms . "update_cms.php";
+            break;
+    
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);
             break;

@@ -2,7 +2,7 @@
 
 <main class="main-content add-cms-page">
   <section class="section-header">
-    <h2>Thêm trang CMS mới</h2>
+    <h2>Thêm CMS</h2>
     <button class="btn-back" onclick="window.location.href='index.php?page=cms'">
         ← Quay lại danh sách
     </button>
@@ -29,7 +29,7 @@
           <input type="text" id="content_file_text" placeholder="Chọn tệp..." readonly>
           <button type="button" id="content_file_btn">Chọn tệp</button>
           <input type="file" id="content_file" name="content_file" accept=".txt,.html" hidden>
-
+        </div>
       <div class="form-actions">
         <button type="submit" class="btn-save">Lưu</button>
         <button type="button" class="btn-cancel" onclick="window.location.href='index.php?page=add_cms'">Hủy</button>
@@ -57,7 +57,6 @@ document.getElementById("add-cms-form").addEventListener("submit", async functio
 
   const type = document.getElementById("type").value.trim();
   const title = document.getElementById("title").value.trim();
-  let content = document.getElementById("content").value.trim();
 
   // Nếu có file, đọc nội dung file
   if (fileInput.files.length > 0) {

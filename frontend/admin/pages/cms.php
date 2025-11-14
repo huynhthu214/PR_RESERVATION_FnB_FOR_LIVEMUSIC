@@ -36,15 +36,31 @@
         <form id="editCmsForm">
             <input type="hidden" id="editPageId">
 
-            <label for="editType">Loại đường dẫn:</label>
-            <input type="text" id="editType" required>
+  <!-- Loại nội dung -->
+            <div class="form-group">
+                <label for="editType">Loại nội dung:</label>
+                <select id="editType" required>
+                    <option value="policy">Chính sách và điều khoản</option>
+                    <option value="about">Giới thiệu</option>
+                </select>
+            </div>
 
-            <label for="editTitle">Tiêu đề trang:</label>
-            <input type="text" id="editTitle" required>
+            <!-- Tiêu đề -->
+            <div class="form-group">
+                <label for="editTitle">Tiêu đề trang:</label>
+                <input type="text" id="editTitle" placeholder="Nhập tiêu đề..." required>
+            </div>
 
-            <label for="editContent">Nội dung:</label>
-            <textarea id="editContent" rows="6" required></textarea>
+            <!-- Chọn file nội dung -->
+            <div class="form-group file-group">
+                <label for="editContentFile">Nội dung:</label>
 
+                <div class="file-input-wrapper">
+                    <input type="text" id="editContentFileText" placeholder="Chọn tệp..." readonly>
+                    <button type="button" id="editContentFileBtn" style="width:110px";>Chọn tệp</button>
+                    <input type="file" id="editContentFile" accept=".txt,.html" hidden>
+                </div>
+            </div>
             <button type="submit">Lưu thay đổi</button>
         </form>
     </div>
@@ -64,6 +80,17 @@
 </div>
 
 <script>
+
+    // Xử lý chọn file
+const editFileInput = document.getElementById("editContentFile");
+const editFileBtn = document.getElementById("editContentFileBtn");
+const editFileText = document.getElementById("editContentFileText");
+
+editFileBtn.addEventListener("click", () => editFileInput.click());
+editFileInput.addEventListener("change", () => {
+    editFileText.value = editFileInput.files[0] ? editFileInput.files[0].name : "";
+});
+
 document.addEventListener("DOMContentLoaded", () => loadCms());
 
 // ------- Toast -------
@@ -130,49 +157,65 @@ let selectedPageId = null;
 function editPage(id) {
     selectedPageId = id;
 
-    fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_page&id=${id}`)
+    fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_cms_detail&id=${id}`)
         .then(res => res.json())
         .then(page => {
             document.getElementById("editPageId").value = page.PAGE_ID;
             document.getElementById("editType").value = page.TYPE || "";
             document.getElementById("editTitle").value = page.TITLE || "";
-            document.getElementById("editContent").value = page.CONTENT || "";
 
+            window.currentCmsContent = page.CONTENT || "";
+            document.getElementById("editContentFileText").value = page.CONTENT.split('/').pop();
             document.getElementById("editCmsModal").style.display = "flex";
         })
         .catch(() => showToast("Không thể tải dữ liệu trang CMS", "error"));
 }
 
+
 function closeCmsModal() {
     document.getElementById("editCmsModal").style.display = "none";
 }
-
-// Lưu sửa CMS
+// Lưu sửa CMS (upload file nếu có, hoặc giữ link hiện tại)
 document.getElementById("editCmsForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const data = {
-        PAGE_ID: document.getElementById("editPageId").value,
-        TYPE: document.getElementById("editType").value,
-        TITLE: document.getElementById("editTitle").value,
-        CONTENT: document.getElementById("editContent").value
-    };
+    const id = document.getElementById("editPageId").value;
+    const type = document.getElementById("editType").value.trim();
+    const title = document.getElementById("editTitle").value.trim();
 
-    fetch("http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=cms&action=update_page", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+    if (!type || !title) {
+        showToast("Vui lòng nhập đầy đủ thông tin!", "error");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("PAGE_ID", id);
+    formData.append("TYPE", type);
+    formData.append("TITLE", title);
+
+    // Nếu user chọn file mới → upload file
+    if (editFileInput.files.length > 0) {
+        formData.append("CONTENT_FILE", editFileInput.files[0]);
+    } else {
+        // Nếu không chọn file, giữ link cũ
+        formData.append("CONTENT_PATH", window.currentCmsContent);
+    }
+
+    fetch("http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=update_cms", {
+        method: "POST",
+        body: formData
     })
-        .then(res => res.json())
-        .then(result => {
-            if (result.success) {
-                showToast("Cập nhật thành công!", "success");
-                closeCmsModal();
-                loadCms();
-            } else {
-                showToast("Lỗi cập nhật!", "error");
-            }
-        });
+    .then(res => res.json())
+    .then(result => {
+        if (result.success) {
+            showToast("Cập nhật thành công!", "success");
+            closeCmsModal();
+            loadCms();
+        } else {
+            showToast(result.message || "Lỗi cập nhật!", "error");
+        }
+    })
+    .catch(() => showToast("Lỗi kết nối server!", "error"));
 });
 
 // ------- Xóa CMS -------
@@ -190,12 +233,12 @@ document.getElementById("cancelDelete").onclick = () => {
 document.getElementById("confirmDelete").onclick = () => {
     document.getElementById("deleteModal").style.display = "none";
 
-    fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=delete_page&id=${deletePageId}`, {
+    fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=delete_cms&id=${deletePageId}`, {
         method: "DELETE"
     })
         .then(res => res.json())
         .then(result => {
-            showToast(result.success ? "Xóa thành công!" : "Xóa thất bại!", result.success ? "success" : "error");
+            showToast(result.success ? "Xóa cms thành công!" : "Xóa thất bại!", result.success ? "success" : "error");
             loadCms();
         });
 };
