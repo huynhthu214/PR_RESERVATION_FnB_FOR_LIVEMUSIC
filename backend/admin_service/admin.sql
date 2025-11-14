@@ -29,9 +29,10 @@ create table EVENTS
    DESCRIPTION          text  comment '',
    END_TIME             datetime  comment '',
    IMAGE_URL            text  comment '',
+   ARTIST_NAME          text  comment '',
+   IMG_ARTIST           text  comment '',
    primary key (EVENT_ID)
 );
-
 /*==============================================================*/
 /* Table: VENUES                                                */
 /*==============================================================*/
@@ -79,4 +80,18 @@ create table PROMOTIONS
    APPLY_TO             text  comment '',
    DESCRIPTION          text  comment '',
    primary key (PROMO_ID)
+);
+
+/*==============================================================*/
+/* Table: CMS_PAGES                                             */
+/*==============================================================*/
+create table CMS_PAGES
+(
+   PAGE_ID              varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
+   TYPE                 text  comment '',
+   TITLE                text  comment '',
+   CONTENT             text  comment '',
+   UPDATED_AT           datetime  comment '',
+   primary key (PAGE_ID)
 );

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/user_details.css">
 <div class="container">
 
-  <!-- <aside class="sidebar">
+   <aside class="sidebar">
     <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" alt="Avatar">
     <h3>Nguyễn Văn A</h3>
     <p>nguyenvana@example.com</p>
@@ -12,7 +12,7 @@
       <button class="tab">Bảo mật</button>
       <button class="tab">Thông báo</button>
     </div>
-  </aside> -->
+  </aside> 
 
   <!-- Nội dung -->
   <section class="content">

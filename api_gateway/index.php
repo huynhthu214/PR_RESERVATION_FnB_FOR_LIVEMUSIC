@@ -109,6 +109,7 @@ function routeAdminService($action, $base)
     $path_event = $base . "admin_service/events/";
     $path_venue = $base . "admin_service/venues/";
     $path_promo = $base . "admin_service/promotions/";
+    $path_cms = $base . "admin_service/cms/";
     
     switch ($action) {
         case 'get_menu_items':
@@ -197,6 +198,14 @@ function routeAdminService($action, $base)
             
         case 'export_dashboard':
             include_once $path_dash . "export_dashboard.php";
+            break;
+
+        case 'get_cms':
+            include_once $path_cms . "get_cms.php";
+            break;
+            
+        case 'add_cms':
+            include_once $path_cms . "add_cms.php";
             break;
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);

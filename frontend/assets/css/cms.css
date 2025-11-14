@@ -1,0 +1,573 @@
+/* ====================== cms PAGE ====================== */
+.main-content.cms-page .section-header h2 {
+  color: #ffb300;
+}
+
+.main-content.cms-page .data-table th {
+  color: #fff;
+}
+
+.main-content.cms-page .btn-add {
+  background: linear-gradient(135deg, #ff7b00, #b30000);
+}
+
+/* ====================== MODAL (Chỉnh sửa + Xóa) ====================== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  position: relative;
+  background: #1e1e1e;
+  color: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 95%;
+  box-shadow: 0 0 15px rgba(255, 179, 0, 0.25);
+  border: 1px solid #ffb30040;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content h3 {
+  text-align: center;
+  color: #ffb300;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 12px;
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #121212;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  border-color: #ffb300;
+  outline: none;
+  box-shadow: 0 0 4px #ffb30060;
+}
+
+.modal-content button[type="submit"] {
+  width: 100%;
+  margin-top: 18px;
+  padding: 10px;
+  background: linear-gradient(90deg, #ffb300, #ff9500);
+  border: none;
+  color: #000;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.modal-content button[type="submit"]:hover {
+  background: linear-gradient(90deg, #ffd54f, #ffb300);
+}
+
+.close {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  font-size: 24px;
+  color: #ffb300;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.close:hover {
+  color: #ffd54f;
+}
+/* Modal content */
+#editcmsModal .modal-content {
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 30px 35px;
+  background: #1e1e1e;
+  border: 1px solid #ffb30040;
+  box-shadow: 0 0 20px rgba(255, 179, 0, 0.25);
+}
+
+/* Scrollbar */
+#editcmsModal .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+#editcmsModal .modal-content::-webkit-scrollbar-thumb {
+  background: #ffb30080;
+  border-radius: 8px;
+}
+
+/* Form grid */
+#editcmsModal form {
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
+}
+
+/* Labels */
+#editcmsModal label {
+  display: block;
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Inputs, select, textarea */
+#editcmsModal input,
+#editcmsModal select,
+#editcmsModal textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #121212;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.2s;
+}
+#editcmsModal input:focus,
+#editcmsModal select:focus,
+#editcmsModal textarea:focus {
+  border-color: #ffb300;
+  outline: none;
+  box-shadow: 0 0 4px #ffb30060;
+}
+
+/* Elements spanning 2 columns */
+#editcmsModal textarea,
+#editcmsModal .price-input,
+#editcmsModal .file-input,
+#editcmsModal button[type="submit"] {
+  grid-column: span 2;
+}
+
+/* Price input */
+/* Giá vé ngang hàng với label, không box riêng cho VNĐ */
+#editcmsModal .price-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#editcmsModal .price-input input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #121212;
+  color: #fff;
+  font-size: 14px;
+}
+
+#editcmsModal .price-input .currency-label {
+  font-size: 14px;
+  color: #ccc;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* File input with browse button */
+#editcmsModal .file-input {
+  display: flex;
+  gap: 8px;
+}
+#editcmsModal .file-input input[type="text"] {
+  flex: 1;
+  cursor: pointer;
+}
+#editcmsModal .file-input .btn-browse {
+  padding: 8px 14px;
+  background: #ffb300;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+#editcmsModal .file-input .btn-browse:hover {
+  background: #ffd54f;
+}
+
+/* Submit button */
+#editcmsModal button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px;
+  background: linear-gradient(90deg, #ffb300, #ff9500);
+  border: none;
+  color: #000;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#editcmsModal button[type="submit"]:hover {
+  background: linear-gradient(90deg, #ffd54f, #ffb300);
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+  #editcmsModal form {
+    grid-template-columns: 1fr;
+  }
+  #editcmsModal textarea,
+  #editcmsModal .price-input,
+  #editcmsModal .file-input,
+  #editcmsModal button {
+    grid-column: 1;
+  }
+}
+
+/* ====================== MODAL XÁC NHẬN XÓA ====================== */
+#deleteModal .modal-content .btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-left: 8px;
+}
+
+#deleteModal .modal-content #cancelDelete {
+  background-color: #444;
+  color: #fff;
+}
+#deleteModal .modal-content #cancelDelete:hover {
+  background-color: #555;
+}
+
+#deleteModal .modal-content #confirmDelete {
+  background-color: #ffb300;
+  color: #000;
+}
+#deleteModal .modal-content #confirmDelete:hover {
+  background-color: #ffd54f;
+}
+
+/* ====================== TOAST ====================== */
+#toast-container {
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  position: relative;
+  background-color: #1a1a1a;
+  color: #ffb300;
+  padding: 14px 22px 14px 18px;
+  border-radius: 10px;
+  min-width: 250px;
+  max-width: 350px;
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(120%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 6px 15px rgba(255, 179, 0, 0.3);
+  border-left: 6px solid #ffb300;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.success {
+  border-left-color: #ffb300;
+  color: #ffb300;
+}
+.toast.error {
+  border-left-color: #ff6b00;
+  color: #ff6b00;
+}
+.toast.info {
+  border-left-color: #ffa726;
+  color: #ffa726;
+}
+
+.toast .close-toast {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #ffb300;
+  font-weight: bold;
+  line-height: 1;
+  transition: 0.2s;
+}
+.toast .close-toast:hover {
+  color: #ffd54f;
+}
+
+/* ====================== FORM THÊM/SỬA cms ====================== */
+.add-cms-page .form-section {
+  background: #1e1e1e;
+  padding: 25px 35px;
+  border-radius: 12px;
+  border: 1px solid #ffb30040;
+  max-width: 550px;
+  margin: 40px auto;
+  box-shadow: 0 0 15px rgba(255, 179, 0, 0.25);
+  color: #fff;
+  animation: fadeIn 0.4s ease-in-out;
+}
+.add-cms-page .btn-back {
+  background: #2c2c2c;
+  color: #ffb300;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.add-cms-page .section-header h2 {
+  text-align: center;
+  color: #ffb300;
+  font-size: 22px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.add-cms-page label {
+  display: block;
+  color: #ccc;
+  margin-top: 14px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* ===== INPUT, TEXTAREA, SELECT ===== */
+.add-cms-page input,
+.add-cms-page textarea,
+.add-cms-page select {
+  width: 100%;
+  padding: 9px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #121212 !important;
+  color: #fff !important;
+  font-size: 15px;
+  outline: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.add-cms-page input:focus,
+.add-cms-page textarea:focus,
+.add-cms-page select:focus {
+  background-color: #121212 !important;
+  border-color: #ffb300;
+  color: #fff !important;
+  outline: none !important;
+  box-shadow: 0 0 4px rgba(255, 179, 0, 0.3);
+}
+
+/* Ngăn autofill */
+.add-cms-page input:-webkit-autofill,
+.add-cms-page input:-webkit-autofill:focus,
+.add-cms-page input:-webkit-autofill:hover,
+.add-cms-page input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #121212 inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 9999s ease-in-out 0s !important;
+}
+
+/* ===== INPUT GIÁ CÓ ĐƠN VỊ VNĐ ===== */
+.price-input {
+  position: relative;
+  width: 100%;
+}
+
+.price-input input {
+  width: 100%;
+  padding-right: 60px; /* chừa khoảng cho chữ VNĐ */
+  background-color: #121212 !important;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  padding: 9px 12px;
+  margin-top: 6px;
+  outline: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+.price-input input:focus {
+  border-color: #ffb300;
+  box-shadow: 0 0 4px rgba(255, 179, 0, 0.3);
+}
+
+.price-input .currency-label {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+  pointer-cmss: none;
+}
+
+/* ===== NÚT LƯU + HỦY ===== */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.btn-save {
+  background: linear-gradient(90deg, #ffb300, #ff9500);
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.btn-save:hover {
+  background: linear-gradient(90deg, #ffd54f, #ffb300);
+}
+
+.btn-cancel {
+  background: #2c2c2c;
+  color: #ffb300;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-cancel:hover {
+  background: #3a3a3a;
+  color: #ffd54f;
+}
+
+/* ====================== ANIMATION ====================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* ====================== INPUT ADD cms ====================== */
+/* ---- Sửa lỗi màu nền và icon cho input date/time ---- */
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"] {
+  background-color: #fff; /* nền trắng */
+  color: #000; /* chữ đen cho rõ */
+  border-radius: 6px;
+  padding: 8px;
+  width: 100%;
+  font-size: 14px;
+}
+
+/* ---- Đổi màu icon lịch/đồng hồ thành sáng rõ ---- */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* đảo màu icon để hiện trắng nếu nền tối */
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* ---- Hover icon rõ hơn ---- */
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Link nội dung */
+.file-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 400px;
+}
+
+#content_file_text {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+#content_file_btn {
+  padding: 6px 12px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#content_file_btn:hover {
+  background-color: #333;
+}
+
+.content_file-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hidden {
+  display: none;
+}

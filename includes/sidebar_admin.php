@@ -44,6 +44,12 @@ $page = $page ?? ($_GET['page'] ?? 'dashboard');
           <i data-lucide="gift"></i> Khuyến mãi
         </a>
       </li>
+      
+      <li class="<?= ($page == 'cms') ? 'active' : ''; ?>">
+      <a href="index.php?page=cms">
+        <i data-lucide="notebook-text"></i> Nội dung
+      </a>
+     </li>
     </ul>
   </nav>
 </aside>

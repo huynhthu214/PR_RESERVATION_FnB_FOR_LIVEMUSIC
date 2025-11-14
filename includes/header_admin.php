@@ -16,13 +16,32 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
 } else {
     $userName = 'Khách'; // Fallback
 }
+$page = $_GET['page'] ?? 'dashboard';
+
+// Tạo tiêu đề động theo từng trang
+$title = match($page) {
+    'dashboard' => 'LYZY - Tổng quan',
+    'events' => 'LYZY - Sự kiện',
+    'venues' => 'LYZY - Địa điểm',
+    'promotion' => 'LYZY - Khuyến mãi',
+    'order' => 'LYZY - Đơn hàng',
+    'users' => 'LYZY - Người dùng',
+    'order_detail' => 'LYZY - Chi tiết đơn hàng',
+    'notification' => 'LYZY - Thông báo',
+    'notitification_detail' => 'LYZY - Chi tiết thông báo',
+    'menu' => 'LYZY - Menu',
+    'cms' => 'LYZY - CMS',
+    'add_cms' => 'LYZY - Thêm trang CMS',
+    'add_event' => 'LYZY - Thêm sự kiện',
+    'add_menu' => 'LYZY - Thêm menu',
+    'add_promo' => 'LYZY - Thêm mã khuyến mãi',
+    'add_user' => 'LYZY - Thêm người dùng',
+    'add_venue' => 'LYZY - Thêm địa điểm',
+    default => 'LYZY | ' . ucfirst($page),
+};
+
 ?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LYZY - <?php echo isset($namePage) ? $namePage : ''; ?></title>
+    <title><?php echo htmlspecialchars($title); ?></title>
     <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo_L.png">
 
     <!-- CSS CHUNG -->
@@ -39,9 +58,6 @@ if (!empty($_SESSION['ADMIN_NAME'])) {
             echo '<link rel="stylesheet" href="' . BASE_URL . 'assets/css/' . $page . '.css">';
         }
     ?>
-</head>
-<body>
-
 <header class="admin-header">
   <div class="header-left">
       <div class="logo">

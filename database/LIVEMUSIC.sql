@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     13/11/2025 11:18:53 PM                       */
+/* Created on:     14/11/2025 8:23:05 PM                        */
 /*==============================================================*/
 
 
@@ -209,9 +209,9 @@ create table CMS_PAGES
 (
    PAGE_ID              varchar(10) not null  comment '',
    ADMIN_ID             varchar(10)  comment '',
-   SLUG                 text  comment '',
+   TYPE                 text  comment '',
    TITLE                text  comment '',
-   CONTENT_             text  comment '',
+   CONTENT             text  comment '',
    UPDATED_AT           datetime  comment '',
    primary key (PAGE_ID)
 );

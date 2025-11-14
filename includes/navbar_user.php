@@ -10,7 +10,7 @@ $userName = '';
 if (!empty($_SESSION['USERNAME'])) {
     $userName = $_SESSION['USERNAME']; // Tên customer đăng nhập
 } else {
-    $userName = 'Khách'; // Fallback
+    $userName = 'Khách'; 
 }
 
 $page = $_GET['page'] ?? 'home';
@@ -35,17 +35,18 @@ $title = match($page) {
     'user_orders' => 'LYZY - Đơn hàng của tôi',
     default => 'LYZY | ' . ucfirst($page),
 };
+
+$hideSidebarPages = [
+    'user_details', 'cart', 'event_details',
+    'noti_details', 'notification', 'payment',
+    'seat', 'tickets', 'user_orders'
+];
 ?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo htmlspecialchars($title); ?></title>
   <link rel="stylesheet" href="../../frontend/assets/css/user_style.css">
   <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-</head>
-<body>
+  
+ <?php if (!in_array($page, $hideSidebarPages)): ?>
   <!-- Sidebar -->
   <aside class="sidebar compact" id="sidebar">
     <ul>
@@ -67,6 +68,7 @@ $title = match($page) {
       </li>
     </ul>
   </aside>
+<?php endif; ?>
 
   <!-- Navbar -->
   <nav class="navbar" id="navbar">
