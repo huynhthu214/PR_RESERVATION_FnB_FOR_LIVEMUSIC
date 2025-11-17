@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng nhập - LYZY</title>
+  <title>LYZY - Đăng nhập</title>
   <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo_L.png">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/login_user.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -73,11 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="right-side">
       <div class="login-card">
         <h2>Đăng nhập</h2>
-
-        <?php if (!empty($error)): ?>
-          <p class="error-msg"><i class="fa fa-exclamation-circle"></i> <?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-
         <form method="POST">
           <label>Email</label>
           <input type="email" name="email" placeholder="Nhập email..." required>
@@ -86,6 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="password" name="password" placeholder="••••••••" required>
 
           <a href="forgot_pass.php" class="forgot-link">Quên mật khẩu?</a>
+
+        <?php if (!empty($error)): ?>
+          <p class="error-msg"><i class="fa fa-exclamation-circle"></i> <?php echo htmlspecialchars($error); ?></p>
+        <?php endif; ?>
 
           <button type="submit" class="btn-submit">Đăng nhập</button>
         </form>

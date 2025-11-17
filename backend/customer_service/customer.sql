@@ -18,6 +18,7 @@ create table OTP
 (
    OTP_ID               varchar(10) not null  comment '',
    CUSTOMER_ID          varchar(10)  comment '',
+   PAYMENT_ID           varchar(10)  comment '',
    CODE                 varchar(10)  comment '',
    CREATED_AT           datetime  comment '',
    EXPIRES_AT           datetime  comment '',

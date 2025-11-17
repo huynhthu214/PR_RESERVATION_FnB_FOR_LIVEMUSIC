@@ -10,39 +10,6 @@ if (empty($service) || empty($action)) {
     exit;
 }
 
-
-// /* ====== HELPER: JSON RESPONSE ====== */
-// function jsonResponse($success, $data)
-// {
-//     echo json_encode(["success" => $success, "data" => $data]);
-//     exit;
-// }
-
-// /* ====== MIDDLEWARE: CHECK ROLE ====== */
-// function checkRole(array $allowed_roles)
-// {
-//     if (!isset($_SESSION['ROLE'])) {
-//         jsonResponse(false, "Bạn chưa đăng nhập.");
-//     }
-//     if (!in_array($_SESSION['ROLE'], $allowed_roles)) {
-//         jsonResponse(false, "Bạn không có quyền truy cập chức năng này.");
-//     }
-// }
-
-// /* ====== MIDDLEWARE: CHECK OWNERSHIP ====== */
-// function checkOwnership($conn, $event_id)
-// {
-//     if ($_SESSION['ROLE'] === 'Admin') return;
-//     $admin_id = $_SESSION['ADMIN_ID'];
-//     $stmt = $conn->prepare("SELECT ADMIN_ID FROM EVENTS WHERE EVENT_ID = ?");
-//     $stmt->bind_param("s", $event_id);
-//     $stmt->execute();
-//     $result = $stmt->get_result()->fetch_assoc();
-//     if (!$result || $result['ADMIN_ID'] !== $admin_id) {
-//         jsonResponse(false, "Bạn không có quyền truy cập sự kiện này.");
-//     }
-// }
-
 /* ====== ROUTER CHÍNH ====== */
 switch ($service) {
     case 'admin':
@@ -256,8 +223,20 @@ function routeCustomerService($action, $base)
             include_once $path_user . "get_user_detail.php";
             break;
 
+        case 'send_otp':
+            include_once $base . "customer_service/send_otp.php";
+            break;
+
+        case 'verify_otp':
+            include_once $base . "customer_service/verify_otp.php";
+            break;
+
+        case 'reset_pwd':
+            include_once $base . "customer_service/reset_pwd.php";
+        break;
+
         default:
-            echo json_encode(["error" => "Hành động không hợp lệ trong admin_service"]);
+            echo json_encode(["error" => "Hành động không hợp lệ trong customer_service"]);
             break;
     }
 }

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     14/11/2025 8:23:05 PM                        */
+/* Created on:     17/11/2025 9:09:34 PM                        */
 /*==============================================================*/
 
 
@@ -45,6 +45,9 @@ alter table ORDER_ITEMS
 
 alter table OTP 
    drop foreign key FK_OTP_CUSTOMER__CUSTOMER;
+
+alter table OTP 
+   drop foreign key FK_OTP_OTP_PAYME_PAYMENTS;
 
 alter table PAYMENTS 
    drop foreign key FK_PAYMENTS_CUSTOMER__CUSTOMER;
@@ -144,6 +147,9 @@ drop table if exists ORDER_ITEMS;
 alter table OTP 
    drop foreign key FK_OTP_CUSTOMER__CUSTOMER;
 
+alter table OTP 
+   drop foreign key FK_OTP_OTP_PAYME_PAYMENTS;
+
 drop table if exists OTP;
 
 
@@ -211,7 +217,7 @@ create table CMS_PAGES
    ADMIN_ID             varchar(10)  comment '',
    TYPE                 text  comment '',
    TITLE                text  comment '',
-   CONTENT             text  comment '',
+   CONTENT_             text  comment '',
    UPDATED_AT           datetime  comment '',
    primary key (PAGE_ID)
 );
@@ -341,6 +347,7 @@ create table OTP
 (
    OTP_ID               varchar(10) not null  comment '',
    CUSTOMER_ID          varchar(10)  comment '',
+   PAYMENT_ID           varchar(10)  comment '',
    CODE                 varchar(10)  comment '',
    CREATED_AT           datetime  comment '',
    EXPIRES_AT           datetime  comment '',
@@ -468,6 +475,9 @@ alter table ORDER_ITEMS add constraint FK_ORDER_IT_ORDER_ORD_ORDERS foreign key 
 
 alter table OTP add constraint FK_OTP_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
+
+alter table OTP add constraint FK_OTP_OTP_PAYME_PAYMENTS foreign key (PAYMENT_ID)
+      references PAYMENTS (PAYMENT_ID) on delete restrict on update restrict;
 
 alter table PAYMENTS add constraint FK_PAYMENTS_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
