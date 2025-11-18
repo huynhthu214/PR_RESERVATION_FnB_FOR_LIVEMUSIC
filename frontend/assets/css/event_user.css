@@ -157,3 +157,27 @@
   .btn-buy:hover {
     opacity: 0.85;
   }
+
+  #loadMoreBtn {
+    background-color: #bc5a0a;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+#loadMoreBtn:hover {
+    background-color: #d56d18;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+#loadMoreBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}

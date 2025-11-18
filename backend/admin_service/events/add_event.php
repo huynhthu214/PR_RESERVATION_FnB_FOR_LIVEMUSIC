@@ -12,13 +12,13 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (empty($data['band_name']) || empty($data['venue_name']) || empty($data['event_date']) || !isset($data['ticket_price']) || empty($data['status'])) {
+if (empty($data['band_name']) || empty($data['event_name']) || empty($data['venue_name']) || empty($data['event_date']) || !isset($data['ticket_price']) || empty($data['status'])) {
     http_response_code(400); 
-    echo json_encode(["success" => false, "message" => "Thiếu dữ liệu bắt buộc (band_name, venue_name, event_date, ticket_price, status)"]);
+    echo json_encode(["success" => false, "message" => "Thiếu dữ liệu bắt buộc (band_name, event_name, venue_name, event_date, ticket_price, status)"]);
     exit;
 }
 
-/* Tạo EVENT_ID tự động sinh.                   */
+/* Tạo EVENT_ID tự động sinh*/
 $sql_get_id = "SELECT EVENT_ID FROM EVENTS ORDER BY EVENT_ID DESC LIMIT 1";
 $result = $conn_admin->query($sql_get_id);
 
@@ -37,7 +37,7 @@ if (!isset($_SESSION['ADMIN_ID'])) {
     exit;
 }
 $ADMIN_ID = $_SESSION['ADMIN_ID']; 
-
+$EVENT_NAME = $conn_admin->real_escape_string($data['event_name']);
 $BAND_NAME = $conn_admin->real_escape_string($data['band_name']);
 $VENUE_NAME = $conn_admin->real_escape_string($data['venue_name']);
 $STATUS = $conn_admin->real_escape_string($data['status']);
@@ -75,11 +75,12 @@ if ($result_venue && $result_venue->num_rows > 0) {
     $conn_admin->close();
     exit;
 }
-
+$DESCRIPTION = "''"; // empty string
+$IMAGE_URL = "''";   // empty string
 $sql = "INSERT INTO EVENTS 
-            (EVENT_ID, ADMIN_ID, VENUE_ID, BAND_NAME, EVENT_DATE, START_TIME, TICKET_PRICE, STATUS, DESCRIPTION, END_TIME, IMAGE_URL)
+            (EVENT_ID, ADMIN_ID, VENUE_ID, BAND_NAME, EVENT_DATE, START_TIME, TICKET_PRICE, STATUS, DESCRIPTION, END_TIME, IMAGE_URL, EVENT_NAME)
         VALUES 
-            ('$EVENT_ID', '$ADMIN_ID', '$VENUE_ID', '$BAND_NAME', '$EVENT_DATE_sql', '$START_TIME_sql', $TICKET_PRICE, '$STATUS', $DESCRIPTION, '$END_TIME_sql', $IMAGE_URL)";
+            ('$EVENT_ID', '$ADMIN_ID', '$VENUE_ID', '$BAND_NAME', '$EVENT_DATE_sql', '$START_TIME_sql', $TICKET_PRICE, '$STATUS', $DESCRIPTION, '$END_TIME_sql', $IMAGE_URL, $EVENT_NAME)";
 
 if ($conn_admin->query($sql)) {
     http_response_code(201); 

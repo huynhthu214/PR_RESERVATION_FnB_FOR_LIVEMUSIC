@@ -31,6 +31,7 @@ create table EVENTS
    IMAGE_URL            text  comment '',
    ARTIST_NAME          text  comment '',
    IMG_ARTIST           text  comment '',
+   EVENT_NAME           text  comment '',
    primary key (EVENT_ID)
 );
 /*==============================================================*/

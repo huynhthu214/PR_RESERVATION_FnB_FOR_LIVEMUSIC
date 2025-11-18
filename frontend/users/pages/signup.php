@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng ký - LYZY</title>
+  <title>LYZY - Đăng ký</title>
 
   <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo_L.png">
 
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="password" name="password" placeholder="••••••••" required>
           <button type="submit" class="btn-submit">Đăng ký</button>
           <p class="signup-note">
-            Đã có tài khoản? <a href="login.php">Đăng nhập ngay</a>
+            Đã có tài khoản? <a href="login_user.php">Đăng nhập ngay</a>
           </p>
         </form>
       </div>

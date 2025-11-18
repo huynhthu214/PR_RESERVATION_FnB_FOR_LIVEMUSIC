@@ -93,6 +93,7 @@
   p {
     color: var(--text);
     line-height: 1.6;
+    font-size: 18px;
   }
 
   .details-grid {
@@ -124,7 +125,7 @@
 
   .detail-label {
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: 18px;
   }
 
   .booking-card {
@@ -171,6 +172,9 @@
   .button-primary {
     background: linear-gradient(90deg, var(--secondary), var(--primary));
     color: #000;
+    width: 150px; 
+    margin-left: auto;     
+    margin-right: auto;   
   }
 
   .button-outline {
@@ -185,4 +189,8 @@
     color: var(--muted);
     font-size: 0.9rem;
     line-height: 1.4;
+  }
+  
+  .artist-info {
+      white-space: pre-line; /* Cho phép xuống dòng theo \n */
   }

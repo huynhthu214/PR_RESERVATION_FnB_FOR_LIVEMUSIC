@@ -8,7 +8,26 @@ if (!$id) {
     exit;
 }
 
-$stmt = $conn_admin->prepare("SELECT * FROM EVENTS WHERE EVENT_ID = ?");
+$sql = "
+    SELECT 
+        E.EVENT_ID,
+        E.EVENT_NAME,
+        E.BAND_NAME,
+        E.EVENT_DATE,
+        E.START_TIME,
+        E.END_TIME,
+        E.TICKET_PRICE,
+        E.STATUS,
+        E.DESCRIPTION,
+        E.IMAGE_URL,
+        V.VENUE_ID,
+        V.NAME AS VENUE_NAME
+    FROM EVENTS E
+    LEFT JOIN VENUES V ON E.VENUE_ID = V.VENUE_ID
+    WHERE E.EVENT_ID = ?
+";
+
+$stmt = $conn_admin->prepare($sql);
 $stmt->bind_param("s", $id);
 $stmt->execute();
 $result = $stmt->get_result();

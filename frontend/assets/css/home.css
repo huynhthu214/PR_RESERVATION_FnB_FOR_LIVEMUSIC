@@ -54,7 +54,8 @@ p {
 .event .info {
   padding: 1rem 1.5rem;
   text-align: left;
-}
+  padding-bottom: 0px;
+} 
 .event .title {
   font-weight: 600;
   color: gold;
@@ -75,14 +76,24 @@ p {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
   gap: 2rem;
+  flex-wrap: wrap;
   margin-top: 2rem;
 }
 .artist {
-  cursor: pointer;
-  transition: all 0.4s;
+  width: 180px;
+  height: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .artist img {
   width: 100%;
+  height: 150px;
+  object-fit: cover;
   border-radius: 50%;
   border: 2px solid rgba(218,165,32,0.2);
   transition: all 0.4s;
@@ -199,4 +210,28 @@ p {
 }
 .about a:hover {
   color: #b87333;
+}
+
+.see-more-btn {
+    margin: 10 auto;
+    width: 140px;
+    padding: 10px 20px;
+    font-size: 17px;
+    border: 1px solid #835209ff;
+    background: #c56e04ff; 
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    
+}
+
+.see-more-btn:hover {
+    background: var(--primary, #835209ff); 
+    color: #fff; 
+    transform: scale(1.05);
 }

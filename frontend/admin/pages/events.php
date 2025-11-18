@@ -11,6 +11,7 @@
           <thead>
               <tr>
                   <th>ID</th>
+                  <th>Tên sự kiện</th>
                   <th>Địa điểm</th>
                   <th>Ban nhạc</th>
                   <th>Ngày diễn</th>
@@ -20,7 +21,7 @@
               </tr>
           </thead>
             <tbody id="event-body">
-                <tr><td colspan="7" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                <tr><td colspan="8" style="text-align:center;">Đang tải dữ liệu...</td></tr>
             </tbody>
         </table>
     </section>
@@ -37,11 +38,14 @@
     <form id="editEventForm">
       <input type="hidden" id="editEventId">
 
-      <label for="editBandName">Tên ban nhạc / chương trình:</label>
+      <label for="editBandName">Tên ban nhạc:</label>
       <input type="text" id="editBandName" required>
 
-      <label for="editVenueId">Địa điểm:</label>
-      <input type="text" id="editVenueId" required>
+      <label for="editEventName">Tên sự kiện:</label>
+      <input type="text" id="editEventName" required>
+
+      <label for="editVenueName">Địa điểm:</label>
+      <input type="text" id="editVenueName" required>
 
       <label for="editEventDate">Ngày diễn:</label>
       <input type="date" id="editEventDate" required>
@@ -60,9 +64,9 @@
 
       <label for="editStatus">Trạng thái:</label>
       <select id="editStatus">
-        <option value="Scheduled">Đang lên lịch</option>
+        <option value="Scheduled">Đang mở</option>
         <option value="Cancelled">Hủy</option>
-        <option value="Completed">Đã diễn</option>
+        <option value="Completed">Đã kết thúc</option>
       </select>
 
       <label for="editDescription">Mô tả:</label>
@@ -149,13 +153,19 @@ function loadEvents() {
                 html += `
                     <tr>
                         <td>${event.id}</td>
-                        <td>${event.venue || ''}</td>
+                        <td>${event.event_name}</td>
+                        <td>${event.venue_name || ''}</td>
                         <td>${event.band || ''}</td>
                         <td>${event.date ? new Date(event.date).toLocaleDateString("vi-VN") : ''}</td>
                         <td>${Number(event.price || 0).toLocaleString("vi-VN")}</td>
                         <td>
                             <span class="status ${event.status?.toLowerCase() === 'active' ? 'selling' : 'soldout'}">
-                                ${event.status?.toLowerCase() === 'active' ? 'Đang mở' : 'Đã kết thúc'}
+                                ${event.status?.toLowerCase() === 'active' 
+                                                    ? 'Đang mở' 
+                                                    : event.status?.toLowerCase() === 'completed'
+                                                        ? 'Đã kết thúc'
+                                                        : 'Hủy'
+}
                             </span>
                         </td>
                         <td>
@@ -171,11 +181,26 @@ function loadEvents() {
         .catch(error => {
             console.error('Lỗi khi tải dữ liệu sự kiện:', error);
             document.getElementById('event-body').innerHTML =
-                '<tr><td colspan="7" style="text-align:center;">Lỗi tải dữ liệu</td></tr>';
+                '<tr><td colspan="8" style="text-align:center;">Lỗi tải dữ liệu</td></tr>';
         });
 }
 
 // ---------------- Modal chỉnh sửa Event ----------------
+function mapStatus(status) {
+    if (!status) return "Scheduled";
+
+    status = status.toLowerCase();
+
+    if (status === "active" || status === "scheduled" || status === "đang mở")
+        return "Scheduled";
+    if (status === "cancelled" || status === "hủy")
+        return "Cancelled";
+    if (status === "completed" || status === "đã kết thúc")
+        return "Completed";
+
+    return "Scheduled";
+}
+
 let selectedEventId = null;
 
 function editEvent(id) {
@@ -190,13 +215,14 @@ function editEvent(id) {
             }
 
             document.getElementById('editEventId').value = event.EVENT_ID;
+            document.getElementById('editEventName').value = event.EVENT_NAME;
             document.getElementById('editBandName').value = event.BAND_NAME || '';
-            document.getElementById('editVenueId').value = event.VENUE_ID || '';
+            document.getElementById('editVenueName').value = event.venue_name || event.VENUE_NAME || '';
             document.getElementById('editEventDate').value = event.EVENT_DATE ? event.EVENT_DATE.split(' ')[0] : '';
             document.getElementById('editStartTime').value = event.START_TIME ? event.START_TIME.split(' ')[1] : '';
             document.getElementById('editEndTime').value = event.END_TIME ? event.END_TIME.split(' ')[1] : '';
             document.getElementById('editTicketPrice').value = Number(event.TICKET_PRICE).toLocaleString("vi-VN");
-            document.getElementById('editStatus').value = event.STATUS || '';
+            document.getElementById('editStatus').value = mapStatus(event.STATUS || event.status);
             document.getElementById('editDescription').value = event.DESCRIPTION || '';
             document.getElementById('editImageUrl').value = event.IMAGE_URL || '';
 
@@ -218,7 +244,7 @@ document.getElementById('editEventForm').addEventListener('submit', function(e){
     const data = {
         EVENT_ID: document.getElementById('editEventId').value,
         BAND_NAME: document.getElementById('editBandName').value,
-        VENUE_ID: document.getElementById('editVenueId').value,
+        VENUE_NAME: document.getElementById('editVenueName').value,
         EVENT_DATE: document.getElementById('editEventDate').value,
         START_TIME: document.getElementById('editStartTime').value,
         END_TIME: document.getElementById('editEndTime').value,

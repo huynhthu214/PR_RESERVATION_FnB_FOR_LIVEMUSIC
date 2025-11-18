@@ -16,6 +16,11 @@
       </div>
 
       <div class="form-group">
+        <label for="event_name">Tên sự kiện:</label>
+        <input type="text" id="event_name" name="event_name" placeholder="Nhập tên sự kiện..." required>
+      </div>
+
+      <div class="form-group">
         <label for="venue_name">Địa điểm</label>
         <input type="text" id="venue_name" name="venue_name" placeholder="Nhập địa điểm" required>
       </div>
@@ -54,17 +59,18 @@ document.getElementById("add-event-form").addEventListener("submit", async funct
   e.preventDefault();
 
   const band_name = document.getElementById("band_name").value.trim();
+  const event_name = document.getElementById("event_name").value.trim();
   const venue_name = document.getElementById("venue_name").value.trim();
   const event_date = document.getElementById("event_date").value.trim();
   const ticket_price = document.getElementById("ticket_price").value.trim();
   const status = document.getElementById("status").value;
 
-  if (!band_name || !venue_name || !event_date || !ticket_price) {
+  if (!band_name || !event_name || !venue_name || !event_date || !ticket_price) {
     showToast("Vui lòng nhập đầy đủ thông tin!", "error");
     return;
   }
 
-  const data = { band_name, venue_name, event_date, ticket_price, status };
+  const data = { band_name, event_name, venue_name, event_date, ticket_price, status };
 
   try {
     const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_event', {

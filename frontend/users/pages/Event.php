@@ -1,97 +1,80 @@
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/event_user.css">
-<div class="hero">
-  <h1>Live Events & Music Nights</h1>
-  <p>Experience the rhythm of the city — from electrifying EDM nights to soulful jazz evenings.</p>
 
-  <div class="genres">
-    <button class="genre-btn">🎧 Electronic</button>
-    <button class="genre-btn">🎸 Rock</button>
-    <button class="genre-btn">🎷 Jazz</button>
-  </div>
+<div class="hero">
+  <h1>Sự kiện trực tiếp & Đêm nhạc</h1>
+  <p>Trải nghiệm nhịp điệu của thành phố — từ những đêm nhạc EDM sôi động đến những buổi tối nhạc jazz đầy cảm xúc.</p>
 </div>
 
 <div class="container">
   <div class="section-title">
-    <h2>Upcoming Events</h2>
-    <p>Don’t miss out on these incredible live performances. Book your tickets now!</p>
+    <h2>Sự kiện sắp tới</h2>
+    <p>Đừng bỏ lỡ những màn trình diễn trực tiếp tuyệt vời này. Đặt vé ngay!</p>
   </div>
 
-  <div class="grid" id="eventsGrid">
-    <!-- Event cards will be loaded here -->
+  <div class="grid" id="eventsGrid"></div>
+  <div style="text-align:center; margin-top:20px;">
+    <button id="loadMoreBtn" class="btn">Xem thêm</button>
   </div>
 </div>
-
 <script>
-  const events = [
-    {
-      title: "Electronic Night Vibes",
-      artist: "DJ Pulse & The Synthwave",
-      date: "Sat, Dec 15, 2024 - 8:00 PM",
-      location: "The Neon Arena, Downtown",
-      price: "$45",
-      image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2070",
-      genre: "Electronic"
-    },
-    {
-      title: "Rock Legends Live",
-      artist: "The Thunder Band",
-      date: "Fri, Dec 20, 2024 - 9:00 PM",
-      location: "Stadium Rock Hall",
-      price: "$60",
-      image: "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070",
-      genre: "Rock"
-    },
-    {
-      title: "Jazz & Soul Evening",
-      artist: "Smooth Notes Collective",
-      date: "Sun, Dec 22, 2024 - 7:30 PM",
-      location: "Blue Note Lounge",
-      price: "$38",
-      image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=2072",
-      genre: "Jazz"
-    },
-    {
-      title: "Hip Hop Festival",
-      artist: "MC Flow & The Beats",
-      date: "Sat, Dec 28, 2024 - 10:00 PM",
-      location: "Urban Sound Complex",
-      price: "$55",
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=2070",
-      genre: "Hip Hop"
-    },
-    {
-      title: "Indie Acoustic Sessions",
-      artist: "The Wandering Folk",
-      date: "Thu, Jan 2, 2025 - 8:30 PM",
-      location: "Cozy Corner Cafe",
-      price: "$30",
-      image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070",
-      genre: "Indie"
-    },
-    {
-      title: "EDM Mega Night",
-      artist: "Neon Pulse DJs",
-      date: "Sat, Jan 5, 2025 - 11:00 PM",
-      location: "The Electric Dome",
-      price: "$70",
-      image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=2070",
-      genre: "EDM"
+const grid = document.getElementById("eventsGrid");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+let allEvents = [];
+let currentIndex = 0;
+const pageSize = 6;
+
+async function loadEvents() {
+    try {
+        const res = await fetch("/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_events");
+        const result = await res.json();
+
+        if (!result.success || !Array.isArray(result.data)) {
+            grid.innerHTML = "<p>Không thể tải sự kiện.</p>";
+            loadMoreBtn.style.display = "none";
+            return;
+        }
+
+        allEvents = result.data;
+        renderEvents();
+    } catch (err) {
+        console.error(err);
+        grid.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+        loadMoreBtn.style.display = "none";
     }
-  ];
+}
 
-  const grid = document.getElementById("eventsGrid");
+// ==== Thay thế đoạn renderEvents và viewEvent ====
+function renderEvents() {
+    const slice = allEvents.slice(currentIndex, currentIndex + pageSize);
+    grid.innerHTML += slice.map(ev => `
+        <div class="card">
+            <img src="${ev.image_url}" alt="${ev.band}" />
+            <div class="card-content">
+                <h3>${ev.band}</h3>
+                <p><strong>${ev.artist_name}</strong></p>
+                <p>${new Date(ev.date).toLocaleString("vi-VN")}</p>
+                <p>${ev.venue}</p>
+                <p class="price">${ev.price.toLocaleString()} VND</p>
+                <button class="btn-buy" onclick="viewEvent('${encodeURIComponent(ev.id)}')">Xem chi tiết</button>
+            </div>
+        </div>
+    `).join("");
 
-  grid.innerHTML = events.map(event => `
-    <div class="card">
-      <img src="${event.image}" alt="${event.title}" />
-      <div class="card-content">
-        <h3>${event.title}</h3>
-        <p><strong>${event.artist}</strong></p>
-        <p>${event.date}</p>
-        <p>${event.location}</p>
-        <p class="price">${event.price}</p>
-        <button class="btn-buy">Buy Ticket</button>
-      </div>
-    </div>
-  `).join("");
+    currentIndex += pageSize;
+
+    if (currentIndex >= allEvents.length) {
+        loadMoreBtn.style.display = "none";
+    }
+}
+
+function viewEvent(id) {
+    window.location.href = "index.php?page=event_details&id=" + encodeURIComponent(id);
+}
+// ==== Kết thúc đoạn sửa ====
+
+loadMoreBtn.addEventListener("click", renderEvents);
+
+// Load 6 event đầu tiên
+loadEvents();
 </script>

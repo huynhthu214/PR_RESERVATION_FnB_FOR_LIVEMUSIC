@@ -1,10 +1,16 @@
-
+<?php
+require_once __DIR__ . '/../../config.php';
+?>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/home.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/event_user.css">
+</head>
+<body>
+
 <!-- Hero -->
 <section>
   <div class="container">
-    <h1 style="font-size:2.5rem; margin-top:-80px;">LiveMusic - Trải nghiệm âm nhạc sống động</h1>
-    <p style="margin-bottom:-100px;">Khám phá những sự kiện âm nhạc đỉnh cao, nơi cảm xúc và giai điệu hòa quyện.</p>
+    <h1 style="font-size:2.5rem;">LiveMusic - Trải nghiệm âm nhạc sống động</h1>
+    <p>Khám phá những sự kiện âm nhạc đỉnh cao, nơi cảm xúc và giai điệu hòa quyện.</p>
   </div>
 </section>
 
@@ -13,31 +19,10 @@
   <div class="container">
     <h2>Sự kiện nổi bật</h2>
     <p>Đừng bỏ lỡ những buổi trình diễn đẳng cấp sắp tới</p>
-    <div class="events">
-      <div class="event">
-        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2070" alt="">
-        <div class="info">
-          <div class="title">Electronic Night Vibes</div>
-          <div class="artist">DJ Pulse & The Synthwave</div>
-          <div class="details">15/12/2024 - The Neon Arena | $45</div>
-        </div>
-      </div>
-      <div class="event">
-        <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070" alt="">
-        <div class="info">
-          <div class="title">Rock Legends Live</div>
-          <div class="artist">The Thunder Band</div>
-          <div class="details">20/12/2024 - Rock Hall | $60</div>
-        </div>
-      </div>
-      <div class="event">
-        <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=2072" alt="">
-        <div class="info">
-          <div class="title">Jazz & Soul Evening</div>
-          <div class="artist">Smooth Notes Collective</div>
-          <div class="details">22/12/2024 - Blue Note Lounge | $38</div>
-        </div>
-      </div>
+    
+    <div class="grid" id="eventsGrid"></div>
+    <div style="text-align:center; margin-top:20px;">
+      <a href="index.php?page=event" class="see-more-btn">Xem thêm</a>
     </div>
   </div>
 </section>
@@ -47,83 +32,110 @@
   <div class="container">
     <h2>Nghệ sĩ nổi bật</h2>
     <p>Những tài năng mang âm nhạc đến trái tim khán giả</p>
-    <div class="artists">
-      <div class="artist">
-        <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=400&h=400&fit=crop" alt="">
-        <h3>DJ Pulse</h3>
-        <p>Electronic</p>
-      </div>
-      <div class="artist">
-        <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=400&h=400&fit=crop" alt="">
-        <h3>The Thunder Band</h3>
-        <p>Rock</p>
-      </div>
-      <div class="artist">
-        <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=400&h=400&fit=crop" alt="">
-        <h3>Smooth Notes</h3>
-        <p>Jazz</p>
-      </div>
-      <div class="artist">
-        <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=400&fit=crop" alt="">
-        <h3>MC Flow</h3>
-        <p>Hip Hop</p>
-      </div>
-    </div>
+    <div class="artists" id="artistsContainer"></div>
+    <button id="moreArtistsBtn" class="see-more-btn" style="display:none; margin:10px auto;">Xem thêm</button>
+    <button id="lessArtistsBtn" class="see-more-btn" style="display:none;">Rút gọn</button>
   </div>
 </section>
 
-<!-- Explore by Genre -->
-<section>
-  <div class="container">
-    <h2 style="margin-top:-100px;">Khám phá theo thể loại</h2>
-    <p>Tìm phong cách âm nhạc bạn yêu thích</p>
-    <div class="genres">
-      <div class="genre">Electronic</div>
-      <div class="genre">Rock</div>
-      <div class="genre">Jazz</div>
-      <div class="genre">Pop</div>
-      <div class="genre">Indie</div>
-      <div class="genre">EDM</div>
-    </div>
-  </div>
-</section>
+<script>
+const eventsGrid = document.getElementById("eventsGrid");
+const artistsContainer = document.getElementById("artistsContainer");
+const moreArtistsBtn = document.getElementById("moreArtistsBtn");
+const lessArtistsBtn = document.getElementById("lessArtistsBtn");
 
-<!-- Gallery -->
-<section>
-  <div class="container">
-    <h2 style="margin-top:-100px;">Khoảnh khắc sân khấu</h2>
-    <p><i>"Mỗi nhịp beat kể một câu chuyện"</i></p>
-    <div class="gallery">
-      <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=600&h=400&fit=crop" alt="">
-      <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&h=400&fit=crop" alt="">
-      <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&h=400&fit=crop" alt="">
-      <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&h=400&fit=crop" alt="">
-      <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=400&fit=crop" alt="">
-      <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&h=400&fit=crop" alt="">
-    </div>
-  </div>
-</section>
+let allEvents = [];
+let uniqueArtists = [];
+let displayedArtistCount = 5;
 
-<!-- Newsletter -->
-<section>
-  <div class="newsletter" style="margin-top:-20px;">
-    <h2>Đăng ký nhận tin</h2>
-    <p>Nhận thông báo về các buổi diễn và ưu đãi mới nhất</p>
-    <form>
-      <input type="email" placeholder="Nhập email của bạn">
-      <button>Đăng ký</button>
-    </form>
-  </div>
-</section>
+// Load sự kiện và nghệ sĩ
+async function loadEventsAndArtists() {
+    try {
+        const res = await fetch("http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_events");
+        const data = await res.json();
+        if(!data.success || !Array.isArray(data.data)){
+            eventsGrid.innerHTML = "<p>Không thể tải sự kiện.</p>";
+            return;
+        }
 
-<!-- About -->
-<section>
-  <div class="about">
-    <h2>Về chúng tôi</h2>
-    <p>Thành lập năm 2024, LYZY kết nối người hâm mộ và nghệ sĩ qua những trải nghiệm âm nhạc sống động. Chúng tôi đam mê lan tỏa sức mạnh của âm nhạc.</p>
-    <a href="index.php?page=about">Tìm hiểu thêm</a>
-  </div>
-</section>
+        // Sắp xếp theo ngày mới nhất
+        allEvents = data.data.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+        // Hiển thị 6 sự kiện đầu
+        const firstSlice = allEvents.slice(0,6);
+        eventsGrid.innerHTML = firstSlice.map(ev => `
+            <div class="card">
+                <img src="${ev.image_url}" alt="${ev.band}" />
+                <div class="card-content">
+                    <h3>${ev.band}</h3>
+                    <p><strong>${ev.artist_name}</strong></p>
+                    <p>${new Date(ev.date).toLocaleString("vi-VN")}</p>
+                    <p>${ev.venue}</p>
+                    <p class="price">${ev.price.toLocaleString()} VND</p>
+                    <button class="btn-buy" onclick="viewEvent('${encodeURIComponent(ev.id)}')">Xem chi tiết</button>
+                </div>
+            </div>
+        `).join("");
+
+        // Tạo danh sách nghệ sĩ duy nhất
+        const artistSet = new Set();
+        uniqueArtists = [];
+        allEvents.forEach(ev => {
+            if(ev.artist_name && !artistSet.has(ev.artist_name)){
+                artistSet.add(ev.artist_name);
+                uniqueArtists.push({name: ev.artist_name, img: ev.img_artist});
+            }
+        });
+
+        renderArtists();
+        moreArtistsBtn.style.display = uniqueArtists.length > displayedArtistCount ? "block" : "none";
+
+    } catch(err){
+        console.error("Lỗi fetch events:", err);
+        eventsGrid.innerHTML = "<p>Lỗi khi tải dữ liệu.</p>";
+    }
+}
+
+function renderArtists() {
+    artistsContainer.innerHTML = "";
+    uniqueArtists.forEach((artist,index)=>{
+        const artDiv = document.createElement("div");
+        artDiv.classList.add("artist");
+        artDiv.innerHTML = `<img src="${artist.img}" alt=""><h3>${artist.name}</h3>`;
+        if(index >= displayedArtistCount) artDiv.style.display="none";
+        artistsContainer.appendChild(artDiv);
+    });
+}
+
+// Nút Xem thêm nghệ sĩ
+moreArtistsBtn.onclick = () => {
+    const hidden = Array.from(artistsContainer.children).filter((el,i)=>i>=displayedArtistCount);
+    hidden.slice(0,5).forEach(el=>el.style.display="inline-block");
+    displayedArtistCount += 5;
+    if(displayedArtistCount >= uniqueArtists.length){
+        moreArtistsBtn.style.display="none";
+        lessArtistsBtn.style.display="block";
+    }
+};
+
+// Nút Rút gọn nghệ sĩ
+lessArtistsBtn.onclick = () => {
+    Array.from(artistsContainer.children).forEach((el,i)=>{
+        if(i>=5) el.style.display="none";
+    });
+    displayedArtistCount = 5;
+    moreArtistsBtn.style.display = uniqueArtists.length > 5 ? "block" : "none";
+    lessArtistsBtn.style.display = "none";
+};
+
+// Xem chi tiết event
+function viewEvent(id){
+    window.location.href = "index.php?page=event_details&id=" + encodeURIComponent(id);
+}
+
+// Load dữ liệu khi trang load
+loadEventsAndArtists();
+</script>
 
 </body>
 </html>

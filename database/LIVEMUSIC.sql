@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     17/11/2025 9:09:34 PM                        */
+/* Created on:     18/11/2025 3:47:13 PM                        */
 /*==============================================================*/
 
 
@@ -268,6 +268,7 @@ create table EVENTS
    IMAGE_URL            text  comment '',
    ARTIST_NAME          text  comment '',
    IMG_ARTIST           text  comment '',
+   EVENT_NAME           text  comment '',
    primary key (EVENT_ID)
 );
 
