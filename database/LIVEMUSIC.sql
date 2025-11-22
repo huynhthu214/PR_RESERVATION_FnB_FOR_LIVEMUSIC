@@ -1,11 +1,14 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     18/11/2025 3:47:13 PM                        */
+/* Created on:     22/11/2025 7:51:49 PM                        */
 /*==============================================================*/
 
 
 alter table CMS_PAGES 
    drop foreign key FK_CMS_PAGE_ADMIN_CMS_ADMIN_US;
+
+alter table EMAIL_LOG 
+   drop foreign key FK_EMAIL_LO_ADMIN_EMA_ADMIN_US;
 
 alter table EMAIL_LOG 
    drop foreign key FK_EMAIL_LO_CUSTOMER__CUSTOMER;
@@ -19,20 +22,14 @@ alter table EVENTS
 alter table MENU_ITEMS 
    drop foreign key FK_MENU_ITE_ADMIN_MEN_ADMIN_US;
 
-alter table MENU_PROMO 
-   drop foreign key FK_MENU_PRO_MENU_PROM_MENU_ITE;
-
-alter table MENU_PROMO 
-   drop foreign key FK_MENU_PRO_MENU_PROM_PROMOTIO;
+alter table NOTIFICATIONS 
+   drop foreign key FK_NOTIFICA_ADMIN_NOT_ADMIN_US;
 
 alter table NOTIFICATIONS 
    drop foreign key FK_NOTIFICA_CUSTOMER__CUSTOMER;
 
 alter table ORDERS 
    drop foreign key FK_ORDERS_CUSTOMER__CUSTOMER;
-
-alter table ORDERS 
-   drop foreign key FK_ORDERS_ODER_PROM_PROMOTIO;
 
 alter table ORDERS 
    drop foreign key FK_ORDERS_RESER_ORD_RESERVAT;
@@ -54,12 +51,6 @@ alter table PAYMENTS
 
 alter table PAYMENTS 
    drop foreign key FK_PAYMENTS_ORDER_PAY_ORDERS;
-
-alter table PROMOTIONS 
-   drop foreign key FK_PROMOTIO_ADMIN_PRO_ADMIN_US;
-
-alter table PROMOTIONS 
-   drop foreign key FK_PROMOTIO_PROMO_EVE_EVENTS;
 
 alter table RESERVATIONS 
    drop foreign key FK_RESERVAT_CUSTOMER__CUSTOMER;
@@ -90,6 +81,9 @@ drop table if exists CUSTOMER_USERS;
 alter table EMAIL_LOG 
    drop foreign key FK_EMAIL_LO_CUSTOMER__CUSTOMER;
 
+alter table EMAIL_LOG 
+   drop foreign key FK_EMAIL_LO_ADMIN_EMA_ADMIN_US;
+
 drop table if exists EMAIL_LOG;
 
 
@@ -108,17 +102,11 @@ alter table MENU_ITEMS
 drop table if exists MENU_ITEMS;
 
 
-alter table MENU_PROMO 
-   drop foreign key FK_MENU_PRO_MENU_PROM_MENU_ITE;
-
-alter table MENU_PROMO 
-   drop foreign key FK_MENU_PRO_MENU_PROM_PROMOTIO;
-
-drop table if exists MENU_PROMO;
-
-
 alter table NOTIFICATIONS 
    drop foreign key FK_NOTIFICA_CUSTOMER__CUSTOMER;
+
+alter table NOTIFICATIONS 
+   drop foreign key FK_NOTIFICA_ADMIN_NOT_ADMIN_US;
 
 drop table if exists NOTIFICATIONS;
 
@@ -128,9 +116,6 @@ alter table ORDERS
 
 alter table ORDERS 
    drop foreign key FK_ORDERS_CUSTOMER__CUSTOMER;
-
-alter table ORDERS 
-   drop foreign key FK_ORDERS_ODER_PROM_PROMOTIO;
 
 drop table if exists ORDERS;
 
@@ -160,15 +145,6 @@ alter table PAYMENTS
    drop foreign key FK_PAYMENTS_CUSTOMER__CUSTOMER;
 
 drop table if exists PAYMENTS;
-
-
-alter table PROMOTIONS 
-   drop foreign key FK_PROMOTIO_ADMIN_PRO_ADMIN_US;
-
-alter table PROMOTIONS 
-   drop foreign key FK_PROMOTIO_PROMO_EVE_EVENTS;
-
-drop table if exists PROMOTIONS;
 
 
 alter table RESERVATIONS 
@@ -241,6 +217,7 @@ create table CUSTOMER_USERS
 create table EMAIL_LOG
 (
    EMAILLOG_ID          varchar(10) not null  comment '',
+   ADMIN_ID             varchar(10)  comment '',
    CUSTOMER_ID          varchar(10)  comment '',
    RECIPIENT_EMAIL      text  comment '',
    SUBJECT              text  comment '',
@@ -289,24 +266,19 @@ create table MENU_ITEMS
 );
 
 /*==============================================================*/
-/* Table: MENU_PROMO                                            */
-/*==============================================================*/
-create table MENU_PROMO
-(
-   ITEM_ID              varchar(10) not null  comment '',
-   PROMO_ID             varchar(10) not null  comment '',
-   primary key (ITEM_ID, PROMO_ID)
-);
-
-/*==============================================================*/
 /* Table: NOTIFICATIONS                                         */
 /*==============================================================*/
 create table NOTIFICATIONS
 (
    NOTIFICATION_ID      varchar(10) not null  comment '',
    CUSTOMER_ID          varchar(10)  comment '',
+   ADMIN_ID             varchar(10)  comment '',
+   SENDER_ID            varchar(10)  comment '',
+   RECEIVER_TYPE        text  comment '',
+   TITLE                text  comment '',
    MESSAGE              text  comment '',
    TYPE                 text  comment '',
+   LINK                 text  comment '',
    SENT_AT              datetime  comment '',
    IS_READ              bool  comment '',
    primary key (NOTIFICATION_ID)
@@ -320,7 +292,6 @@ create table ORDERS
    ORDER_ID             varchar(10) not null  comment '',
    CUSTOMER_ID          varchar(10)  comment '',
    RESERVATION_ID       varchar(10)  comment '',
-   PROMO_ID             varchar(10)  comment '',
    ORDER_TIME           datetime  comment '',
    TOTAL_AMOUNT         float  comment '',
    STATUS               text  comment '',
@@ -374,24 +345,6 @@ create table PAYMENTS
 );
 
 /*==============================================================*/
-/* Table: PROMOTIONS                                            */
-/*==============================================================*/
-create table PROMOTIONS
-(
-   PROMO_ID             varchar(10) not null  comment '',
-   EVENT_ID             varchar(10)  comment '',
-   ADMIN_ID             varchar(10)  comment '',
-   CODE                 varchar(10)  comment '',
-   DISCOUNT_PERCENT     numeric(8,0)  comment '',
-   VALID_FROM           datetime  comment '',
-   VALID_TO             datetime  comment '',
-   IS_ACTIVE            bool  comment '',
-   APPLY_TO             text  comment '',
-   DESCRIPTION          text  comment '',
-   primary key (PROMO_ID)
-);
-
-/*==============================================================*/
 /* Table: RESERVATIONS                                          */
 /*==============================================================*/
 create table RESERVATIONS
@@ -438,6 +391,9 @@ create table VENUES
 alter table CMS_PAGES add constraint FK_CMS_PAGE_ADMIN_CMS_ADMIN_US foreign key (ADMIN_ID)
       references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
 
+alter table EMAIL_LOG add constraint FK_EMAIL_LO_ADMIN_EMA_ADMIN_US foreign key (ADMIN_ID)
+      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
+
 alter table EMAIL_LOG add constraint FK_EMAIL_LO_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
 
@@ -450,20 +406,14 @@ alter table EVENTS add constraint FK_EVENTS_VENUE_EVE_VENUES foreign key (VENUE_
 alter table MENU_ITEMS add constraint FK_MENU_ITE_ADMIN_MEN_ADMIN_US foreign key (ADMIN_ID)
       references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
 
-alter table MENU_PROMO add constraint FK_MENU_PRO_MENU_PROM_MENU_ITE foreign key (ITEM_ID)
-      references MENU_ITEMS (ITEM_ID) on delete restrict on update restrict;
-
-alter table MENU_PROMO add constraint FK_MENU_PRO_MENU_PROM_PROMOTIO foreign key (PROMO_ID)
-      references PROMOTIONS (PROMO_ID) on delete restrict on update restrict;
+alter table NOTIFICATIONS add constraint FK_NOTIFICA_ADMIN_NOT_ADMIN_US foreign key (ADMIN_ID)
+      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
 
 alter table NOTIFICATIONS add constraint FK_NOTIFICA_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
 
 alter table ORDERS add constraint FK_ORDERS_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;
-
-alter table ORDERS add constraint FK_ORDERS_ODER_PROM_PROMOTIO foreign key (PROMO_ID)
-      references PROMOTIONS (PROMO_ID) on delete restrict on update restrict;
 
 alter table ORDERS add constraint FK_ORDERS_RESER_ORD_RESERVAT foreign key (RESERVATION_ID)
       references RESERVATIONS (RESERVATION_ID) on delete restrict on update restrict;
@@ -485,12 +435,6 @@ alter table PAYMENTS add constraint FK_PAYMENTS_CUSTOMER__CUSTOMER foreign key (
 
 alter table PAYMENTS add constraint FK_PAYMENTS_ORDER_PAY_ORDERS foreign key (ORDER_ID)
       references ORDERS (ORDER_ID) on delete restrict on update restrict;
-
-alter table PROMOTIONS add constraint FK_PROMOTIO_ADMIN_PRO_ADMIN_US foreign key (ADMIN_ID)
-      references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
-
-alter table PROMOTIONS add constraint FK_PROMOTIO_PROMO_EVE_EVENTS foreign key (EVENT_ID)
-      references EVENTS (EVENT_ID) on delete restrict on update restrict;
 
 alter table RESERVATIONS add constraint FK_RESERVAT_CUSTOMER__CUSTOMER foreign key (CUSTOMER_ID)
       references CUSTOMER_USERS (CUSTOMER_ID) on delete restrict on update restrict;

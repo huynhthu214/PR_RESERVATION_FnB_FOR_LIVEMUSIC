@@ -143,9 +143,6 @@ function routeAdminService($action, $base)
             include_once $path_venue . "get_venue_detail.php";
             break;
 
-        case 'get_seat_layout':
-            include_once $path_venue. "get_seat_layout.php";
-            break;
         case 'get_promotions':
             include_once $path_promo . "get_promotions.php";
             break;
@@ -285,6 +282,10 @@ function routeReservationService($action, $base)
             break;
         case 'add_reservation':
             include_once $path . "add_reservation.php";
+            break;
+
+        case 'get_seat_layout':
+            include_once $path_venue. "get_seat_layout.php";
             break;
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong reservation_service"]);

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config.php'; // BASE_URL, DB
+require_once __DIR__ . '/../../config.php'; 
 ?>
 
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/seat.css">
@@ -52,7 +52,7 @@ async function loadSeats() {
   if (!eventId) return alert("Không có ID sự kiện.");
 
   try {
-    const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_seat_layout&event_id=${eventId}`);
+    const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=reservation&action=get_seat_layout&event_id=${eventId}`);
     const json = await res.json();
 
     if (!json.success) {
