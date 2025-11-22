@@ -179,11 +179,9 @@ async function loadEventDetail() {
 
     const bookingBtn = document.querySelector('.booking-card .button-primary');
         if(bookingBtn) {
-            bookingBtn.onclick = function() {
-                // Sử dụng encodeURIComponent để mã hóa ID an toàn
-                // Lưu ý: Bên trang seat.php phải nhận đúng tham số 'id' hoặc 'event_id'
-                window.location.href = `index.php?page=seat&id=${encodeURIComponent(eventId)}`;
-            }
+          bookingBtn.onclick = function() {
+              window.location.href = `index.php?page=seat&event_id=${encodeURIComponent(eventId)}`;
+          }
         }
 
     } catch (err) {

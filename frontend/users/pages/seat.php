@@ -41,31 +41,25 @@ require_once __DIR__ . '/../../config.php'; // BASE_URL, DB
 </div>
 
 <script>
-// Giữ nguyên tên biến toàn cục của bạn
 const seatMap = document.getElementById("seatMap");
 const seatSummary = document.getElementById("seatSummary");
-let selectedSeats = [];
+let selectedSeats = JSON.parse(localStorage.getItem('selectedSeats') || '[]');
 
 async function loadSeats() {
   const params = new URLSearchParams(window.location.search);
-  // Hỗ trợ lấy cả id hoặc event_id từ URL
-  const eventId = params.get('event_id') || params.get('id'); 
+  const eventId = params.get('event_id');
   
   if (!eventId) return alert("Không có ID sự kiện.");
 
   try {
-    // GỌI API MỚI: API này trả về luôn cấu trúc 'layout' mà renderSeats cần
-    // Đảm bảo đường dẫn trỏ đúng vào file PHP vừa tạo ở Bước 1
-    const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_seat_layout?id=${eventId}`);
+    const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_seat_layout&event_id=${eventId}`);
     const json = await res.json();
 
     if (!json.success) {
-        // Xử lý nếu không có dữ liệu hoặc lỗi
         seatMap.innerHTML = `<div style="padding:20px; text-align:center;">${json.message || 'Chưa có dữ liệu ghế'}</div>`;
         return;
     }
 
-    // json.data chính là biến 'layout' (mảng các row)
     renderSeats(json.data);
     renderSummary();
 
@@ -75,57 +69,45 @@ async function loadSeats() {
   }
 }
 
-// Hàm này GIỮ NGUYÊN logic và tên class của bạn
 function renderSeats(layout) {
   seatMap.innerHTML = layout.map(row => {
     return `
       <div class="seat-row">
         <span class="row-label">${row.row}</span>
-        ${row.seats.map(seat => `
-          <button
-            class="seat ${seat.type === 'VIP' ? 'vip' : ''} ${seat.status}"
-            onclick="toggleSeat('${seat.id}', ${seat.price}, '${seat.number}')" 
-            title="Ghế ${seat.number} - ${seat.type} - ${seat.price.toLocaleString()} đ"
-            ${seat.status === 'reserved' ? 'disabled' : ''}
-          >${seat.number}</button>
-        `).join('')}
+        ${row.seats.map(seat => {
+          const isSelected = selectedSeats.some(s => s.id === seat.id);
+          return `
+            <button
+              class="seat ${seat.type === 'VIP' ? 'vip' : ''} ${seat.status} ${isSelected ? 'selected' : ''}"
+              onclick="toggleSeat('${seat.id}', ${seat.price}, '${seat.number}')" 
+              title="Ghế ${seat.number} - ${seat.type} - ${seat.price.toLocaleString()} đ"
+              ${seat.status === 'reserved' ? 'disabled' : ''}
+            >${seat.number}</button>
+          `;
+        }).join('')}
       </div>
     `}).join('');
 }
 
-// Cập nhật nhẹ hàm toggleSeat để nhận thêm giá (price) và số ghế (number) từ onclick
-// Vì khi load từ API, ta truyền giá trị vào hàm này luôn cho tiện
 function toggleSeat(id, price, number) {
-  // Tìm button đang được click (dựa vào event) hoặc query lại DOM
-  // Ở đây dùng cách đơn giản: tìm trong mảng selectedSeats xem có chưa
-  
-  // Logic này giữ nguyên style code của bạn
-  // Tuy nhiên, để lấy đúng element button nhằm add class 'selected', ta cần cẩn thận:
-  // Cách tốt nhất là truyền 'this' vào onclick, nhưng để giữ nguyên HTML string:
-  // Ta sẽ tìm button dựa trên attribute title hoặc text content, hoặc dùng event.target
-  
-  // SỬA LẠI CÁCH TÌM ELEMENT CHO CHÍNH XÁC HƠN CODE CŨ:
-  // Code cũ: seatMap.querySelector(`button[title^="${id}"]`) -> Có thể lỗi nếu title thay đổi
-  // Code mới dùng event.target (đối tượng được click)
   const seatBtn = event.target; 
-
   const existingIndex = selectedSeats.findIndex(s => s.id === id);
 
   if (seatBtn.disabled) return;
 
   if (existingIndex !== -1) {
-    // Nếu đã có -> Xóa
     selectedSeats.splice(existingIndex, 1);
     seatBtn.classList.remove('selected');
   } else {
-    // Nếu chưa có -> Thêm
-    selectedSeats.push({ id: id, price: price, number: number });
+    selectedSeats.push({ id, price, number });
     seatBtn.classList.add('selected');
   }
+
+  // Lưu vào localStorage để giữ dữ liệu khi reload
+  localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
   renderSummary();
 }
 
-// Hàm này GIỮ NGUYÊN logic
 function renderSummary() {
   if (selectedSeats.length === 0) {
     seatSummary.innerHTML = `
@@ -137,7 +119,6 @@ function renderSummary() {
 
   const totalPrice = selectedSeats.reduce((sum, s) => sum + s.price, 0);
   
-  // Format lại hiển thị tiền cho đẹp (toLocaleString)
   seatSummary.innerHTML = `
     <div class="seat-list">
       ${selectedSeats.map(s => `
@@ -150,10 +131,13 @@ function renderSummary() {
     <div style="margin-top:0.5rem;display:flex;justify-content:space-between;font-size:0.9rem;color:var(--muted);">
       <span>Vị trí (${selectedSeats.length})</span><span>${totalPrice.toLocaleString()} đ</span>
     </div>
-    <div class="total"><span>Total</span><span>${totalPrice.toLocaleString()} đ</span></div>
-    <button class="btn">Tiếp tục đến Đồ ăn & Đồ uống</button>
+    <div class="total"><span>Tổng</span><span>${totalPrice.toLocaleString()} đ</span></div>
+    <button class="btn" onclick="window.location.href='index.php?page=order.php'">
+      Tiếp tục
+    </button>
   `;
 }
 
+// Khi load trang, render lại ghế dựa trên localStorage
 loadSeats();
 </script>
