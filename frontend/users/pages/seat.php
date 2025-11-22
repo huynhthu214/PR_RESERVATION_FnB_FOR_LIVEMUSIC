@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config.php'; 
+require_once __DIR__ . '/../../config.php'; // BASE_URL, DB
 ?>
 
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/seat.css">

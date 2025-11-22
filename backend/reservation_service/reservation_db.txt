@@ -9,15 +9,3 @@ INSERT INTO RESERVATIONS VALUES
 ('R008', 'E008', 'S009', 'CU008', '2025-10-19 12:15:00', 'CONFIRMED', 200000),
 ('R009', 'E007', 'S010', 'CU009', '2025-10-19 12:45:00', 'PENDING', 600000),
 ('R010', 'E010', 'S002', 'CU010', '2025-10-19 13:00:00', 'CONFIRMED', 450000);
-
-INSERT INTO SEATS VALUES
-('S001', 'V001', 1, 1, 'VIP', 2, TRUE),
-('S002', 'V001', 1, 2, 'Standard', 1, TRUE),
-('S003', 'V002', 2, 5, 'Standard', 1, TRUE),
-('S004', 'V003', 1, 1, 'VIP', 2, TRUE),
-('S005', 'V001', 5, 3, 'Standard', 1, TRUE),
-('S006', 'V004', 10, 1, 'VIP', 4, TRUE),
-('S007', 'V005', 3, 3, 'Standard', 2, TRUE),
-('S008', 'V006', 8, 1, 'Standard', 2, TRUE),
-('S009', 'V008', 1, 4, 'Standard', 1, TRUE),
-('S010', 'V007', 4, 2, 'VIP', 2, TRUE);

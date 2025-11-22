@@ -27,19 +27,6 @@ create table ORDER_ITEMS
 );
 
 /*==============================================================*/
-/* Table: ORDER_ITEMS                                           */
-/*==============================================================*/
-create table ORDER_ITEMS
-(
-   ORDER_ITEM_ID        varchar(10) not null  comment '',
-   ORDER_ID             varchar(10)  comment '',
-   ITEM_ID              varchar(10)  comment '',
-   QUANTITY             numeric(8,0)  comment '',
-   UNIT_PRICE           numeric(8,0)  comment '',
-   primary key (ORDER_ITEM_ID)
-);
-
-/*==============================================================*/
 /* Table: PAYMENTS                                              */
 /*==============================================================*/
 create table PAYMENTS

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     22/11/2025 7:51:49 PM                        */
+/* Created on:     22/11/2025 10:14:12 PM                       */
 /*==============================================================*/
 
 
@@ -57,12 +57,6 @@ alter table RESERVATIONS
 
 alter table RESERVATIONS 
    drop foreign key FK_RESERVAT_EVENT_RES_EVENTS;
-
-alter table RESERVATIONS 
-   drop foreign key FK_RESERVAT_SEAT_RESE_SEATS;
-
-alter table SEATS 
-   drop foreign key FK_SEATS_VENUE_SEA_VENUES;
 
 alter table VENUES 
    drop foreign key FK_VENUES_ADMIN_VEN_ADMIN_US;
@@ -153,16 +147,7 @@ alter table RESERVATIONS
 alter table RESERVATIONS 
    drop foreign key FK_RESERVAT_EVENT_RES_EVENTS;
 
-alter table RESERVATIONS 
-   drop foreign key FK_RESERVAT_SEAT_RESE_SEATS;
-
 drop table if exists RESERVATIONS;
-
-
-alter table SEATS 
-   drop foreign key FK_SEATS_VENUE_SEA_VENUES;
-
-drop table if exists SEATS;
 
 
 alter table VENUES 
@@ -351,27 +336,11 @@ create table RESERVATIONS
 (
    RESERVATION_ID       varchar(10) not null  comment '',
    EVENT_ID             varchar(10)  comment '',
-   SEAT_ID              varchar(10)  comment '',
    CUSTOMER_ID          varchar(10)  comment '',
    RESERVATION_TIME     datetime  comment '',
    STATUS               text  comment '',
    TOTAL_AMOUNT         float  comment '',
    primary key (RESERVATION_ID)
-);
-
-/*==============================================================*/
-/* Table: SEATS                                                 */
-/*==============================================================*/
-create table SEATS
-(
-   SEAT_ID              varchar(10) not null  comment '',
-   VENUE_ID             varchar(10)  comment '',
-   ROW_NUMBER           numeric(8,0)  comment '',
-   SEAT_NUMBER          numeric(8,0)  comment '',
-   SEAT_TYPE            text  comment '',
-   PRICE_MULTIPLIER     numeric(8,0)  comment '',
-   IS_AVAILABLE         bool  comment '',
-   primary key (SEAT_ID)
 );
 
 /*==============================================================*/
@@ -441,12 +410,6 @@ alter table RESERVATIONS add constraint FK_RESERVAT_CUSTOMER__CUSTOMER foreign k
 
 alter table RESERVATIONS add constraint FK_RESERVAT_EVENT_RES_EVENTS foreign key (EVENT_ID)
       references EVENTS (EVENT_ID) on delete restrict on update restrict;
-
-alter table RESERVATIONS add constraint FK_RESERVAT_SEAT_RESE_SEATS foreign key (SEAT_ID)
-      references SEATS (SEAT_ID) on delete restrict on update restrict;
-
-alter table SEATS add constraint FK_SEATS_VENUE_SEA_VENUES foreign key (VENUE_ID)
-      references VENUES (VENUE_ID) on delete restrict on update restrict;
 
 alter table VENUES add constraint FK_VENUES_ADMIN_VEN_ADMIN_US foreign key (ADMIN_ID)
       references ADMIN_USERS (ADMIN_ID) on delete restrict on update restrict;
