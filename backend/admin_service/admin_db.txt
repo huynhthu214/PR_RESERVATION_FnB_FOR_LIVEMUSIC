@@ -47,13 +47,16 @@ INSERT INTO MENU_ITEMS VALUES
 ('M010', 'AD002', 'French Fries', 'Khoai tây chiên', 90000, 'Food', 50, TRUE);
 
 INSERT INTO CMS_PAGES VALUES
-('P001', 'AD001', 'about-us', 'Giới thiệu hệ thống LiveMusic', 'backend/admin_service/cms/content/P001.html', '2025-11-10 10:00:00'),
-('P002', 'AD001', 'how-to-book', 'Hướng dẫn đặt chỗ', 'backend/admin_service/cms/content/P002.html', '2025-11-10 10:10:00'),
-('P003', 'AD002', 'faqs', 'Câu hỏi thường gặp', 'backend/admin_service/cms/content/P003.html', '2025-11-10 10:20:00'),
-('P004', 'AD002', 'terms-of-service', 'Điều khoản dịch vụ', 'backend/admin_service/cms/content/P004.html', '2025-11-10 10:30:00'),
-('P005', 'AD003', 'privacy-policy', 'Chính sách bảo mật', 'backend/admin_service/cms/content/P005.html', '2025-11-10 10:40:00'),
-('P006', 'AD003', 'seat-guide', 'Sơ đồ & phân loại chỗ ngồi', 'backend/admin_service/cms/content/P006.html', '2025-11-10 10:50:00'),
-('P007', 'AD001', 'drink-menu', 'Menu đồ uống', 'backend/admin_service/cms/content/P007.html', '2025-11-10 11:00:00'),
-('P008', 'AD002', 'event-rules', 'Nội quy tham dự sự kiện', 'backend/admin_service/cms/content/P008.html', '2025-11-10 11:10:00'),
-('P009', 'AD003', 'support', 'Hỗ trợ khách hàng', 'backend/admin_service/cms/content/P009.html', '2025-11-10 11:20:00'),
-('P010', 'AD001', 'promotion', 'Khuyến mãi & ưu đãi', 'backend/admin_service/cms/content/P010.html', '2025-11-10 11:30:00');
+('P011', 'AD001', 'about-live-music', 'About LiveMusic', 
+ 'backend/admin_service/cms/content/about-live-music.html', '2025-11-23 10:00:00'),
+
+('P012', 'AD001', 'our-mission', 'Our Mission', 
+ 'backend/admin_service/cms/content/our-mission.html', '2025-11-23 10:10:00'),
+
+('P013', 'AD002', 'our-values', 'Our Values', 
+ 'backend/admin_service/cms/content/our-values.html', '2025-11-23 10:20:00'),
+
+('P014', 'AD003', 'legal-privacy', 'Legal & Privacy', 
+ 'backend/admin_service/cms/content/legal-privacy.html', '2025-11-23 10:30:00');
+
+('P020', 'AD001', 'faq', 'Câu Hỏi Thường Gặp', 'backend/admin_service/cms/content/content/faqs.html', NOW());

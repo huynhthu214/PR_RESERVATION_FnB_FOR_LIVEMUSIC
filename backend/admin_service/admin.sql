@@ -74,7 +74,7 @@ create table CMS_PAGES
    ADMIN_ID             varchar(10)  comment '',
    TYPE                 text  comment '',
    TITLE                text  comment '',
-   CONTENT_             text  comment '',
+   CONTENT            text  comment '',
    UPDATED_AT           datetime  comment '',
    primary key (PAGE_ID)
 );

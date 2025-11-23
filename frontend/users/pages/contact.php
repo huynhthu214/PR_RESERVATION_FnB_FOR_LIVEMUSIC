@@ -1,118 +1,125 @@
+<?php
+function loadCmsContent($type) {
+    $url = 'http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_content&type=' . urlencode($type);
+
+    $json = @file_get_contents($url);
+    if ($json === false) {
+        echo '<p style="color:#999; text-align:center;">Đang tải FAQ...</p>';
+        return;
+    }
+    $data = json_decode($json, true);
+    if ($data && $data['success']) {
+        echo $data['content'];
+    } else {
+        echo '<p style="color:#999; text-align:center;">Chưa có câu hỏi nào.</p>';
+    }
+}
+?>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/contact.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <div class="container">
   <div class="hero">
-    <h1>How Can We Help?</h1>
-    <p>Find answers to common questions or get in touch with our support team.</p>
+    <h1>Chúng tôi có thể giúp gì cho bạn?</h1>
+    <p>Tìm câu trả lời nhanh cho các câu hỏi thường gặp hoặc liên hệ trực tiếp với đội ngũ hỗ trợ của chúng tôi.</p>
   </div>
-
-  <!-- Contact Methods -->
-  <div class="grid lg-3" style="margin-bottom: 2rem;">
-    <div class="card">
-      <div class="icon-box primary">💬</div>
-      <h3>Live Chat</h3>
-      <p>Chat with our support team in real-time</p>
-      <button class="primary-btn">Start Chat</button>
-    </div>
-    <div class="card">
-      <div class="icon-box accent">✉️</div>
-      <h3>Email Support</h3>
-      <p>Get help via email within 24 hours</p>
-      <button class="accent-btn">Send Email</button>
-    </div>
-    <div class="card">
-      <div class="icon-box secondary">📞</div>
-      <h3>Phone Support</h3>
-      <p>Call us Mon-Fri, 9AM - 6PM</p>
-      <button class="secondary-btn">+1 (555) 123-4567</button>
-    </div>
-  </div>
-
-  <!-- FAQ and Contact Form -->
+  <!-- FAQ và Form liên hệ -->
   <div class="grid lg-2">
-    <!-- FAQ -->
-    <div class="card">
-      <h2>Frequently Asked Questions</h2>
-
-      <div class="accordion">
-        <div class="accordion-item">
-          <div class="accordion-header">How do I book tickets?</div>
-          <div class="accordion-content">
-            Simply browse our events, select your preferred show, choose your seats, and proceed to checkout. You'll receive instant confirmation via email.
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">Can I cancel or refund my tickets?</div>
-          <div class="accordion-content">
-            Tickets can be refunded up to 48 hours before the event. Contact our support team with your ticket ID to process a refund.
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">How do I receive my tickets?</div>
-          <div class="accordion-content">
-            After successful payment, you'll receive a confirmation email with your digital tickets.
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">Can I book tickets for a group?</div>
-          <div class="accordion-content">
-            Yes! We offer group discounts for bookings of 10 or more tickets.
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">What payment methods do you accept?</div>
-          <div class="accordion-content">
-            We accept Visa, Mastercard, American Express, debit cards, and digital wallets.
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">Is there wheelchair accessibility?</div>
-          <div class="accordion-content">
-            Yes, all our venues are wheelchair accessible.
-          </div>
-        </div>
-      </div>
+  <!-- FAQ -->
+  <div class="card">
+    <h2>Câu Hỏi Thường Gặp</h2>
+    <div class="accordion" id="faqAccordion">
+      <?php loadCmsContent('faq'); ?>
     </div>
+  </div>
 
-    <!-- Contact Form -->
-    <div class="card">
-      <h2>Send Us a Message</h2>
-      <form id="contactForm">
-        <label>Your Name</label>
-        <input type="text" placeholder="John Doe" required />
+    <!-- Form liên hệ -->
+  <div class="card">
+    <h2>Gửi Tin Nhắn Cho Chúng Tôi</h2>
+    <form id="contactForm">
+      <label>Họ và tên</label>
+      <input type="text" name="name" placeholder="Nguyễn Văn A" required />
 
-        <label>Email Address</label>
-        <input type="email" placeholder="john@example.com" required />
+      <label>Địa chỉ email</label>
+      <input type="email" name="email" placeholder="bạn@email.com" required />
 
-        <label>Ticket ID (if applicable)</label>
-        <input type="text" placeholder="TKT001" />
+      <label>Mã vé (nếu có)</label>
+      <input type="text" name="ticket_id" placeholder="TKT123456" />
 
-        <label>Your Message</label>
-        <textarea placeholder="How can we help you?" required></textarea>
+      <label>Nội dung liên hệ</label>
+      <textarea name="message" placeholder="Bạn cần hỗ trợ gì ạ?" required></textarea>
 
-        <button type="submit" class="submit-btn">Send Message</button>
-      </form>
-    </div>
+      <button type="submit" class="submit-btn">Gửi Tin Nhắn</button>
+    </form>
+  </div>
   </div>
 </div>
-
+<div id="toast-container"></div>
 <script>
-  // Accordion Toggle Logic
-  document.querySelectorAll('.accordion-header').forEach(header => {
+// Accordion FAQ
+document.querySelectorAll('.accordion-header').forEach(header => {
     header.addEventListener('click', () => {
-      const item = header.parentElement;
-      item.classList.toggle('active');
+        header.parentElement.classList.toggle('active');
     });
-  });
+});
 
-  // Contact Form Handler
-  document.getElementById('contactForm').addEventListener('submit', e => {
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type}`;
+    toast.innerHTML = `
+        <span>${message}</span>
+        <span class="toast-close">&times;</span>
+    `;
+    container.appendChild(toast);
+
+    // Hiển thị toast
+    setTimeout(() => toast.classList.add('show'), 100);
+
+    // Tự tắt sau 3s
+    const autoClose = setTimeout(() => hideToast(toast), 5000);
+
+    // Đóng khi click X
+    toast.querySelector('.toast-close').addEventListener('click', () => {
+        clearTimeout(autoClose);
+        hideToast(toast);
+    });
+}
+
+function hideToast(toast) {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+}
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    alert(' Your message has been sent! Our team will get back to you soon.');
-    e.target.reset();
-  });
+
+    const btn = this.querySelector('.submit-btn');
+    const oldText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+    btn.disabled = true;
+
+    const formData = new FormData(this);
+
+    fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=submit_contact', {
+        method: 'POST',
+        body: new FormData(document.getElementById('contactForm'))
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+        showToast(data.message, data.success ? 'success' : 'error');
+        if (data.success) {
+            document.getElementById('contactForm').reset();
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi:', error);
+        showToast('Lỗi kết nối, vui lòng thử lại sau', 'error');
+    })
+    .finally(() => {
+        btn.innerHTML = oldText;
+        btn.disabled = false;
+    });
+    });
 </script>

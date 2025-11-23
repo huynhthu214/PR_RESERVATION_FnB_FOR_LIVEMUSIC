@@ -37,32 +37,6 @@ switch ($service) {
         break;
 }
 
-switch ($service) {
-    case 'admin':
-        routeAdminService($action, $backendPath);
-        break;
-
-    case 'customer':
-        routeCustomerService($action, $backendPath);
-        break;
-
-    case 'order':
-        routeOrderService($action, $backendPath);
-        break;
-
-    case 'reservation':
-        routeReservationService($action, $backendPath);
-        break;
-
-    case 'notification':
-        routeNotificationService($action, $backendPath);
-        break;
-
-    default:
-        echo json_encode(["error" => "Service không hợp lệ"]);
-        break;
-}
-
 /* -------------------- ADMIN SERVICE -------------------- */
 function routeAdminService($action, $base)
 {
@@ -164,6 +138,10 @@ function routeAdminService($action, $base)
     
         case 'update_cms':
             include_once $path_cms . "update_cms.php";
+            break;
+    
+        case 'get_content':
+            include_once $path_cms . "get_content.php";
             break;
     
         default:
@@ -277,16 +255,40 @@ function routeReservationService($action, $base)
 function routeNotificationService($action, $base)
 {
     $path = $base . "notification_service/notification/";
+    $path_noti_user = $base . "notification_service/noti_user/";
+    $path_contact = $base . "notification_service/contact/";
     switch ($action) {
         case 'get_notifications':
             include_once $path . "get_notification.php";
             break;
+
         case 'get_notification_detail':
             include_once $path . "get_notification_detail.php";
             break;
+
+        case 'get_noti':
+            include_once $path_noti_user . "get_noti.php";
+            break;
+
         case 'mark_as_read':
             include_once $path . "mark_as_read.php";
             break; 
+
+        case 'delete_all_noti':
+            include_once $path_noti_user . "delete_all_noti.php";
+            break;
+    
+        case 'delete_noti':
+            include_once $path_noti_user . "delete_noti.php";
+            break;
+
+        case 'mark_all_read':
+            include_once $path_noti_user . "mark_all_read.php";
+            break;
+
+        case 'submit_contact':
+            include_once $path_contact . "submit_contact.php";
+            break;
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong notification_service"]);
             break;

@@ -16,7 +16,7 @@ require_once __DIR__ . '/../frontend/config.php';
             <span class="footer-title">LYZY</span>
           </a>
           <p class="footer-desc">
-            Nền tảng đặt vé và khám phá sự kiện âm nhạc trực tiếp hàng đầu — nơi kết nối bạn với những đêm nhạc đỉnh cao và trải nghiệm sống động nhất.
+            Nền tảng đặt vé và khám phá sự kiện âm nhạc trực tiếp hàng đầu - nơi kết nối bạn với những đêm nhạc đỉnh cao và trải nghiệm sống động nhất.
           </p>
           <div class="footer-social">
             <a href="#" class="social-btn"><i class="ri-facebook-fill"></i></a>

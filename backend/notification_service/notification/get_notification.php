@@ -2,8 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once __DIR__ . '/../db.php'; // Kết nối DB
-
+include_once __DIR__ . '/../db.php'; 
 $receiver_id = $_GET['receiver_id'] ?? null;
 $receiver_type = $_GET['receiver_type'] ?? 'CUSTOMER';
 
