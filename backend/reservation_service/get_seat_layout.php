@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../admin_service/db.php';
 
 if (!isset($_GET['event_id'])) {
     echo json_encode(['success' => false, 'message' => 'Missing event_id']);

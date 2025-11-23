@@ -6,7 +6,6 @@ create table ORDERS
    ORDER_ID             varchar(10) not null  comment '',
    CUSTOMER_ID          varchar(10)  comment '',
    RESERVATION_ID       varchar(10)  comment '',
-   PROMO_ID             varchar(10)  comment '',
    ORDER_TIME           datetime  comment '',
    TOTAL_AMOUNT         float  comment '',
    STATUS               text  comment '',

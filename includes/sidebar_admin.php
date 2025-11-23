@@ -39,11 +39,6 @@ $page = $page ?? ($_GET['page'] ?? 'dashboard');
           <i data-lucide="user"></i> Người dùng
         </a>
       </li>
-      <li class="<?= ($page == 'promotion') ? 'active' : ''; ?>">
-        <a href="index.php?page=promotion">
-          <i data-lucide="gift"></i> Khuyến mãi
-        </a>
-      </li>
       
       <li class="<?= ($page == 'cms') ? 'active' : ''; ?>">
       <a href="index.php?page=cms">

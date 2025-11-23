@@ -12,7 +12,6 @@ create table ADMIN_USERS
    primary key (ADMIN_ID)
 );
 
-
 /*==============================================================*/
 /* Table: EVENTS                                                */
 /*==============================================================*/
@@ -34,6 +33,7 @@ create table EVENTS
    EVENT_NAME           text  comment '',
    primary key (EVENT_ID)
 );
+
 /*==============================================================*/
 /* Table: VENUES                                                */
 /*==============================================================*/
@@ -47,6 +47,7 @@ create table VENUES
    SEAT_LAYOUT          text  comment '',
    primary key (VENUE_ID)
 );
+
 
 /*==============================================================*/
 /* Table: MENU_ITEMS                                            */
@@ -64,25 +65,6 @@ create table MENU_ITEMS
    primary key (ITEM_ID)
 );
 
-
-/*==============================================================*/
-/* Table: PROMOTIONS                                            */
-/*==============================================================*/
-create table PROMOTIONS
-(
-   PROMO_ID             varchar(10) not null  comment '',
-   EVENT_ID             varchar(10)  comment '',
-   ADMIN_ID             varchar(10)  comment '',
-   CODE                 varchar(10)  comment '',
-   DISCOUNT_PERCENT     numeric(8,0)  comment '',
-   VALID_FROM           datetime  comment '',
-   VALID_TO             datetime  comment '',
-   IS_ACTIVE            bool  comment '',
-   APPLY_TO             text  comment '',
-   DESCRIPTION          text  comment '',
-   primary key (PROMO_ID)
-);
-
 /*==============================================================*/
 /* Table: CMS_PAGES                                             */
 /*==============================================================*/
@@ -92,7 +74,7 @@ create table CMS_PAGES
    ADMIN_ID             varchar(10)  comment '',
    TYPE                 text  comment '',
    TITLE                text  comment '',
-   CONTENT             text  comment '',
+   CONTENT_             text  comment '',
    UPDATED_AT           datetime  comment '',
    primary key (PAGE_ID)
 );

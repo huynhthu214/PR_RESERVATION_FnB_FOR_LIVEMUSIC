@@ -75,7 +75,6 @@ function routeAdminService($action, $base)
     $path_dash = $base . "admin_service/dashboard/";
     $path_event = $base . "admin_service/events/";
     $path_venue = $base . "admin_service/venues/";
-    $path_promo = $base . "admin_service/promotions/";
     $path_cms = $base . "admin_service/cms/";
     
     switch ($action) {
@@ -141,29 +140,6 @@ function routeAdminService($action, $base)
         
         case 'get_venue_detail':
             include_once $path_venue . "get_venue_detail.php";
-            break;
-
-        case 'get_seat_layout':
-            include_once $path_venue. "get_seat_layout.php";
-            break;
-        case 'get_promotions':
-            include_once $path_promo . "get_promotions.php";
-            break;
-
-        case 'add_promo':
-            include_once $path_promo . "add_promo.php";
-            break;
-            
-        case 'update_promo':
-            include_once $path_promo . "update_promo.php";
-            break;
-
-        case 'delete_promo':
-            include_once $path_promo . "delete_promo.php";
-            break;
-
-        case 'get_promo_detail':
-           include_once $path_promo . "get_promo_detail.php";
             break;
             
         case 'export_dashboard':
@@ -303,8 +279,13 @@ function routeReservationService($action, $base)
         case 'get_reservations':
             include_once $path . "get_reservations.php";
             break;
+
         case 'add_reservation':
             include_once $path . "add_reservation.php";
+            break;
+
+        case 'get_seat_layout':
+            include_once $path . "get_seat_layout.php";
             break;
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong reservation_service"]);

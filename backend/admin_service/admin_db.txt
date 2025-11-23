@@ -46,18 +46,6 @@ INSERT INTO MENU_ITEMS VALUES
 ('M009', 'AD001', 'Red Wine (Glass)', 'Rượu vang đỏ (ly)', 180000, 'Drink', 20, TRUE),
 ('M010', 'AD002', 'French Fries', 'Khoai tây chiên', 90000, 'Food', 50, TRUE);
 
-INSERT INTO PROMOTIONS VALUES
-('P001', 'E001', 'AD001', 'CHILL20', 20, '2025-10-20', '2025-11-02', TRUE, 'Ticket', 'Giảm 20% vé sự kiện Chill Sky Lounge'),
-('P002', 'E002', 'AD002', 'ROCK10', 10, '2025-10-25', '2025-11-11', TRUE, 'Food', 'Giảm 10% tất cả món ăn Rock Cafe'),
-('P003', 'E003', 'AD003', 'JAZZ15', 15, '2025-11-20', '2025-12-06', TRUE, 'Ticket', 'Giảm 15% vé sự kiện Jazz Night'),
-('P004', 'E004', 'AD001', 'EDM15', 15, '2025-11-10', '2025-11-16', TRUE, 'Ticket', 'Giảm 15% vé EDM Party'),
-('P005', 'E005', 'AD002', 'INDIE5', 5, '2025-11-15', '2025-11-21', TRUE, 'Ticket', 'Giảm 5% vé Indie Music'),
-('P006', 'E006', 'AD003', 'LADY10', 10, '2025-11-18', '2025-11-23', TRUE, 'Drink', 'Giảm 10% đồ uống Lady Night'),
-('P007', 'E007', 'AD001', 'DANCE10', 10, '2025-11-20', '2025-11-26', TRUE, 'Ticket', 'Giảm 10% vé Dance Party'),
-('P008', 'E008', 'AD002', 'YOKO20', 20, '2025-11-25', '2025-11-29', TRUE, 'Food', 'Giảm 20% món ăn tại Yoko Cafe'),
-('P009', 'E009', 'AD003', 'CLASSIC5', 5, '2025-12-01', '2025-12-11', TRUE, 'Ticket', 'Giảm 5% vé Classical Evening'),
-('P010', 'E010', 'AD001', 'HIPHOP10', 10, '2025-12-10', '2025-12-16', TRUE, 'Drink', 'Giảm 10% đồ uống HipHop Night');
-
 INSERT INTO CMS_PAGES VALUES
 ('P001', 'AD001', 'about-us', 'Giới thiệu hệ thống LiveMusic', 'backend/admin_service/cms/content/P001.html', '2025-11-10 10:00:00'),
 ('P002', 'AD001', 'how-to-book', 'Hướng dẫn đặt chỗ', 'backend/admin_service/cms/content/P002.html', '2025-11-10 10:10:00'),
@@ -69,5 +57,3 @@ INSERT INTO CMS_PAGES VALUES
 ('P008', 'AD002', 'event-rules', 'Nội quy tham dự sự kiện', 'backend/admin_service/cms/content/P008.html', '2025-11-10 11:10:00'),
 ('P009', 'AD003', 'support', 'Hỗ trợ khách hàng', 'backend/admin_service/cms/content/P009.html', '2025-11-10 11:20:00'),
 ('P010', 'AD001', 'promotion', 'Khuyến mãi & ưu đãi', 'backend/admin_service/cms/content/P010.html', '2025-11-10 11:30:00');
-
-
