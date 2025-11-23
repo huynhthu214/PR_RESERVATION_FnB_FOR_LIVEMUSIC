@@ -132,12 +132,38 @@ function renderSummary() {
       <span>Vị trí (${selectedSeats.length})</span><span>${totalPrice.toLocaleString()} đ</span>
     </div>
     <div class="total"><span>Tổng</span><span>${totalPrice.toLocaleString()} đ</span></div>
-    <button class="btn" onclick="window.location.href='index.php?page=order.php'">
+    <button class="btn" onclick="goToPayment()">
       Tiếp tục
     </button>
+
   `;
 }
 
 // Khi load trang, render lại ghế dựa trên localStorage
 loadSeats();
+
+function goToPayment(){
+  if(selectedSeats.length === 0){
+      alert("Vui lòng chọn ít nhất 1 ghế.");
+      return;
+  }
+
+  fetch('save_selected_seats.php', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(selectedSeats)
+  })
+  .then(res=>res.json())
+  .then(data=>{
+      console.log("DEBUG save_selected_seats:", data);
+      if(data.success) window.location.href = 'index.php?page=payment';
+      else alert("Lỗi lưu ghế");
+  })
+  .catch(err=>{
+      console.error(err);
+      alert("Lỗi server khi lưu ghế");
+  });
+}
+
+
 </script>

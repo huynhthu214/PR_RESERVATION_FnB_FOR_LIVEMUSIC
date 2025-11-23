@@ -48,27 +48,31 @@ $hideSidebarPages = [
   
  <?php if (!in_array($page, $hideSidebarPages)): ?>
   <!-- Sidebar -->
-  <aside class="sidebar compact" id="sidebar">
+  <aside class="sidebar" id="sidebar">
     <ul>
-      <li>
+      <li onclick="location.href='index.php?page=home'">
         <div class="sb-icon"></div>
         <span>Trang chủ</span>
       </li>
-      <li>
+
+      <li onclick="location.href='index.php?page=event'">
         <div class="sb-icon"></div>
         <span>Sự kiện</span>
       </li>
-      <li>
+
+      <li onclick="location.href='index.php?page=about'">
         <div class="sb-icon"></div>
         <span>Giới thiệu</span>
       </li>
-      <li>
+
+      <li onclick="location.href='index.php?page=contact'">
         <div class="sb-icon"></div>
         <span>Liên hệ</span>
       </li>
     </ul>
   </aside>
 <?php endif; ?>
+
 
   <!-- Navbar -->
   <nav class="navbar" id="navbar">
@@ -79,15 +83,19 @@ $hideSidebarPages = [
       </div>
 
       <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Event</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="index.php?page=home">Home</a>
+        <a href="index.php?page=event">Event</a>
+        <a href="index.php?page=about">About</a>
+        <a href="index.php?page=contact">Contact</a>
       </div>
 
+
       <div class="Notification">
-        <div class="logo-icon"></div>
+        <a href="index.php?page=notification">
+          <div class="logo-icon"></div>
+        </a>
       </div>
+
       
       <div class="search-box" id="searchBox">
         <input type="text" placeholder="Tìm kiếm..." />
@@ -107,64 +115,69 @@ $hideSidebarPages = [
         </button>
 
         <div class="user-dropdown" id="userDropdown">
+          <a href="index.php?page=user_details">Thông tin tài khoản</a>
           <a href="pages/logout_user.php" class="logout">Đăng xuất</a>
         </div>
+
       </div>
     </div>
   </nav>
 
   <!-- Script -->
   <script>
-    const navbar = document.getElementById("navbar");
-    const logo = document.getElementById("logo");
-    const sidebar = document.getElementById("sidebar");
+    document.addEventListener("DOMContentLoaded", () => {
+  const navbar = document.getElementById("navbar");
+  const logo = document.getElementById("logo");
+  const sidebar = document.getElementById("sidebar");
 
-    if (logo && sidebar) {
-      let lastScrollY = 0;
+  if (!logo || !sidebar || !navbar) {
+    console.warn("Thiếu logo, sidebar hoặc navbar");
+    return;
+  }
 
-      // Hàm thu gọn sidebar
-      const collapseSidebar = () => {
+  // Mặc định sidebar thu gọn
+  sidebar.classList.add("compact");
+
+  // Scroll event
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+
+    if (scrollY > 60) {
+      // Khi scroll xuống → navbar scrolled + sidebar ẩn
+      navbar.classList.add("scrolled");
+      sidebar.classList.add("hidden");
+    } else {
+      // Khi ở đầu trang → navbar bình thường + sidebar hiện và thu gọn
+      navbar.classList.remove("scrolled");
+      sidebar.classList.remove("hidden");
+      sidebar.classList.remove("active");
+      sidebar.classList.add("compact");
+    }
+  });
+
+  // Click logo → toggle sidebar
+  logo.addEventListener("click", () => {
+    const isActive = sidebar.classList.contains("active");
+    const isScrolled = navbar.classList.contains("scrolled");
+
+    if (isScrolled) {
+      // Giữa trang → bật full sidebar + navbar
+      navbar.classList.remove("scrolled");
+      sidebar.classList.remove("hidden", "compact");
+      sidebar.classList.add("active");
+    } else {
+      // Toggle mở/thu gọn khi ở đầu trang
+      if (isActive) {
         sidebar.classList.remove("active");
         sidebar.classList.add("compact");
-      };
-
-      // Cuộn trang
-      window.addEventListener("scroll", () => {
-        const currentScrollY = window.scrollY;
-
-        if (currentScrollY > 60) {
-          navbar.classList.add("scrolled");
-          sidebar.classList.add("hidden"); // ẩn khi cuộn
-        } else {
-          navbar.classList.remove("scrolled");
-          sidebar.classList.remove("hidden");
-
-          // Nếu đang ở đầu trang → sidebar tự thu gọn
-          collapseSidebar();
-        }
-
-        lastScrollY = currentScrollY;
-      });
-
-      // Click logo
-      logo.addEventListener("click", () => {
-        const isActive = sidebar.classList.contains("active");
-        const isScrolled = navbar.classList.contains("scrolled");
-
-        if (isScrolled) {
-          // Khi đang giữa trang → bật lại full sidebar + full navbar
-          navbar.classList.remove("scrolled");
-          sidebar.classList.remove("hidden", "compact");
-          sidebar.classList.add("active");
-        } else {
-          // Khi ở đầu trang → toggle mở/đóng
-          sidebar.classList.toggle("active", !isActive);
-          sidebar.classList.toggle("compact", isActive);
-        }
-      });
-    } else {
-      console.warn('Thiếu logo hoặc sidebar (id="logo" hoặc id="sidebar").');
+      } else {
+        sidebar.classList.add("active");
+        sidebar.classList.remove("compact");
+      }
     }
+  });
+});
+
      // Dropdown User
       const userBtn = document.getElementById('userBtn');
       const userDropdown = document.getElementById('userDropdown');
@@ -180,6 +193,7 @@ $hideSidebarPages = [
           userDropdown.classList.remove('show');
         });
       }
+
   </script>
 </body>
 </html>
