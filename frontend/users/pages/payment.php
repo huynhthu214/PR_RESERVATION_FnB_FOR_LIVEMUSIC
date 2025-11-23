@@ -13,7 +13,8 @@ $total          = $totalSeatPrice + $totalMenuPrice;
 // Thông tin user login
 $userName   = $_SESSION['USERNAME'] ?? '';
 $customerId = $_SESSION['CUSTOMER_ID'] ?? '';
-$email      = $_SESSION['USER_EMAIL'] ?? '';
+$email = $_SESSION['EMAIL'] ?? '';
+
 ?>
 
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/payment_user.css">
@@ -100,6 +101,39 @@ $email      = $_SESSION['USER_EMAIL'] ?? '';
 </div>
 
 <script>
+
+  // Lấy chi tiết user từ API nếu CUSTOMER_ID có
+const CUSTOMER_ID = "<?php echo $customerId; ?>";
+
+async function loadUserDetail() {
+    if (!CUSTOMER_ID) return;
+
+    try {
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=customer&action=get_user_detail&id=${CUSTOMER_ID}`);
+        const data = await res.json();
+
+        if (data.error) {
+            console.warn("Lỗi tải user detail:", data.error);
+            return;
+        }
+
+        // Điền dữ liệu vào form
+        const nameInput = document.querySelector('input[name="name"]');
+        const emailInput = document.querySelector('input[name="email"]');
+
+        if (nameInput) nameInput.value = data.USERNAME;
+        if (emailInput) emailInput.value = data.EMAIL;
+
+        console.log("User detail loaded:", data);
+
+    } catch (err) {
+        console.error("Lỗi kết nối API Gateway:", err);
+    }
+}
+
+// Gọi hàm
+loadUserDetail();
+
 // Debug dữ liệu từ PHP
 console.log("DEBUG selectedSeats:", <?php echo json_encode($selectedSeats); ?>);
 console.log("DEBUG orderMenu:", <?php echo json_encode($orderMenu); ?>);
@@ -144,8 +178,6 @@ document.getElementById('payment-form').addEventListener('submit', async e=>{
     unit_price: parseInt(m.dataset.price)
   }));
 
-  console.log("DEBUG submitting seats:", seats);
-  console.log("DEBUG submitting menu:", menu);
 
   const total = seats.reduce((sum,s)=>sum+s.price,0) + menu.reduce((sum,m)=>sum+m.unit_price*m.quantity,0);
 
@@ -157,7 +189,6 @@ document.getElementById('payment-form').addEventListener('submit', async e=>{
     });
 
     const data = await res.json();
-    console.log("DEBUG add_order response:", data);
 
     if(data.success){
       alert('Thanh toán thành công! Mã đơn: ' + data.order_id);

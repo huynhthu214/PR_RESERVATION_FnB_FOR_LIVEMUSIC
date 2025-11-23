@@ -141,29 +141,49 @@ function renderSummary() {
 
 // Khi load trang, render lại ghế dựa trên localStorage
 loadSeats();
-
 function goToPayment(){
   if(selectedSeats.length === 0){
       alert("Vui lòng chọn ít nhất 1 ghế.");
       return;
   }
 
-  fetch('/../../save_selected_seats.php', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(selectedSeats)
+  // Gọi API Gateway để lưu ghế vào session
+  fetch('/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=save_selected_seats', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          seats: selectedSeats
+      })
   })
-  .then(res=>res.json())
-  .then(data=>{
+  .then(async res => {
+      const text = await res.text();
+
+      // Debug trả về raw text để phát hiện báo lỗi PHP
+      console.log("DEBUG RAW response:", text);
+
+      let data;
+      try {
+         data = JSON.parse(text);
+      } catch (e) {
+         console.error("Không parse được JSON:", e);
+         alert("Server trả về dữ liệu không hợp lệ.");
+         return;
+      }
+
       console.log("DEBUG save_selected_seats:", data);
-      if(data.success) window.location.href = 'index.php?page=payment';
-      else alert("Lỗi lưu ghế");
+
+      if (data.success) {
+          window.location.href = 'index.php?page=payment';
+      } else {
+          alert("Lỗi lưu ghế: " + (data.message || 'Không xác định'));
+      }
   })
-  .catch(err=>{
-      console.error(err);
-      alert("Lỗi server khi lưu ghế");
+  .catch(err => {
+      console.error("FETCH ERROR:", err);
+      alert("Lỗi kết nối server khi lưu ghế");
   });
 }
-
 
 </script>
