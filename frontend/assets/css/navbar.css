@@ -62,7 +62,6 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #00ffaa, #00c896);
 }
 
 .logo span {
@@ -96,7 +95,7 @@ body {
 }
 
 .nav-links a:hover {
-  color: #00ffaa;
+  color: #ff7b00;
 }
 /* ===== Notification ===== */
 .navbar.scrolled .Notification {
@@ -104,6 +103,22 @@ body {
   opacity: 0;
   margin: 0;
   overflow: hidden;
+}
+
+.Notification a{
+  color: #ff7b00;
+}
+.Notification {
+  background: rgba(30, 30, 30, 0.85);
+  border: 1px solid rgba(255, 204, 102, 0.2);
+  border-radius: 15px;
+  padding: 10px 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.6s ease forwards;
 }
 /* ===== Search Box ===== */
 .search-box {
@@ -212,13 +227,7 @@ body {
   }
 }
 /* ===== Sidebar ===== */
-.sb-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #00ffaa, #00c896);
-  flex-shrink: 0;
-}
+
 .sidebar {
   position: fixed;
   top: var(--navbar-height, 70px);
@@ -245,18 +254,21 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #ccc;
+  color: #c47805;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
 }
 
 .sidebar li:hover {
-  color: #00ffaa;
+  color: #ff7b00;
   transform: translateX(4px);
 }
 
 .sidebar i {
   font-size: 22px;
+  color: #ff7b00;
 }
 
 /* Sidebar mở full */

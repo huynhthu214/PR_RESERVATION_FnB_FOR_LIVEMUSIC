@@ -9,9 +9,9 @@ require_once __DIR__ . '/../frontend/config.php';
     <div class="footer-container">
       <div class="footer-grid">
         <div class="footer-section">
-          <a href="/" class="footer-brand">
+          <a href="index.php?page=home" class="footer-brand">
             <div class="footer-logo">
-              <i class="ri-music-2-line"></i>
+              <img src="<?php echo BASE_URL; ?>assets/images/LogoLYZY.png" alt="LYZY Logo" style="height:40px;">
             </div>
             <span class="footer-title">LYZY</span>
           </a>
