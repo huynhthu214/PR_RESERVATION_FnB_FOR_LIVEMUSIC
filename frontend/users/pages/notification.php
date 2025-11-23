@@ -1,10 +1,18 @@
+<?php
+require_once __DIR__ . '/../../config.php';
+
+$customer_id = $_SESSION['CUSTOMER_ID'] ?? null;
+if (!$customer_id) {
+    echo "<p>Chưa login</p>";
+    exit;
+}
+?>
+
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/noti_user.css">
 
 <h1>Thông báo</h1>
 
 <div class="container">
-
-    <!-- Filter Bar -->
     <div class="filter-bar">
         <div class="tabs">
             <button class="tab-btn active" data-tab="all">Tất cả</button>
@@ -16,17 +24,17 @@
         </div>
     </div>
 
-    <!-- Notification List -->
     <div id="notification-list"></div>
 </div>
 
 <!-- Modal xác nhận xóa -->
 <div id="deleteModal" class="modal hidden">
     <div class="modal-content">
+        <button class="modal-close">&times;</button>
         <h3>Xác nhận xóa</h3>
         <p>Bạn có chắc muốn xóa thông báo này?</p>
         <div class="modal-actions">
-            <button id="cancelDelete" class="btn">Hủy</button>
+            <button id="cancelDelete" class="btn btn-cancel">Hủy</button>
             <button id="confirmDelete" class="btn btn-delete">Xóa</button>
         </div>
     </div>
@@ -37,7 +45,7 @@
 .modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,18 +53,29 @@
 }
 .modal.hidden { display: none; }
 .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
+    background: linear-gradient(145deg, #ffcc66, #a97142, #ff4444, #1a1a1a);
+    padding: 25px;
+    border-radius: 12px;
+    width: 320px;
     text-align: center;
+    color: #fff;
+    position: relative;
 }
-.modal-actions {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-around;
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff;
 }
-.btn-delete { background: red; color: #fff; }
+.modal-actions { margin-top: 20px; display: flex; justify-content: space-around; }
+.btn-cancel { background: #555; color: #fff; padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; }
+.btn-delete { background: #ff4444; color: #fff; padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; }
+.btn-cancel:hover { background: #777; }
+.btn-delete:hover { background: #cc0000; }
 </style>
 
 <script>
@@ -65,10 +84,12 @@ let notifications = [];
 let currentTab = 'all';
 let deleteNotifId = null;
 
-// Load notifications từ API
+// Load notifications
 async function loadNotifications() {
     try {
-        const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=get_noti');
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=get_noti`, {
+            credentials: 'include' // gửi cookie PHP session
+        });
         const data = await res.json();
         if (!data.success) throw new Error(data.message || 'Lỗi API');
         notifications = data.data;
@@ -79,13 +100,13 @@ async function loadNotifications() {
     }
 }
 
-// Render notifications theo tab
+// Render notifications
 function renderNotifications(tab) {
     currentTab = tab;
     notificationList.innerHTML = '';
     const list = tab === 'unread' ? notifications.filter(n => !n.is_read) : notifications;
 
-    if (list.length === 0) {
+    if (!list.length) {
         notificationList.innerHTML = '<p style="text-align:center;">Không có thông báo</p>';
         return;
     }
@@ -94,7 +115,6 @@ function renderNotifications(tab) {
         const div = document.createElement('div');
         div.className = 'notification' + (notif.is_read ? '' : ' unread');
         div.dataset.id = notif.id;
-        div.id = `notif-${notif.id}`;
         div.innerHTML = `
             <div class="notification-title">${notif.title}</div>
             <div class="notification-message">${notif.message}</div>
@@ -105,78 +125,78 @@ function renderNotifications(tab) {
         notificationList.appendChild(div);
     });
 
-    // Xử lý nút xóa từng thông báo: mở modal
+    // xóa từng thông báo → mở modal
     document.querySelectorAll('.close-btn').forEach(btn => {
-        btn.addEventListener('click', e => {
-            const id = e.target.closest('.notification').dataset.id;
-            openDeleteModal(id);
-        });
+        btn.onclick = e => {
+            deleteNotifId = e.target.closest('.notification').dataset.id;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        };
     });
 }
 
-// Mở modal xóa
-function openDeleteModal(notiId) {
-    deleteNotifId = notiId;
-    document.getElementById('deleteModal').classList.remove('hidden');
-}
-
-// Nút Hủy modal
+// Modal close
+document.querySelector('.modal-close').onclick = () => {
+    document.getElementById('deleteModal').classList.add('hidden');
+};
 document.getElementById('cancelDelete').onclick = () => {
     document.getElementById('deleteModal').classList.add('hidden');
 };
 
-// Nút Xóa modal
+// Xóa 1 thông báo
 document.getElementById('confirmDelete').onclick = async () => {
     if (!deleteNotifId) return;
     try {
-        const res = await fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=delete_noti&id=${deleteNotifId}`, { method: 'DELETE' });
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=delete_noti&id=${deleteNotifId}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
         const data = await res.json();
         if (data.success) {
             notifications = notifications.filter(n => n.id !== deleteNotifId);
             renderNotifications(currentTab);
-        } else {
-            alert(data.message || 'Xóa thất bại');
-        }
+        } else alert(data.message || 'Xóa thất bại');
     } catch(err){ console.error(err); }
     document.getElementById('deleteModal').classList.add('hidden');
 };
 
-// Nút đánh dấu tất cả đã đọc
-document.getElementById('mark-all-read').addEventListener('click', async () => {
+// Đánh dấu tất cả đã đọc
+document.getElementById('mark-all-read').onclick = async () => {
     try {
-        const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_all_read', { method: 'POST' });
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_all_read`, {
+            method: 'POST',
+            credentials: 'include'
+        });
         const data = await res.json();
         if (data.success) {
             notifications.forEach(n => n.is_read = true);
             renderNotifications(currentTab);
-        } else {
-            alert(data.message || 'Đánh dấu thất bại');
-        }
+        } else alert(data.message || 'Đánh dấu thất bại');
     } catch(err) { console.error(err); }
-});
+};
 
-// Nút xóa tất cả
-document.getElementById('delete-all').addEventListener('click', async () => {
+// Xóa tất cả
+document.getElementById('delete-all').onclick = async () => {
     if (!confirm('Bạn có chắc muốn xóa tất cả thông báo?')) return;
     try {
-        const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=delete_all_noti', { method: 'DELETE' });
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=delete_all_noti`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
         const data = await res.json();
         if (data.success) {
             notifications = [];
             renderNotifications(currentTab);
-        } else {
-            alert(data.message || 'Xóa tất cả thất bại');
-        }
+        } else alert(data.message || 'Xóa tất cả thất bại');
     } catch(err) { console.error(err); }
-});
+};
 
 // Chuyển tab
 document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
+    btn.onclick = e => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
         renderNotifications(e.target.dataset.tab);
-    });
+    };
 });
 
 document.addEventListener('DOMContentLoaded', loadNotifications);

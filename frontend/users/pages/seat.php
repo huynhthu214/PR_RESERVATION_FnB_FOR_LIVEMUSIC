@@ -148,7 +148,7 @@ function goToPayment(){
       return;
   }
 
-  fetch('save_selected_seats.php', {
+  fetch('/../../save_selected_seats.php', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify(selectedSeats)

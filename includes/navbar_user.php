@@ -43,7 +43,7 @@ $hideSidebarPages = [
 ];
 ?>
   <title><?php echo htmlspecialchars($title); ?></title>
-  <link rel="stylesheet" href="../../frontend/assets/css/user_style.css">
+  <link rel="stylesheet" href="../../frontend/assets/css/navbar.css">
   <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
   
  <?php if (!in_array($page, $hideSidebarPages)): ?>
@@ -83,10 +83,10 @@ $hideSidebarPages = [
       </div>
 
       <div class="nav-links">
-        <a href="index.php?page=home">Home</a>
-        <a href="index.php?page=event">Event</a>
-        <a href="index.php?page=about">About</a>
-        <a href="index.php?page=contact">Contact</a>
+        <a href="index.php?page=home">Trang chủ</a>
+        <a href="index.php?page=event">Sự kiện</a>
+        <a href="index.php?page=about">Giới thiệu</a>
+        <a href="index.php?page=contact">Hỗ trợ</a>
       </div>
 
 
