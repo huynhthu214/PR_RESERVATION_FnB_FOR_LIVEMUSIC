@@ -223,6 +223,26 @@ function routeOrderService($action, $base)
             include_once $path . "get_order_detail.php";
             break;
 
+        case 'get_customer_order':
+            include_once $path . "get_customer_order.php";
+            break;
+
+        case 'get_cart_count': 
+            include_once $path . "get_cart_count.php";
+            break;
+            
+        case 'add_to_session':
+            include_once $path . "add_to_session.php";
+            break;
+
+        case 'update_cart_item':
+            include_once $path . "update_cart_item.php";
+            break;
+
+        case 'add_order':
+            include_once $path . "add_order.php";
+            break;
+
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong order_service"]);
             break;
