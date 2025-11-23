@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               $user = $result['user'];
               $_SESSION['CUSTOMER_ID'] = $user['CUSTOMER_ID'];
               $_SESSION['USERNAME'] = $user['USERNAME'];
+              $_SESSION['EMAIL']       = $user['EMAIL'];
               header("Location: ../index.php?page=home");
               exit();
           } else {
