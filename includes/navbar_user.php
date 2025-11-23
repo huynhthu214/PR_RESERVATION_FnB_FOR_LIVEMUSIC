@@ -1,30 +1,17 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
+if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/../frontend/config.php';
 
-$userName = '';
-
-if (!empty($_SESSION['USERNAME'])) {
-    $userName = $_SESSION['USERNAME']; // Tên customer đăng nhập
-} else {
-    $userName = 'Khách'; 
-}
-
+$userName = !empty($_SESSION['USERNAME']) ? $_SESSION['USERNAME'] : 'Khách';
 $page = $_GET['page'] ?? 'home';
 
-// Tạo tiêu đề động theo từng trang
 $title = match($page) {
     'home' => 'LYZY - Trang chủ',
     'event' => 'LYZY - Sự kiện',
     'about' => 'LYZY - Giới thiệu',
     'contact' => 'LYZY - Liên hệ',
     'event_details' => 'LYZY - Chi tiết sự kiện',
-    'about' => 'LYZY - Giới thiệu',
     'cart' => 'LYZY - Giỏ hàng',
-    'event' => 'LYZY - Sự kiện',
     'noti_details' => 'LYZY - Chi tiết thông báo',
     'notification' => 'LYZY - Thông báo',
     'order' => 'LYZY - Đặt hàng',
@@ -42,144 +29,95 @@ $hideSidebarPages = [
     'seat', 'tickets', 'user_orders'
 ];
 ?>
-  <title><?php echo htmlspecialchars($title); ?></title>
-  <link rel="stylesheet" href="../../frontend/assets/css/user_style.css">
-  <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-  
- <?php if (!in_array($page, $hideSidebarPages)): ?>
-  <!-- Sidebar -->
-  <aside class="sidebar compact" id="sidebar">
-    <ul>
-      <li>
-        <div class="sb-icon"></div>
-        <span>Trang chủ</span>
-      </li>
-      <li>
-        <div class="sb-icon"></div>
-        <span>Sự kiện</span>
-      </li>
-      <li>
-        <div class="sb-icon"></div>
-        <span>Giới thiệu</span>
-      </li>
-      <li>
-        <div class="sb-icon"></div>
-        <span>Liên hệ</span>
-      </li>
-    </ul>
-  </aside>
+
+<title><?php echo htmlspecialchars($title); ?></title>
+<link rel="stylesheet" href="../../frontend/assets/css/navbar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+<?php if (!in_array($page, $hideSidebarPages)): ?>
+<aside class="sidebar compact" id="sidebar">
+  <ul>
+    <li onclick="location.href='index.php?page=home'"><i class="fa-solid fa-home"></i><span>Trang chủ</span></li>
+    <li onclick="location.href='index.php?page=tickets'"><i class="fa-solid fa-ticket"></i><span>Vé của tôi</span></li>
+    <li onclick="location.href='index.php?page=order'"><i class="fa-solid fa-cart-shopping"></i><span>Đơn hàng của tôi</span></li>
+    <li onclick="location.href='index.php?page=contact'"><i class="fa-solid fa-phone"></i><span>Liên hệ</span></li>
+  </ul>
+</aside>
 <?php endif; ?>
 
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-      <div class="logo" id="logo">
-        <div class="logo-icon"></div>
-        <span>LYZY</span>
-      </div>
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <div class="logo" id="logo">
+      <a href="index.php?page=home" class="logo-icon">
+        <img src="<?php echo BASE_URL; ?>assets/images/LogoLYZY.png" alt="LYZY Logo" style="height:40px;">
+      </a>
+    </div>
 
-      <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Event</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-      </div>
+    <div class="nav-links">
+      <a href="index.php?page=home">Trang chủ</a>
+      <a href="index.php?page=event">Sự kiện</a>
+      <a href="index.php?page=about">Giới thiệu</a>
+      <a href="index.php?page=contact">Hỗ trợ</a>
+    </div>
 
-      <div class="Notification">
-        <div class="logo-icon"></div>
-      </div>
-      
-      <div class="search-box" id="searchBox">
-        <input type="text" placeholder="Tìm kiếm..." />
-      </div>
+    <div class="Notification">
+      <a href="index.php?page=notification"><i class="fa-solid fa-bell"></i></a>
+    </div>
 
-      <div class="user">
-        <button class="user-btn" id="userBtn">
-          <svg xmlns="http://www.w3.org/2000/svg"
-            width="22" height="22"
-            fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-user">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-          <span class="username"><?php echo htmlspecialchars($userName); ?></span>
-        </button>
+    <div class="search-box" id="searchBox">
+      <input type="text" placeholder="Tìm kiếm..." />
+    </div>
 
-        <div class="user-dropdown" id="userDropdown">
-          <a href="pages/logout_user.php" class="logout">Đăng xuất</a>
-        </div>
+    <div class="user">
+      <button class="user-btn" id="userBtn">
+        <i class="fa-solid fa-user"></i>
+        <span class="username"><?php echo htmlspecialchars($userName); ?></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <a href="index.php?page=user_details">Thông tin tài khoản</a>
+        <a href="pages/logout_user.php" class="logout">Đăng xuất</a>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- Script -->
-  <script>
-    const navbar = document.getElementById("navbar");
-    const logo = document.getElementById("logo");
-    const sidebar = document.getElementById("sidebar");
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById("sidebar");
+  const logo = document.getElementById("logo");
+  const navbar = document.getElementById("navbar");
 
-    if (logo && sidebar) {
-      let lastScrollY = 0;
+  if (!sidebar || !logo || !navbar) return;
 
-      // Hàm thu gọn sidebar
-      const collapseSidebar = () => {
-        sidebar.classList.remove("active");
-        sidebar.classList.add("compact");
-      };
-
-      // Cuộn trang
-      window.addEventListener("scroll", () => {
-        const currentScrollY = window.scrollY;
-
-        if (currentScrollY > 60) {
-          navbar.classList.add("scrolled");
-          sidebar.classList.add("hidden"); // ẩn khi cuộn
-        } else {
-          navbar.classList.remove("scrolled");
-          sidebar.classList.remove("hidden");
-
-          // Nếu đang ở đầu trang → sidebar tự thu gọn
-          collapseSidebar();
-        }
-
-        lastScrollY = currentScrollY;
-      });
-
-      // Click logo
-      logo.addEventListener("click", () => {
-        const isActive = sidebar.classList.contains("active");
-        const isScrolled = navbar.classList.contains("scrolled");
-
-        if (isScrolled) {
-          // Khi đang giữa trang → bật lại full sidebar + full navbar
-          navbar.classList.remove("scrolled");
-          sidebar.classList.remove("hidden", "compact");
-          sidebar.classList.add("active");
-        } else {
-          // Khi ở đầu trang → toggle mở/đóng
-          sidebar.classList.toggle("active", !isActive);
-          sidebar.classList.toggle("compact", isActive);
-        }
-      });
+  logo.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (sidebar.classList.contains("active")) {
+      sidebar.classList.remove("active");
+      sidebar.classList.add("compact");
     } else {
-      console.warn('Thiếu logo hoặc sidebar (id="logo" hoặc id="sidebar").');
+      sidebar.classList.add("active");
+      sidebar.classList.remove("compact");
     }
-     // Dropdown User
-      const userBtn = document.getElementById('userBtn');
-      const userDropdown = document.getElementById('userDropdown');
+  });
 
-      if (userBtn && userDropdown) {
-        userBtn.addEventListener('click', (e) => {
-          e.stopPropagation(); // chặn lan click ra ngoài
-          userDropdown.classList.toggle('show');
-        });
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add("scrolled");
+      sidebar.classList.add("hidden");
+    } else {
+      navbar.classList.remove("scrolled");
+      sidebar.classList.remove("hidden");
+      sidebar.classList.remove("active");
+      sidebar.classList.add("compact");
+    }
+  });
 
-        // Click ra ngoài thì ẩn dropdown
-        document.addEventListener('click', () => {
-          userDropdown.classList.remove('show');
-        });
-      }
-  </script>
-</body>
-</html>
+  // Dropdown User
+  const userBtn = document.getElementById('userBtn');
+  const userDropdown = document.getElementById('userDropdown');
+  if (userBtn && userDropdown) {
+    userBtn.addEventListener('click', e => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
+    document.addEventListener('click', () => userDropdown.classList.remove('show'));
+  }
+});
+</script>

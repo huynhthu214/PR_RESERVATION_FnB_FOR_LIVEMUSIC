@@ -9,14 +9,14 @@ require_once __DIR__ . '/../frontend/config.php';
     <div class="footer-container">
       <div class="footer-grid">
         <div class="footer-section">
-          <a href="/" class="footer-brand">
+          <a href="index.php?page=home" class="footer-brand">
             <div class="footer-logo">
-              <i class="ri-music-2-line"></i>
+              <img src="<?php echo BASE_URL; ?>assets/images/LogoLYZY.png" alt="LYZY Logo" style="height:40px;">
             </div>
             <span class="footer-title">LYZY</span>
           </a>
           <p class="footer-desc">
-            Nền tảng đặt vé và khám phá sự kiện âm nhạc trực tiếp hàng đầu — nơi kết nối bạn với những đêm nhạc đỉnh cao và trải nghiệm sống động nhất.
+            Nền tảng đặt vé và khám phá sự kiện âm nhạc trực tiếp hàng đầu - nơi kết nối bạn với những đêm nhạc đỉnh cao và trải nghiệm sống động nhất.
           </p>
           <div class="footer-social">
             <a href="#" class="social-btn"><i class="ri-facebook-fill"></i></a>

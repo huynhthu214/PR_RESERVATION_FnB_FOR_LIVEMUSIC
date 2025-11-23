@@ -10,7 +10,9 @@ body {
   color: #f5f5f5;
   overflow-x: hidden;
 }
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-weight: 600;
 }
 
@@ -39,7 +41,7 @@ h1, h2, h3 {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.6), #0a0a0a);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), #0a0a0a);
 }
 .hero-content {
   position: relative;
@@ -49,7 +51,7 @@ h1, h2, h3 {
 .hero h1 {
   font-size: 3.2rem;
   color: gold;
-  text-shadow: 0 0 20px rgba(255,215,0,0.3);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   animation: fadeInDown 1.5s ease;
 }
 .hero p {
@@ -60,17 +62,29 @@ h1, h2, h3 {
 }
 
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ======= CATEGORY FILTER ======= */
 section {
-  padding: 60px 20px;
+  padding: 40px 20px;
   text-align: center;
 }
 .categories {
@@ -83,8 +97,8 @@ section {
 .category-btn {
   padding: 10px 25px;
   border-radius: 8px;
-  border: 1px solid rgba(218,165,32,0.4);
-  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(218, 165, 32, 0.4);
+  background: rgba(255, 255, 255, 0.03);
   color: #f5f5f5;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -94,7 +108,7 @@ section {
 .category-btn:hover {
   border-color: gold;
   color: gold;
-  box-shadow: 0 0 20px rgba(255,215,0,0.3);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   transform: translateY(-2px) scale(1.05);
 }
 
@@ -112,15 +126,15 @@ section {
   position: relative;
   border-radius: 15px;
   overflow: hidden;
-  border: 1px solid rgba(218,165,32,0.15);
-  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(218, 165, 32, 0.15);
+  background: rgba(255, 255, 255, 0.03);
   transition: all 0.4s ease;
   cursor: pointer;
 }
 .food-item:hover {
   transform: scale(1.04);
   border-color: gold;
-  box-shadow: 0 0 25px rgba(255,215,0,0.15);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
 }
 .food-item img {
   width: 100%;
@@ -134,7 +148,7 @@ section {
 .food-item .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 60%);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -171,19 +185,37 @@ section {
   right: 10px;
   padding: 5px 10px;
   font-size: 0.8rem;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   color: gold;
   border-radius: 20px;
-  border: 1px solid rgba(255,215,0,0.3);
+  border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 /* ======= BUTTON BUY ======= */
+/* Container 2 nút ngang hàng */
+.btn-group {
+  display: flex;
+  gap: 10px; /* khoảng cách giữa 2 nút */
+  margin-top: 10px;
+}
+
+/* Style nút */
+.btn-cart,
+.btn-buy-now {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
 .btn-cart {
   display: inline-block;
   margin-top: 10px;
-  background: rgba(255,215,0,0.3);
+  background: rgba(255, 215, 0, 0.3);
   color: #000;
-  padding: 8px 16px;
+  padding: 8px 9px;
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -194,19 +226,246 @@ section {
   color: gold;
   transform: scale(1.08);
 }
-.btn-buy {
+.btn-buy-now {
   display: inline-block;
   margin-top: 10px;
   background: linear-gradient(90deg, gold, #b87333);
   color: #000;
-  padding: 8px 16px;
+  padding: 8px 9px;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(255,215,0,0.25);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
 }
-.btn-buy:hover {
+.btn-buy-now:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 25px rgba(255,215,0,0.35);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
+}
+
+/* ======================================================= */
+/* ⭐️ CẬP NHẬT: CSS SIDEBAR VÀ NỘI DUNG (Tông VÀNG-ĐEN) ⭐️ */
+/* ======================================================= */
+
+/* --- 1. Style cho Sidebar Chính --- */
+.cart-sidebar {
+  position: fixed;
+  right: 0;
+  top: 70px;
+  width: 300px;
+  height: calc(100vh - 70px);
+  background: #1e1e1e;
+  padding: 20px 15px;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  z-index: 1000;
+  color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Thêm transition cho hiệu ứng thu gọn */
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+/* --- Style cho Header & Tiêu đề --- */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ffc400; /* Màu vàng */
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+.cart-header h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  border-bottom: none;
+}
+#cart-items {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* --- 2. Style cho Sản phẩm trong giỏ (Cart Item) --- */
+.cart-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+  background-color: #333333;
+}
+
+.cart-item > span:first-child {
+  font-size: 0.9rem; /* Đã sửa lỗi chính tả từ "0.9 rem" */
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.cart-item > span:nth-child(2) {
+  font-size: 0.95rem;
+  color: #ffc400; /* Màu vàng */
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cart-item > div {
+  display: flex;
+  align-items: center;
+}
+
+.cart-item button {
+  background: #3a3a3a;
+  color: #ffffff;
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s;
+  margin-left: 5px;
+}
+
+/* Hover cho Nút điều khiển */
+.cart-item .btn-inc:hover {
+  background-color: #ffc400; /* Màu vàng */
+}
+.cart-item .btn-dec:hover {
+  background-color: #ffaa00; /* Màu cam/vàng đậm */
+}
+
+/* Nút xóa (đỏ) */
+.cart-item .btn-del {
+  background-color: #ff4d4d;
+  margin-left: 10px;
+}
+
+.cart-item .btn-del:hover {
+  background-color: #cc3c3c;
+}
+
+/* --- 3. Style cho Footer & Nút Tiếp tục (Payment Button) --- */
+.cart-footer {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #333333;
+  display: block;
+}
+
+.cart-footer div:first-child {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+#cart-total {
+  color: #ffc400; /* Màu vàng */
+  font-size: 1.3rem;
+}
+
+#cart-continue {
+  width: 100%;
+  background-color: #ffc400; /* Màu vàng */
+  color: #1e1e1e; /* Chữ đen trên nền vàng */
+  border: none;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 700; /* Đậm hơn */
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  letter-spacing: 0.5px;
+}
+
+#cart-continue:hover {
+  background-color: #ffaa00; /* Màu vàng đậm hơn khi hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 196, 0, 0.4);
+}
+
+/* ======================================================= */
+/* ⭐️ CSS CHỨC NĂNG THU GỌN (TOGGLE) ⭐️ */
+/* ======================================================= */
+
+/* --- 4. Style cho Nút Toggle Nổi (Floating Button) --- */
+
+.btn-toggle-cart {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  background-color: #ffedb1; /* Màu vàng */
+  color: #1e1e1e; /* Chữ đen */
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.2s, right 0.3s;
+}
+
+.btn-toggle-cart:hover {
+  background-color: #ffaa00; /* Màu vàng đậm hơn */
+}
+
+#toggle-count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ff4d4d;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 12px;
+  line-height: 1;
+}
+
+/* --- 5. Style cho trạng thái GIỎ HÀNG THU GỌN (.collapsed) --- */
+
+.cart-sidebar.collapsed {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+  border-left: none;
+  box-shadow: none;
+}
+
+/* --- 6. Tùy chỉnh Layout cho Menu chính --- */
+
+.food-grid {
+  margin-right: 20px; /* Margin tiêu chuẩn */
+  transition: margin-right 0.3s ease-in-out;
+}
+
+/* Khi giỏ hàng không thu gọn (đang mở), dịch menu sang trái */
+.cart-sidebar:not(.collapsed) ~ .food-grid {
+  margin-right: 320px; /* 300px cho sidebar + 20px margin */
 }

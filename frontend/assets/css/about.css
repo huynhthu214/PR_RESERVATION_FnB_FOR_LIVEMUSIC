@@ -288,3 +288,24 @@
     background: var(--primary);
     color: #000;
   }
+
+  /* Fallback cho nội dung CMS nếu thiếu class */
+.mission p,
+.values p,
+.legal p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.value-card h3,
+.legal-card h3 {
+  color: var(--primary);
+  margin: 1rem 0 0.5rem;
+  font-size: 1.4rem;
+}
+
+.value-card p,
+.legal-card p {
+  font-size: 0.95rem;
+}
