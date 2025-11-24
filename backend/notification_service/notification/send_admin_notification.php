@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 require_once __DIR__ . '/../db.php';
-require_once __DIR__ . 'NotificationModel.php';
+require_once __DIR__ .'/NotificationModel.php';
 
 $input = json_decode(file_get_contents('php://input'), true);
 if (!$input || !isset($input['ADMIN_ID'], $input['TITLE'], $input['MESSAGE'], $input['TYPE'])) {

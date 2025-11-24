@@ -292,6 +292,8 @@ function routeNotificationService($action, $base)
     $path = $base . "notification_service/notification/";
     $path_noti_user = $base . "notification_service/noti_user/";
     $path_contact = $base . "notification_service/contact/";
+    $path_email = $base . "notification_service/email/";
+
     switch ($action) {
         case 'get_notifications':
             include_once $path . "get_notification.php";
@@ -324,6 +326,23 @@ function routeNotificationService($action, $base)
         case 'submit_contact':
             include_once $path_contact . "submit_contact.php";
             break;
+        
+        case 'send_user_notification':
+            include_once $path_noti_user . "send_user_notification.php";
+            break;
+
+        case 'send_admin_notification':
+            include_once $path . "send_admin_notification.php";
+            break;
+
+        case 'broadcast_notification':
+            include_once $path . "broadcast.php";
+            break;
+
+        case 'get_admin_logs':
+            include_once $path . "get_admin_logs.php";
+            break;
+
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong notification_service"]);
             break;
