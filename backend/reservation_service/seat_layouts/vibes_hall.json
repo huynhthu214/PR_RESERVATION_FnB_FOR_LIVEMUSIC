@@ -3,7 +3,7 @@
     {
       "row": "A",
       "seats": [
-        {"id":"A1","number":1,"type":"VIP","status":"reserved","priceMultiplier":1.5},
+        {"id":"A1","number":1,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A2","number":2,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A3","number":3,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A4","number":4,"type":"VIP","status":"","priceMultiplier":1.5},
@@ -12,15 +12,15 @@
         {"id":"A7","number":7,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A8","number":8,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A9","number":9,"type":"VIP","status":"","priceMultiplier":1.5},
-        {"id":"A10","number":10,"type":"VIP","status":"reserved","priceMultiplier":1.5},
+        {"id":"A10","number":10,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A11","number":11,"type":"VIP","status":"","priceMultiplier":1.5},
-        {"id":"A12","number":12,"type":"VIP","status":"reserved","priceMultiplier":1.5},
+        {"id":"A12","number":12,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A13","number":13,"type":"VIP","status":"","priceMultiplier":1.5},
-        {"id":"A14","number":14,"type":"VIP","status":"reserved","priceMultiplier":1.5},
+        {"id":"A14","number":14,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A15","number":15,"type":"VIP","status":"","priceMultiplier":1.5},
-        {"id":"A16","number":16,"type":"VIP","status":"reserved","priceMultiplier":1.5},
+        {"id":"A16","number":16,"type":"VIP","status":"","priceMultiplier":1.5},
         {"id":"A17","number":17,"type":"VIP","status":"","priceMultiplier":1.5},
-        {"id":"A18","number":18,"type":"VIP","status":"reserved","priceMultiplier":1.5}
+        {"id":"A18","number":18,"type":"VIP","status":"","priceMultiplier":1.5}
       ]
     },
     {
@@ -51,11 +51,11 @@
       "seats": [
         {"id":"C1","number":1,"type":"Standard","status":"","priceMultiplier":1},
         {"id":"C2","number":2,"type":"Standard","status":"","priceMultiplier":1},
-        {"id":"C3","number":3,"type":"Standard","status":"reserved","priceMultiplier":1},
+        {"id":"C3","number":3,"type":"Standard","status":"","priceMultiplier":1},
         {"id":"C4","number":4,"type":"Standard","status":"","priceMultiplier":1},
-        {"id":"C5","number":5,"type":"Standard","status":"reserved","priceMultiplier":1},
+        {"id":"C5","number":5,"type":"Standard","status":"","priceMultiplier":1},
         {"id":"C6","number":6,"type":"Standard","status":"","priceMultiplier":1},
-        {"id":"C7","number":7,"type":"Standard","status":"reserved","priceMultiplier":1},
+        {"id":"C7","number":7,"type":"Standard","status":"","priceMultiplier":1},
         {"id":"C8","number":8,"type":"Standard","status":"","priceMultiplier":1},
         {"id":"C9","number":9,"type":"Standard","status":"","priceMultiplier":1},
         {"id":"C10","number":10,"type":"Standard","status":"","priceMultiplier":1},

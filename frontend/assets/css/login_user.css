@@ -148,6 +148,9 @@ input:focus {
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
+  width: 150px;
+  font-size: 15px;
+  margin: auto;
 }
 
 .btn-submit:hover {

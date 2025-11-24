@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config.php'; // Chứa BASE_URL, API_GATEWAY_URL,...
-
+require_once __DIR__ . '/../../config.php'; 
 // Nếu đã đăng nhập → chuyển về dashboard
 if (isset($_SESSION['ADMIN_ID'])) {
     header("Location: ../index.php?page=dashboard");
