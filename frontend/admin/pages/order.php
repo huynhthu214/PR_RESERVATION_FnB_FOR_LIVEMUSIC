@@ -78,7 +78,7 @@ function showToast(message, type = 'info', duration = 3000){
 function loadOrders() {
   const tbody = document.getElementById('order-body');
   tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Đang tải dữ liệu...</td></tr>';
-
+  
   fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=get_order')
     .then(res => res.json())
     .then(data => {
