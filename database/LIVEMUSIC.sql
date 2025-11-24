@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     22/11/2025 10:14:12 PM                       */
+/* Created on:     24/11/2025 7:39:41 PM                        */
 /*==============================================================*/
 
 
@@ -340,6 +340,8 @@ create table RESERVATIONS
    RESERVATION_TIME     datetime  comment '',
    STATUS               text  comment '',
    TOTAL_AMOUNT         float  comment '',
+   PRICE                float  comment '',
+   SEAT_NUMBER          numeric(8,0)  comment '',
    primary key (RESERVATION_ID)
 );
 

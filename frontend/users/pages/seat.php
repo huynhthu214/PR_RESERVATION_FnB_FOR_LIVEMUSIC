@@ -87,18 +87,19 @@ function renderSeats(layout) {
           const isSelected = selectedSeats.some(s => s.id === seat.id);
           return `
             <button
-              class="seat ${seat.type === 'VIP' ? 'vip' : ''} ${seat.status} ${isSelected ? 'selected' : ''}"
-              onclick="toggleSeat('${seat.id}', ${seat.price}, '${seat.number}')" 
-              title="Ghế ${seat.number} - ${seat.type} - ${seat.price.toLocaleString()} đ"
+              class="seat ${seat.type === 'VIP' ? 'vip' : 'standard'} ${seat.status} ${isSelected ? 'selected' : ''}"
+              onclick="toggleSeat('${seat.id}', ${seat.price}, '${row.row}', '${seat.number}', '${seat.type}')"
+              title="${row.row}${seat.number} - ${seat.type} - ${seat.price.toLocaleString()} đ"
               ${seat.status === 'reserved' ? 'disabled' : ''}
             >${seat.number}</button>
           `;
         }).join('')}
       </div>
-    `}).join('');
+    `;
+  }).join('');
 }
 
-function toggleSeat(id, price, number){
+function toggleSeat(id, price, rowLetter, number, type){
   const seatBtn = event.target;
   const existingIndex = selectedSeats.findIndex(s => s.id === id);
 
@@ -108,7 +109,12 @@ function toggleSeat(id, price, number){
     selectedSeats.splice(existingIndex, 1);
     seatBtn.classList.remove('selected');
   } else {
-    selectedSeats.push({ id, price, number });
+    selectedSeats.push({ 
+      id, 
+      price, 
+      number: `${rowLetter}${number}`,  // Ghép row + number
+      type: type                        // Lưu loại ghế
+    });
     seatBtn.classList.add('selected');
   }
 
@@ -132,7 +138,7 @@ function renderSummary(){
     <div class="seat-list">
       ${selectedSeats.map(s=>`
         <div class="seat-item">
-          <div>Ghế ${s.number}</div>
+          <div> ${s.number} (${s.type})</div>
           <div>${s.price.toLocaleString()} đ</div>
         </div>
       `).join('')}

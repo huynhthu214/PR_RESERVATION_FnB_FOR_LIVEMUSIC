@@ -9,9 +9,10 @@ create table RESERVATIONS
    RESERVATION_TIME     datetime  comment '',
    STATUS               text  comment '',
    TOTAL_AMOUNT         float  comment '',
+   PRICE                float  comment '',
+   SEAT_NUMBER          numeric(8,0)  comment '',
    primary key (RESERVATION_ID)
 );
-
 /*==============================================================*/
 /* Table: EMAIL_LOG                                             */
 /*==============================================================*/
