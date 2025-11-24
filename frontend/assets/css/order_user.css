@@ -50,14 +50,14 @@ h3 {
 }
 .hero h1 {
   font-size: 3.2rem;
-  color: gold;
+  color: var(--primary);
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   animation: fadeInDown 1.5s ease;
 }
 .hero p {
   margin-top: 10px;
   font-size: 1.2rem;
-  color: #b87333;
+  color: var(--text-color);
   animation: fadeInUp 1.8s ease;
 }
 
@@ -107,8 +107,8 @@ section {
   transition: all 0.35s ease;
 }
 .category-btn:hover {
-  border-color: gold;
-  color: gold;
+  border-color: var(--primary);;
+  color: var(--primary);;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   transform: translateY(-2px) scale(1.05);
 }
@@ -124,27 +124,43 @@ section {
   gap: 1.5rem;
 }
 .food-item {
-    background-color: #1e1e1e; /* màu nền thay cho hình */
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(255, 179, 0, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 120px; /* chiều cao cố định để không bị “mất” */
-    margin-bottom: 15px;
     width: 180px;
+    background: var(--card--);
+    padding: 24px 28px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    margin-bottom: 40px;
+    margin-top: 40px;
+    transition: all 0.5s ease;
 }
-
+.food-item:hover {
+  color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow:
+    0 6px 20px #2f2617,
+    0 0 20px #2f2617;
+  border: 1px solid var(--border-card--);
+}
 .food-item .info h3 {
     margin: 0 0 8px;
     font-size: 18px;
-    color: #ffb300;
+    color: var(--primary);
 }
 
 .food-item .price {
     font-size: 16px;
     color: #fff;
+}
+.food-item:hover .price {
+    font-size: 18px;
+    color: var(--primary);
+}
+.food-item:hover .category{
+  color: var(--text-color);
 }
 
 .food-item .btn-group {
@@ -166,21 +182,29 @@ section {
   justify-content: center;
 }
 
+
 .btn-cart {
   display: inline-block;
   margin-top: 10px;
-  background: rgba(255, 215, 0, 0.3);
-  color: #000;
-  padding: 8px 9px;
+  background: linear-gradient(135deg, var(--text-color), var(--primary));
   border: none;
-  border-radius: 8px;
+  color: var(--text-light);
   font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(255, 90, 0, 0.25);
 }
 .btn-cart:hover {
-  border-color: gold;
-  color: gold;
-  transform: scale(1.08);
+  transform: translateY(-2px);
+  color: var(--primary);
+  box-shadow:
+    0 6px 20px #2f2617,
+    0 0 20px #2f2617;
+  border: 1px solid var(--primary);
+  background: transparent;
 }
 .btn-buy-now {
   display: inline-block;
@@ -228,7 +252,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #ffc400; /* Màu vàng */
+  border-bottom: 2px solid var(--primary);
   padding-bottom: 15px;
   margin-bottom: 25px;
 }
@@ -273,7 +297,7 @@ section {
 
 .cart-item > span:nth-child(2) {
   font-size: 0.95rem;
-  color: #ffc400; /* Màu vàng */
+  color:var(--primary);
   font-weight: 700;
   white-space: nowrap;
 }
@@ -303,10 +327,10 @@ section {
 
 /* Hover cho Nút điều khiển */
 .cart-item .btn-inc:hover {
-  background-color: #ffc400; /* Màu vàng */
+  background-color: var(--primary); /* Màu vàng */
 }
 .cart-item .btn-dec:hover {
-  background-color: #ffaa00; /* Màu cam/vàng đậm */
+  background-color: var(--text-color); /* Màu cam/vàng đậm */
 }
 
 /* Nút xóa (đỏ) */
@@ -336,14 +360,14 @@ section {
 }
 
 #cart-total {
-  color: #ffc400; /* Màu vàng */
+  color: var(--primary); /* Màu vàng */
   font-size: 1.3rem;
 }
 
 #cart-continue {
   width: 100%;
-  background-color: #ffc400; /* Màu vàng */
-  color: #1e1e1e; /* Chữ đen trên nền vàng */
+  background-color: var(--text-color); /* Màu vàng */
+  color: var(--text-light); /* Chữ đen trên nền vàng */
   border: none;
   padding: 12px 0;
   font-size: 1.1rem;
@@ -355,7 +379,7 @@ section {
 }
 
 #cart-continue:hover {
-  background-color: #ffaa00; /* Màu vàng đậm hơn khi hover */
+  background-color: var(--primary); /* Màu vàng đậm hơn khi hover */
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(255, 196, 0, 0.4);
 }
@@ -388,7 +412,7 @@ section {
 }
 
 .btn-toggle-cart:hover {
-  background-color: #ffaa00; /* Màu vàng đậm hơn */
+  background-color: var(--primary); /* Màu vàng đậm hơn */
 }
 
 #toggle-count {
