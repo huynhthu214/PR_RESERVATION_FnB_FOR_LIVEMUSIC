@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../config.php';
 <section class="hero">
     <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1200" alt="">
     <div class="hero-content">
-        <h1>Food & Drinks</h1>
+        <h1>Đồ ăn và Thức uống</h1>
         <p>Thưởng thức hương vị đẳng cấp trong không gian âm nhạc sang trọng</p>
     </div>
 </section>
@@ -17,9 +17,9 @@ require_once __DIR__ . '/../../config.php';
 <!-- CATEGORY FILTER -->
 <section>
     <div class="categories">
-        <button class="category-btn active">All</button>
-        <button class="category-btn">Food</button>
-        <button class="category-btn">Drink</button>
+        <button class="category-btn active">Tất cả</button>
+        <button class="category-btn">Đồ ăn</button>
+        <button class="category-btn">Nước uống</button>
     </div>
 </section>
 
@@ -127,14 +127,13 @@ window.addEventListener("DOMContentLoaded", async () => {
 
             grid.innerHTML = items.map(item => `
                 <div class="food-item" data-id="${item.ITEM_ID}" data-category="${item.CATEGORY}">
-                    <img src="https://via.placeholder.com/400?text=${encodeURIComponent(item.NAME)}" alt="${item.NAME}">
                     <div class="overlay"></div>
                     <div class="category">${item.CATEGORY}</div>
                     <div class="info">
                         <h3>${item.NAME}</h3>
                         <div class="price">${item.PRICE.toLocaleString()}đ</div>
                         <div class="btn-group">
-                            <button class="btn-cart">Thêm vào giỏ hàng</button>
+                            <button class="btn-cart">Thêm</button>
                         </div>
                     </div>
                 </div>

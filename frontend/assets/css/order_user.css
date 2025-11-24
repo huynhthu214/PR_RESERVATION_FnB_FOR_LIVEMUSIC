@@ -93,6 +93,7 @@ section {
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 40px;
+  margin-top: -40px;
 }
 .category-btn {
   padding: 10px 25px;
@@ -123,80 +124,33 @@ section {
   gap: 1.5rem;
 }
 .food-item {
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  border: 1px solid rgba(218, 165, 32, 0.15);
-  background: rgba(255, 255, 255, 0.03);
-  transition: all 0.4s ease;
-  cursor: pointer;
-}
-.food-item:hover {
-  transform: scale(1.04);
-  border-color: gold;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
-}
-.food-item img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-}
-.food-item:hover img {
-  transform: scale(1.1);
-}
-.food-item .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.food-item:hover .overlay {
-  opacity: 1;
-}
-.food-item .info {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 20px;
-  text-align: left;
-  transform: translateY(30px);
-  opacity: 0;
-  transition: all 0.4s ease;
-}
-.food-item:hover .info {
-  transform: translateY(0);
-  opacity: 1;
-}
-.food-item h3 {
-  color: gold;
-  font-size: 1.3rem;
-  margin-bottom: 5px;
-}
-.food-item .price {
-  color: #b87333;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-.food-item .category {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 10px;
-  font-size: 0.8rem;
-  background: rgba(0, 0, 0, 0.7);
-  color: gold;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 215, 0, 0.3);
+    background-color: #1e1e1e; /* màu nền thay cho hình */
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(255, 179, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px; /* chiều cao cố định để không bị “mất” */
+    margin-bottom: 15px;
+    width: 180px;
 }
 
-/* ======= BUTTON BUY ======= */
-/* Container 2 nút ngang hàng */
-.btn-group {
-  display: flex;
-  gap: 10px; /* khoảng cách giữa 2 nút */
-  margin-top: 10px;
+.food-item .info h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: #ffb300;
+}
+
+.food-item .price {
+    font-size: 16px;
+    color: #fff;
+}
+
+.food-item .btn-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 /* Style nút */
@@ -208,6 +162,8 @@ section {
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s ease, color 0.3s ease;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-cart {
@@ -461,7 +417,7 @@ section {
 /* --- 6. Tùy chỉnh Layout cho Menu chính --- */
 
 .food-grid {
-  margin-right: 20px; /* Margin tiêu chuẩn */
+  margin-top: -120px;
   transition: margin-right 0.3s ease-in-out;
 }
 

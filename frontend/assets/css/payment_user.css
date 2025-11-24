@@ -21,6 +21,7 @@ body {
   border-radius: 15px;
   padding: 2rem;
   transition: all 0.3s ease;
+  width: 500px;
 }
 .card:hover {
   border-color: gold;
@@ -65,9 +66,10 @@ form {
 }
 label {
   display: block;
-  font-size: 0.9rem;
+  font-size: 15px;
   color: #b87333;
   margin-bottom: 0.3rem;
+  font-weight: bold;
 }
 input, select {
   width: 100%;
@@ -99,6 +101,7 @@ input:focus {
   font-weight: 500;
   transition: all 0.3s;
   cursor: pointer;
+  font-size: 15px;
 }
 .method:hover {
   border-color: gold;
@@ -122,15 +125,30 @@ input:focus {
 }
 
 /* Checkbox + Confirm */
+/* Đảm bảo checkbox nằm ngoài grid flow */
 .checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  font-size: 0.9rem;
+  display: flex;           /* xếp hàng ngang */
+  align-items: center;     /* căn giữa theo chiều dọc */
+  gap: 0.5rem;             /* khoảng cách checkbox và chữ */
+  width: auto;             /* không giới hạn chiều ngang */
+  grid-column: 1 / -1;     /* chiếm toàn bộ hàng trong grid */
 }
+
 .checkbox input {
   accent-color: gold;
-  margin-top: 3px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.checkbox label {
+  white-space: nowrap;     /* chữ không xuống dòng */
+}
+.checkbox input[type="checkbox"] {
+  width: auto;       /* reset nếu bị override */
+  height: auto;
+  transform: scale(0.8);  /* 0.8 = 80% kích thước mặc định */
+  margin: 0;
+  accent-color: gold;     /* màu checkbox vẫn giữ */
 }
 .btn {
   display: inline-block;
@@ -144,6 +162,7 @@ input:focus {
   cursor: pointer;
   margin-top: 1rem;
   transition: all 0.3s;
+  font-size: 15px;
 }
 .btn:hover {
   transform: scale(1.03);

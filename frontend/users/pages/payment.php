@@ -82,10 +82,8 @@ $email = $_SESSION['EMAIL'] ?? '';
 
       <h3>Phương thức thanh toán</h3>
       <div class="payment-methods">
-        <button type="button" class="method active">💳 Thẻ ngân hàng</button>
-        <button type="button" class="method">🏦 Chuyển khoản</button>
-        <button type="button" class="method">📱 Ví MoMo</button>
-        <button type="button" class="method">🔳 Mã QR</button>
+        <button type="button" class="method active">Chuyển khoản</button>
+        <button type="button" class="method">Mã QR</button>
       </div>
 
       <div class="checkbox">
@@ -101,8 +99,6 @@ $email = $_SESSION['EMAIL'] ?? '';
 </div>
 
 <script>
-
-  // Lấy chi tiết user từ API nếu CUSTOMER_ID có
 const CUSTOMER_ID = "<?php echo $customerId; ?>";
 
 async function loadUserDetail() {
@@ -117,26 +113,18 @@ async function loadUserDetail() {
             return;
         }
 
-        // Điền dữ liệu vào form
         const nameInput = document.querySelector('input[name="name"]');
         const emailInput = document.querySelector('input[name="email"]');
 
         if (nameInput) nameInput.value = data.USERNAME;
         if (emailInput) emailInput.value = data.EMAIL;
 
-        console.log("User detail loaded:", data);
-
     } catch (err) {
         console.error("Lỗi kết nối API Gateway:", err);
     }
 }
 
-// Gọi hàm
 loadUserDetail();
-
-// Debug dữ liệu từ PHP
-console.log("DEBUG selectedSeats:", <?php echo json_encode($selectedSeats); ?>);
-console.log("DEBUG orderMenu:", <?php echo json_encode($orderMenu); ?>);
 
 // Cập nhật tổng tiền
 function updateTotal() {
@@ -160,43 +148,49 @@ document.querySelectorAll('.payment-methods .method').forEach(btn=>{
 });
 
 // Gửi đơn hàng
-document.getElementById('payment-form').addEventListener('submit', async e=>{
+document.getElementById('payment-form').addEventListener('submit', async e => {
   e.preventDefault();
 
   const name = e.target.name.value.trim();
   const email = e.target.email.value.trim();
+  const phone = '';   // tạm thời để trống
+  const idCard = '';  // tạm thời để trống
+
   const paymentMethod = document.querySelector('.payment-methods .method.active').textContent;
 
-  const seats = Array.from(document.querySelectorAll('.seat-item')).map(s=>({
+  const seats = Array.from(document.querySelectorAll('.seat-item')).map(s => ({
     id: s.dataset.id,
     price: parseInt(s.dataset.price)
   }));
 
-  const menu = Array.from(document.querySelectorAll('.menu-item')).map(m=>({
+  const menu = Array.from(document.querySelectorAll('.menu-item')).map(m => ({
     item_id: m.dataset.id,
     quantity: parseInt(m.dataset.quantity),
     unit_price: parseInt(m.dataset.price)
   }));
 
+  const total = seats.reduce((sum, s) => sum + s.price, 0) +
+                menu.reduce((sum, m) => sum + m.unit_price * m.quantity, 0);
 
-  const total = seats.reduce((sum,s)=>sum+s.price,0) + menu.reduce((sum,m)=>sum+m.unit_price*m.quantity,0);
+  const payload = {name, email, phone, idCard, paymentMethod, seats, menu, total};
 
-  try{
-    const res = await fetch('/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=add_order', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({name,email,paymentMethod,seats,menu,total})
+  try {
+    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=add_order', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
     });
 
     const data = await res.json();
 
-    if(data.success){
+    if (data.success) {
       alert('Thanh toán thành công! Mã đơn: ' + data.order_id);
-      window.location.href='index.php?page=receipt&order_id='+data.order_id;
+      window.location.href = 'index.php?page=receipt&order_id=' + data.order_id;
     } else {
       alert(data.message || 'Lỗi thanh toán');
     }
-  } catch(err){
+
+  } catch(err) {
     console.error(err);
     alert('Lỗi server, vui lòng thử lại.');
   }
