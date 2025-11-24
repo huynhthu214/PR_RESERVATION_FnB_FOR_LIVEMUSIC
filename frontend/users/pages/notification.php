@@ -40,71 +40,37 @@ if (!$customer_id) {
     </div>
 </div>
 
-<style>
-/* Modal */
-.modal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-.modal.hidden { display: none; }
-.modal-content {
-    background: linear-gradient(145deg, #ffcc66, #a97142, #ff4444, #1a1a1a);
-    padding: 25px;
-    border-radius: 12px;
-    width: 320px;
-    text-align: center;
-    color: #fff;
-    position: relative;
-}
-.modal-close {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    border: none;
-    background: transparent;
-    font-size: 22px;
-    cursor: pointer;
-    color: #fff;
-}
-.modal-actions { margin-top: 20px; display: flex; justify-content: space-around; }
-.btn-cancel { background: #555; color: #fff; padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; }
-.btn-delete { background: #ff4444; color: #fff; padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; }
-.btn-cancel:hover { background: #777; }
-.btn-delete:hover { background: #cc0000; }
-</style>
-
 <script>
 const notificationList = document.getElementById('notification-list');
+const customer_id = "<?php echo $_SESSION['CUSTOMER_ID']; ?>";
 let notifications = [];
 let currentTab = 'all';
 let deleteNotifId = null;
 
-// Load notifications
+// =================== Load notifications ===================
 async function loadNotifications() {
     try {
         const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=get_noti`, {
-            credentials: 'include' // gửi cookie PHP session
+            credentials: 'include'
         });
         const data = await res.json();
         if (!data.success) throw new Error(data.message || 'Lỗi API');
         notifications = data.data;
         renderNotifications(currentTab);
     } catch(err) {
-        notificationList.innerHTML = '<p style="text-align:center;">Lỗi tải dữ liệu</p>';
+        notificationList.innerHTML = '<p style="text-align:center;color:red;">Lỗi tải dữ liệu</p>';
         console.error(err);
     }
 }
 
-// Render notifications
+// =================== Render notifications ===================
 function renderNotifications(tab) {
     currentTab = tab;
     notificationList.innerHTML = '';
-    const list = tab === 'unread' ? notifications.filter(n => !n.is_read) : notifications;
+
+    const list = tab === 'unread'
+        ? notifications.filter(n => !n.is_read)
+        : notifications;
 
     if (!list.length) {
         notificationList.innerHTML = '<p style="text-align:center;">Không có thông báo</p>';
@@ -113,36 +79,66 @@ function renderNotifications(tab) {
 
     list.forEach(notif => {
         const div = document.createElement('div');
-        div.className = 'notification' + (notif.is_read ? '' : ' unread');
+        div.className = 'notification' + (notif.is_read ? ' read' : ' unread');
         div.dataset.id = notif.id;
         div.innerHTML = `
             <div class="notification-title">${notif.title}</div>
             <div class="notification-message">${notif.message}</div>
             <div class="notification-time">${new Date(notif.sent_at).toLocaleString("vi-VN")}</div>
-            ${notif.link ? `<a href="${notif.link}" class="action-link">Xem chi tiết</a>` : ''}
+            ${notif.id ? `<a href="index.php?page=noti_details&id=${notif.id}" class="action-link">Xem chi tiết</a>` : ''}
             <button class="close-btn">&times;</button>
         `;
         notificationList.appendChild(div);
-    });
 
-    // xóa từng thông báo → mở modal
-    document.querySelectorAll('.close-btn').forEach(btn => {
-        btn.onclick = e => {
-            deleteNotifId = e.target.closest('.notification').dataset.id;
+        const linkEl = div.querySelector('.action-link');
+
+        // Click vào thông báo → đánh dấu đã đọc
+        div.addEventListener('click', async e => {
+            if (e.target.classList.contains('close-btn') || e.target === linkEl) return;
+            if (!notif.is_read) await markAsRead(notif, div);
+        });
+
+        // Click vào link “Xem chi tiết” → đánh dấu đã đọc trước khi chuyển trang
+        if (linkEl) {
+            linkEl.addEventListener('click', async e => {
+                e.preventDefault();
+                if (!notif.is_read) await markAsRead(notif, div);
+                window.location.href = linkEl.href;
+            });
+        }
+
+        // Click nút xóa → mở modal
+        div.querySelector('.close-btn').addEventListener('click', e => {
+            e.stopPropagation();
+            deleteNotifId = notif.id;
             document.getElementById('deleteModal').classList.remove('hidden');
-        };
+        });
     });
 }
 
-// Modal close
-document.querySelector('.modal-close').onclick = () => {
-    document.getElementById('deleteModal').classList.add('hidden');
-};
-document.getElementById('cancelDelete').onclick = () => {
-    document.getElementById('deleteModal').classList.add('hidden');
-};
+// =================== Mark as read ===================
+async function markAsRead(notif, div) {
+    try {
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_as_read&id=${notif.id}&receiver_id=${customer_id}&receiver_type=CUSTOMER`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        const data = await res.json();
+        if (data.success) {
+            notif.is_read = true;
+            div.classList.remove('unread');
+            div.classList.add('read');
+            if (currentTab === 'unread') renderNotifications(currentTab);
+        }
+    } catch(err) {
+        console.error('Lỗi đánh dấu đã đọc:', err);
+    }
+}
 
-// Xóa 1 thông báo
+// =================== Modal & Delete ===================
+document.querySelector('.modal-close').onclick = () => document.getElementById('deleteModal').classList.add('hidden');
+document.getElementById('cancelDelete').onclick = () => document.getElementById('deleteModal').classList.add('hidden');
+
 document.getElementById('confirmDelete').onclick = async () => {
     if (!deleteNotifId) return;
     try {
@@ -155,14 +151,16 @@ document.getElementById('confirmDelete').onclick = async () => {
             notifications = notifications.filter(n => n.id !== deleteNotifId);
             renderNotifications(currentTab);
         } else alert(data.message || 'Xóa thất bại');
-    } catch(err){ console.error(err); }
+    } catch(err) {
+        console.error(err);
+    }
     document.getElementById('deleteModal').classList.add('hidden');
 };
 
-// Đánh dấu tất cả đã đọc
+// =================== Mark all read ===================
 document.getElementById('mark-all-read').onclick = async () => {
     try {
-        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_all_read`, {
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_all_read&receiver_id=${customer_id}&receiver_type=CUSTOMER`, {
             method: 'POST',
             credentials: 'include'
         });
@@ -174,11 +172,11 @@ document.getElementById('mark-all-read').onclick = async () => {
     } catch(err) { console.error(err); }
 };
 
-// Xóa tất cả
+// =================== Delete all ===================
 document.getElementById('delete-all').onclick = async () => {
     if (!confirm('Bạn có chắc muốn xóa tất cả thông báo?')) return;
     try {
-        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=delete_all_noti`, {
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=delete_all_noti&receiver_id=${customer_id}&receiver_type=CUSTOMER`, {
             method: 'DELETE',
             credentials: 'include'
         });
@@ -190,13 +188,13 @@ document.getElementById('delete-all').onclick = async () => {
     } catch(err) { console.error(err); }
 };
 
-// Chuyển tab
+// =================== Tabs ===================
 document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.onclick = e => {
+    btn.addEventListener('click', e => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
         renderNotifications(e.target.dataset.tab);
-    };
+    });
 });
 
 document.addEventListener('DOMContentLoaded', loadNotifications);

@@ -61,9 +61,9 @@ $title = match($page) {
 <header class="admin-header">
   <div class="header-left">
       <div class="logo">
-        <img src="<?php echo BASE_URL; ?>assets/images/LYZY.png" alt="Logo" width="60" height="40">
+        <img src="<?php echo BASE_URL; ?>assets/images/logo_LYZY.png" alt="Logo" width="50" height="45">
         <div>
-            <h2>LYZY Admin</h2>
+            <h2>LYZY ADMIN</h2>
         </div>
       </div>
   </div>

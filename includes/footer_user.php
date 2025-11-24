@@ -29,7 +29,7 @@ require_once __DIR__ . '/../frontend/config.php';
         <div class="footer-section">
           <h3 class="footer-heading">Khám phá</h3>
           <ul class="footer-list">
-            <li><a href=pages/event.php" class="footer-link">Sự kiện</a></li>
+            <li><a href="pages/event.php" class="footer-link">Sự kiện</a></li>
             <li><a href="pages/tickets.php" class="footer-link">Vé của tôi</a></li>
             <li><a href="#" class="footer-link">Nghệ sĩ & Ban nhạc</a></li>
             <li><a href="#" class="footer-link">Địa điểm biểu diễn</a></li>
