@@ -21,17 +21,16 @@ body {
   border-radius: 15px;
   padding: 2rem;
   transition: all 0.3s ease;
-  width: 500px;
+  display: block;
 }
 .card:hover {
-  border-color: gold;
+  border-color: var(--text-color);
   transform: scale(1.01);
   box-shadow: 0 0 15px rgba(255,215,0,0.15);
 }
 
 /* Titles */
 h2 {
-  color: gold;
   margin-bottom: 1rem;
 }
 h3 {
@@ -51,7 +50,7 @@ h3 {
   border-top: 1px solid rgba(218,165,32,0.3);
   padding-top: 1rem;
   font-weight: 600;
-  color: gold;
+  color: var(--text-color);
   font-size: 1.1rem;
 }
 
@@ -82,7 +81,7 @@ input, select {
   transition: all 0.3s;
 }
 input:focus {
-  border-color: gold;
+  border-color: var(--primary);
   outline: none;
   box-shadow: 0 0 10px rgba(255,215,0,0.3);
 }
@@ -105,14 +104,14 @@ input:focus {
   font-size: 15px;
 }
 .method:hover {
-  border-color: gold;
-  color: gold;
+  border-color: var( --primary);
+  color: var( --primary);
   transform: scale(1.03);
 }
 .method.active {
-  border-color: gold;
-  background: linear-gradient(90deg, gold, #b87333);
-  color: #000;
+  border-color: var( --primary);
+  background: linear-gradient(90deg, var( --text-color), var( --primary));
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -136,7 +135,7 @@ input:focus {
 }
 
 .checkbox input {
-  accent-color: gold;
+  accent-color: var(--primary);
   margin: 0;
   flex-shrink: 0;
 }
@@ -149,14 +148,14 @@ input:focus {
   height: auto;
   transform: scale(0.8);  /* 0.8 = 80% kích thước mặc định */
   margin: 0;
-  accent-color: gold;     /* màu checkbox vẫn giữ */
+  accent-color: var(--primary);     /* màu checkbox vẫn giữ */
 }
 .btn {
   display: inline-block;
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(90deg, gold, #b87333);
-  color: #000;
+  background: linear-gradient(90deg, var( --text-color), var( --primary));
+  color: #ffffff;
   font-weight: 700;
   border: none;
   border-radius: 8px;
