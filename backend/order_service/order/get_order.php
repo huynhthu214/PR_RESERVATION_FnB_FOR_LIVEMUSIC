@@ -53,7 +53,6 @@ while ($row = $result->fetch_assoc()) {
         "customer_id"    => $row['CUSTOMER_ID'],
         "customer_name"  => $customer_name,
         "reservation_id" => $row['RESERVATION_ID'],
-        "promo_id"       => $row['PROMO_ID'],
         "order_time"     => $row['ORDER_TIME'],
         "total_amount"   => $row['TOTAL_AMOUNT'],
         "status"         => $row['STATUS'],

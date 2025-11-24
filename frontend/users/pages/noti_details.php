@@ -58,12 +58,15 @@ async function loadNotificationDetail() {
         document.querySelector('#notification-card .content').innerHTML = notif.message;
 
         // Đánh dấu đã đọc
-        if (!notif.is_read) {
-            await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_as_read&id=${notifId}`, {
-              method: 'POST',
-              credentials: 'include'
-            });
-        }
+        const formData = new FormData();
+        formData.append("notification_id", notifId);
+
+        await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_as_read`, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include'
+        });
+
 
     } catch(err) {
         console.error(err);
