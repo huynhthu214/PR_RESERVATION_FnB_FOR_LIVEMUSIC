@@ -148,7 +148,7 @@ function renderSummary(){
       <span>${totalPrice.toLocaleString()} đ</span>
     </div>
     <div class="total"><span>Tổng</span><span>${totalPrice.toLocaleString()} đ</span></div>
-    <button class="btn" onclick="goToOrder()">Tiếp tục</button>
+    <button class="btn-tt" onclick="goToOrder()">Tiếp tục</button>
   `;
 }
 
