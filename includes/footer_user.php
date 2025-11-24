@@ -11,7 +11,7 @@ require_once __DIR__ . '/../frontend/config.php';
         <div class="footer-section">
           <a href="index.php?page=home" class="footer-brand">
             <div class="footer-logo">
-              <img src="<?php echo BASE_URL; ?>assets/images/LogoLYZY.png" alt="LYZY Logo" style="height:40px;">
+              <img src="<?php echo BASE_URL; ?>assets/images/Logo_LYZY.png" alt="LYZY Logo" style="height:40px;">
             </div>
             <span class="footer-title">LYZY</span>
           </a>
@@ -49,7 +49,7 @@ require_once __DIR__ . '/../frontend/config.php';
     </div>
 
       <div class="footer-bottom">
-        © 2024 LiveMusic. All rights reserved.
+        <p>&copy; <?php echo date('Y'); ?> LYZY Music. All rights reserved.</p>
       </div>
     </div>
   </footer>

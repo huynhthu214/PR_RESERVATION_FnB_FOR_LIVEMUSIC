@@ -269,7 +269,6 @@ body {
   background-color: var(--bg-card);
   border-radius: 12px;
   padding: 20px;
-  display: flex;
   align-items: center;
   gap: 15px;
 }

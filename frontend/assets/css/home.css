@@ -14,6 +14,11 @@ section {
   max-width: 1200px;
   margin: auto;
 }
+.container h2{
+  color: var(--primary);
+  text-transform: uppercase;
+  font-size: 25px;
+}
 
 .hero {
   background-image: url('../images/home.jpg');
@@ -116,12 +121,15 @@ p {
   transition: all 0.4s;
 }
 .artist:hover img {
-  border-color: gold;
+  border-color: var(--text-color);
   transform: scale(1.08);
   box-shadow: 0 0 20px rgba(255,215,0,0.2);
 }
+.artist:hover h3{
+  color: var(--primary);
+}
 .artist h3 {
-  color: gold;
+  color: var(--text-color);
   margin-top: 0.8rem;
   font-size: 1rem;
 }
@@ -232,23 +240,30 @@ p {
 .see-more-btn {
     margin: 10 auto;
     width: 140px;
-    padding: 10px 20px;
     font-size: 17px;
-    border: 1px solid #835209ff;
-    background: #c56e04ff; 
-    color: #333;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
     display: block;
     text-align: center;
-    font-weight: bold;
     text-decoration: none;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--text-color), var(--primary));
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 90, 0, 0.25);
     
 }
 
 .see-more-btn:hover {
-    background: var(--primary, #835209ff); 
-    color: #fff; 
     transform: scale(1.05);
+      transform: translateY(-2px);
+    color: var(--primary);
+    box-shadow:
+      0 6px 20px #2f2617,
+      0 0 20px #2f2617;
+    border: 1px solid var(--primary);
+    background: transparent;
 }

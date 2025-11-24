@@ -81,7 +81,7 @@ body {
 }
 
 .social-btn:hover {
-  color: #ff7b00;
+  color: var(--primary);
 }
 
 /* ===== Links ===== */
@@ -89,7 +89,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 12px;
-  color: #e6ad2b;
+  color: var(--primary);
 }
 
 .footer-list {
@@ -106,7 +106,7 @@ body {
 }
 
 .footer-link:hover {
-  color: #ff7b00;
+  color: var(--primary);
 }
 
 /* ===== Newsletter ===== */
