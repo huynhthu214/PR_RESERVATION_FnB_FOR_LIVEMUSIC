@@ -41,3 +41,5 @@ create table PAYMENTS
    PAYMENT_STATUS       text  comment '',
    primary key (PAYMENT_ID)
 );
+
+ALTER TABLE ORDERS ADD SEATS_JSON JSON NULL;
