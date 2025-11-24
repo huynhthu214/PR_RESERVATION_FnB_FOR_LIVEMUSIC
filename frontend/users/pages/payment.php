@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../../config.php'; 
 $selectedSeats = $_SESSION['selectedSeats'] ?? [];
 $orderMenu     = $_SESSION['order_menu'] ?? [];
+  
+$total         = $_SESSION['total_amount'] ?? 0;
 
 // Tính tổng tiền
 $totalSeatPrice = array_sum(array_column($selectedSeats, 'price'));

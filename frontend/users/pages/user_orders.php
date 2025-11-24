@@ -1,6 +1,35 @@
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/user_orders.css">
+<style>
+  /* Nút thanh toán / đã thanh toán */
+.btn-pay {
+    display: inline-block;
+    padding: 8px 20px;           /* khoảng cách trong nút */
+    font-size: 0.95rem;          /* chữ vừa phải */
+    font-weight: 600;
+    border-radius: 8px;          /* bo góc */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    color: #ffffffff;
+}
 
-<!-- Thêm thư viện QRCode.js -->
+/* Chưa thanh toán */
+.btn-pay:not([disabled]) {
+    background-color: #ffa200ff;   /* xanh dương */
+}
+
+.btn-pay:not([disabled]):hover {
+    background-color: #b37a00ff;
+    transform: translateY(-2px); /* nhấn nổi bật khi hover */
+}
+
+/* Đã thanh toán */
+.btn-pay[disabled] {
+    background-color: #28a745;   /* xanh lá */
+    cursor: default;
+    opacity: 0.7;                /* mờ đi */
+}
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <section class="hero">
@@ -52,8 +81,9 @@ async function loadUserOrders() {
             `;
         }
 
-        const statusClass = payment?.PAYMENT_STATUS === 'Completed' ? 'done' : 'pending';
-        const statusText = payment?.PAYMENT_STATUS === 'Completed' ? 'Đã thanh toán' : 'Chưa thanh toán';
+        const isPaid = payment?.PAYMENT_STATUS === 'Completed';
+        const statusClass = isPaid ? 'done' : 'pending';
+        const statusText = isPaid ? 'Đã thanh toán' : 'Chưa thanh toán';
 
         const orderCard = document.createElement('div');
         orderCard.className = 'order-card';
@@ -73,46 +103,36 @@ async function loadUserOrders() {
                     ${reservationHTML}
                 </div>
                 <div class="order-side">
-                    <div class="${statusClass==='done'?'done-box':'qr-box'}" id="qr-container-${order.ORDER_ID}">
-                        <div class="emoji"></div>
-                        <p>${statusClass==='done'?'Đơn hàng đã hoàn thành!':'QR Code'}</p>
-                    </div>
+                    <div class="${statusClass==='done'?'done-box':'qr-box'}" id="qr-container-${order.ORDER_ID}"></div>
                     <p style="font-size:0.8rem;color:#b87333;text-align:center;">
-                        ${statusClass==='done'?'Hiển thị QR này tại quầy':'Show this QR code at the pickup counter'}
+                        ${isPaid?'Hiển thị mã QR tại quầy':'Hiển thị mã QR tại quầy'}
                     </p>
-                    <button class="btn-download" id="download-${order.ORDER_ID}">Download QR</button>
+                    <button class="btn-pay" id="btn-pay-${order.ORDER_ID}" ${isPaid?'disabled':''}>
+                        ${isPaid?'Đã thanh toán':'Thanh toán'}
+                    </button>
                 </div>
             </div>
         `;
 
         container.appendChild(orderCard);
 
-        // Tạo QR code nếu chưa thanh toán
-        if (statusClass !== 'done') {
-            const qrDiv = document.getElementById(`qr-container-${order.ORDER_ID}`);
-            const qr = new QRCode(qrDiv, {
-                text: `ORDER:${order.ORDER_ID}`,
-                width: 100,
-                height: 100,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
+        // Tạo QR code (giả lập mã vé)
+        const qrDiv = document.getElementById(`qr-container-${order.ORDER_ID}`);
+        const qr = new QRCode(qrDiv, {
+            text: `ORDER:${order.ORDER_ID}`, 
+            width: 100,
+            height: 100,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
 
-            // Nút download QR
-            document.getElementById(`download-${order.ORDER_ID}`).addEventListener('click', () => {
-                const img = qrDiv.querySelector('img') || qrDiv.querySelector('canvas');
-                if (img) {
-                    const url = img.src || img.toDataURL("image/png");
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `QR-${order.ORDER_ID}.png`;
-                    a.click();
-                }
+        // Nút thanh toán
+        const btnPay = document.getElementById(`btn-pay-${order.ORDER_ID}`);
+        if(!isPaid){
+            btnPay.addEventListener('click', () => {
+                window.location.href = `index.php?page=payment&order_id=${order.ORDER_ID}`;
             });
-        } else {
-            // Nếu đã thanh toán, ẩn nút download
-            document.getElementById(`download-${order.ORDER_ID}`).style.display = 'none';
         }
     });
 }
