@@ -61,12 +61,12 @@ async function loadUserOrders(){
         const statusClass = isPaid?'done':'pending';
         const statusText = isPaid?'Đã thanh toán':'Chưa thanh toán';
 
-        // Ghế
-        const seatRows = reservation?.seats?.map(s=>`
+        // Ghế từ ORDER.seats (dùng đúng key SEAT_NUMBER và PRICE)
+        const seatRows = order?.seats?.map(s => `
             <div class="item-row">
-                <span>${s.SEAT_NUMBER}</span>
+                <span>${s.number || 'Chưa rõ'} (${s.type || 'Standard'})</span>
                 <span>1</span>
-                <span>${s.PRICE.toLocaleString()}đ</span>
+                <span>${s.price?.toLocaleString() || '0'}đ</span>
             </div>
         `).join('') || '';
 
