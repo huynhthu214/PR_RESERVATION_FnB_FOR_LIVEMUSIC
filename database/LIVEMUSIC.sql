@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     24/11/2025 7:39:41 PM                        */
+/* Created on:     24/11/2025 11:23:14 PM                       */
 /*==============================================================*/
 
 
@@ -281,6 +281,7 @@ create table ORDERS
    TOTAL_AMOUNT         float  comment '',
    STATUS               text  comment '',
    DELIVERY_NOTES       text  comment '',
+   SEAT_JSON            text  comment '',
    primary key (ORDER_ID)
 );
 
