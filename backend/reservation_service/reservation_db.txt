@@ -9,3 +9,15 @@ INSERT INTO RESERVATIONS (RESERVATION_ID, EVENT_ID, CUSTOMER_ID, RESERVATION_TIM
 ('R008', 'E008', 'CU008', '2025-10-19 12:15:00', 'CONFIRMED', 200000),
 ('R009', 'E007', 'CU009', '2025-10-19 12:45:00', 'PENDING', 600000),
 ('R010', 'E010', 'CU010', '2025-10-19 13:00:00', 'CONFIRMED', 450000);
+
+INSERT INTO `email_log` (`EMAILLOG_ID`, `ADMIN_ID`, `CUSTOMER_ID`, `RECIPIENT_EMAIL`, `SUBJECT`, `SENT_TIME`, `STATUS`, `ERRORMESSAGE`) VALUES
+('EL001', NULL, 'CU001', 'thutrang@gmail.com', 'Xác nhận đặt chỗ Chill Sky Lounge', '2025-10-17 15:01:00', 'SENT', NULL),
+('EL002', NULL, 'CU001', 'thutrang@gmail.com', 'Thanh toán thành công đơn hàng O001', '2025-10-17 16:06:00', 'SENT', NULL),
+('EL003', NULL, 'CU002', 'minhthu@gmail.com', 'Xác nhận đặt chỗ Acoustic Vibes', '2025-10-17 15:31:00', 'SENT', NULL),
+('EL004', NULL, 'CU003', 'hoanganh@gmail.com', 'Đơn hàng đang chờ thanh toán Jazz in Sunset', '2025-10-18 17:02:00', 'SENT', NULL),
+('EL005', NULL, 'CU004', 'longnguyen@gmail.com', 'Thanh toán thành công đơn hàng O004', '2025-10-18 17:22:00', 'SENT', NULL),
+('EL006', NULL, 'CU005', 'baotran@gmail.com', 'Chào mừng bạn đến LiveMusic', '2025-10-19 10:01:00', 'SENT', NULL),
+('EL007', NULL, 'CU006', 'quocviet@gmail.com', 'Xác nhận đặt chỗ The Rooftop Bar', '2025-10-19 11:00:00', 'SENT', NULL),
+('EL008', NULL, 'CU007', 'myduyen@gmail.com', 'Thanh toán thất bại', '2025-10-19 11:15:00', 'FAILED', 'Invalid card details'),
+('EL009', NULL, 'CU008', 'thanhtung@gmail.com', 'Xác nhận đặt chỗ Indie Music Fest', '2025-10-19 12:00:00', 'SENT', NULL),
+('EL010', NULL, 'CU009', 'phuongthao@gmail.com', 'Đơn hàng O009 đang chờ thanh toán', '2025-10-19 12:30:00', 'SENT', NULL);
