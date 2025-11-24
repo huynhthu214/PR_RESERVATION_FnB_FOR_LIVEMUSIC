@@ -92,7 +92,7 @@ document.getElementById('confirm-transfer-btn').addEventListener('click', async 
     const data = await res.json();
 
     if (data.success) {
-        window.location.href = `index.php?page=receipt&order_id=${orderId}`;
+        window.location.href = `index.php?page=user_orders&order_id=${orderId}`;
     } else {
         alert(data.message || 'Có lỗi xảy ra');
     }

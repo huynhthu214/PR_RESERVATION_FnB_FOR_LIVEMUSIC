@@ -254,6 +254,10 @@ function routeOrderService($action, $base)
         case 'get_user_order':
             require_once $path . 'get_user_order.php';
             break;
+
+        case 'qr_api':
+            require_once $path . 'qr_api.php';
+            break;
         default:
             echo json_encode(["error" => "Hành động không hợp lệ trong order_service"]);
             break;
