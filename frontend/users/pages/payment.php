@@ -1,7 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config.php'; // session đã được start trong config.php
-
-// Lấy dữ liệu ghế và menu từ session, mặc định array rỗng nếu chưa có
+require_once __DIR__ . '/../../config.php'; 
 $selectedSeats = $_SESSION['selectedSeats'] ?? [];
 $orderMenu     = $_SESSION['order_menu'] ?? [];
 
@@ -153,8 +151,6 @@ document.getElementById('payment-form').addEventListener('submit', async e => {
 
   const name = e.target.name.value.trim();
   const email = e.target.email.value.trim();
-  const phone = '';   // tạm thời để trống
-  const idCard = '';  // tạm thời để trống
 
   const paymentMethod = document.querySelector('.payment-methods .method.active').textContent;
 
@@ -172,7 +168,7 @@ document.getElementById('payment-form').addEventListener('submit', async e => {
   const total = seats.reduce((sum, s) => sum + s.price, 0) +
                 menu.reduce((sum, m) => sum + m.unit_price * m.quantity, 0);
 
-  const payload = {name, email, phone, idCard, paymentMethod, seats, menu, total};
+  const payload = {name, email, phone: '', idCard: '', paymentMethod, seats, menu, total};
 
   try {
     const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=add_order', {
@@ -184,8 +180,12 @@ document.getElementById('payment-form').addEventListener('submit', async e => {
     const data = await res.json();
 
     if (data.success) {
-      alert('Thanh toán thành công! Mã đơn: ' + data.order_id);
-      window.location.href = 'index.php?page=receipt&order_id=' + data.order_id;
+      // Redirect theo phương thức
+      if (paymentMethod.includes('Chuyển khoản')) {
+        window.location.href = 'index.php?page=bank_transfer&order_id=' + data.order_id;
+      } else if (paymentMethod.includes('QR')) {
+        window.location.href = 'index.php?page=qr_payment&order_id=' + data.order_id;
+      }
     } else {
       alert(data.message || 'Lỗi thanh toán');
     }
@@ -195,4 +195,5 @@ document.getElementById('payment-form').addEventListener('submit', async e => {
     alert('Lỗi server, vui lòng thử lại.');
   }
 });
+
 </script>

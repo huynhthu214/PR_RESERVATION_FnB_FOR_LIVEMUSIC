@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config.php'; // BASE_URL, DB
+require_once __DIR__ . '/../../config.php';
 ?>
 
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/seat.css">
@@ -43,25 +43,34 @@ require_once __DIR__ . '/../../config.php'; // BASE_URL, DB
 <script>
 const seatMap = document.getElementById("seatMap");
 const seatSummary = document.getElementById("seatSummary");
-let selectedSeats = JSON.parse(localStorage.getItem('selectedSeats') || '[]');
+let selectedSeats = []; 
+let basePrice = 0; // Giá cơ bản của event
 
 async function loadSeats() {
   const params = new URLSearchParams(window.location.search);
   const eventId = params.get('event_id');
-  
   if (!eventId) return alert("Không có ID sự kiện.");
 
   try {
-    const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=reservation&action=get_seat_layout&event_id=${eventId}`);
-    const json = await res.json();
-
-    if (!json.success) {
-        seatMap.innerHTML = `<div style="padding:20px; text-align:center;">${json.message || 'Chưa có dữ liệu ghế'}</div>`;
-        return;
+    // Lấy layout ghế
+    const resSeat = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=reservation&action=get_seat_layout&event_id=${eventId}`);
+    const seatJson = await resSeat.json();
+    if (!seatJson.success) {
+      seatMap.innerHTML = `<div style="padding:20px;text-align:center;">${seatJson.message || 'Chưa có dữ liệu ghế'}</div>`;
+      return;
     }
 
-    renderSeats(json.data);
+    // Lấy thông tin event để có giá cơ bản
+    const resEvent = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_events`);
+    const eventJson = await resEvent.json();
+    if(eventJson.success){
+        const event = eventJson.data.find(ev => ev.id === eventId);
+        if(event) basePrice = Number(event.price);
+    }
+
+    renderSeats(seatJson.data);
     renderSummary();
+    updateEventPrice();
 
   } catch (error) {
     console.error(error);
@@ -89,13 +98,13 @@ function renderSeats(layout) {
     `}).join('');
 }
 
-function toggleSeat(id, price, number) {
-  const seatBtn = event.target; 
+function toggleSeat(id, price, number){
+  const seatBtn = event.target;
   const existingIndex = selectedSeats.findIndex(s => s.id === id);
 
-  if (seatBtn.disabled) return;
+  if(seatBtn.disabled) return;
 
-  if (existingIndex !== -1) {
+  if(existingIndex !== -1){
     selectedSeats.splice(existingIndex, 1);
     seatBtn.classList.remove('selected');
   } else {
@@ -103,13 +112,13 @@ function toggleSeat(id, price, number) {
     seatBtn.classList.add('selected');
   }
 
-  // Lưu vào localStorage để giữ dữ liệu khi reload
   localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
   renderSummary();
+  updateEventPrice();
 }
 
-function renderSummary() {
-  if (selectedSeats.length === 0) {
+function renderSummary(){
+  if(selectedSeats.length === 0){
     seatSummary.innerHTML = `
       <p style="text-align:center;color:var(--muted);">Không có chỗ ngồi nào được chọn</p>
       <p style="text-align:center;font-size:0.9rem;color:var(--muted);">Nhấp vào chỗ ngồi còn trống để chọn</p>
@@ -117,30 +126,35 @@ function renderSummary() {
     return;
   }
 
-  const totalPrice = selectedSeats.reduce((sum, s) => sum + s.price, 0);
-  
+  const totalPrice = selectedSeats.reduce((sum,s)=> sum + s.price, 0);
+
   seatSummary.innerHTML = `
     <div class="seat-list">
-      ${selectedSeats.map(s => `
+      ${selectedSeats.map(s=>`
         <div class="seat-item">
-          <div>Ghế ${s.number} <small>(${s.id})</small></div>
+          <div>Ghế ${s.number}</div>
           <div>${s.price.toLocaleString()} đ</div>
         </div>
       `).join('')}
     </div>
-    <div style="margin-top:0.5rem;display:flex;justify-content:space-between;font-size:0.9rem;color:var(--muted);">
-      <span>Vị trí (${selectedSeats.length})</span><span>${totalPrice.toLocaleString()} đ</span>
+    <div style="margin-top:0.5rem; display:flex; justify-content:space-between; font-size:0.9rem; color:var(--muted);">
+      <span>Vị trí (${selectedSeats.length})</span>
+      <span>${totalPrice.toLocaleString()} đ</span>
     </div>
     <div class="total"><span>Tổng</span><span>${totalPrice.toLocaleString()} đ</span></div>
-    <button class="btn" onclick="goToOrder()">
-      Tiếp tục
-    </button>
-
+    <button class="btn" onclick="goToOrder()">Tiếp tục</button>
   `;
 }
 
-// Khi load trang, render lại ghế dựa trên localStorage
-loadSeats();
+// Cập nhật giá tổng lên event detail nếu có
+function updateEventPrice(){
+  const priceEl = document.getElementById('eventPrice');
+  if(!priceEl) return;
+  const totalPrice = selectedSeats.reduce((sum,s)=> sum + s.price, 0);
+  priceEl.textContent = `${totalPrice.toLocaleString()} đ`;
+}
+
+// Khi click "Tiếp tục"
 function goToOrder(){
   if(selectedSeats.length === 0){
       alert("Vui lòng chọn ít nhất 1 ghế.");
@@ -149,15 +163,12 @@ function goToOrder(){
 
   fetch('/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=save_selected_seats', {
       method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ seats: selectedSeats })
   })
   .then(res => res.json())
   .then(data => {
       if(data.success){
-          // Chuyển sang trang order.php
           window.location.href = 'index.php?page=order';
       } else {
           alert("Lỗi lưu ghế: " + (data.message || 'Không xác định'));
@@ -169,4 +180,7 @@ function goToOrder(){
   });
 }
 
+// Load ghế khi mở trang
+loadSeats();
 </script>
+

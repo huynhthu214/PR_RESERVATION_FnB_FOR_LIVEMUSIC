@@ -1,21 +1,16 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 header("Content-Type: application/json; charset=UTF-8");
 session_start();
 require_once __DIR__ . '/../db.php';
 
-// Đọc input JSON
 $input = json_decode(file_get_contents("php://input"), true);
 
-if (!$input || !is_array($input)) {
-    echo json_encode(["success" => false, "message" => "Thiếu dữ liệu JSON hoặc JSON không hợp lệ"]);
+if(!$input){
+    echo json_encode(["success"=>false,"message"=>"Thiếu dữ liệu"]);
     exit;
 }
 
-// Lấy dữ liệu cơ bản
+// Dữ liệu cơ bản
 $name = $conn_order->real_escape_string($input['name'] ?? '');
 $email = $conn_order->real_escape_string($input['email'] ?? '');
 $phone = $conn_order->real_escape_string($input['phone'] ?? '');
@@ -25,60 +20,72 @@ $seats = $input['seats'] ?? [];
 $menu = $input['menu'] ?? [];
 $total = floatval($input['total'] ?? 0);
 
+// ======================= TẠO ORDER_ID ============================
+$sqlLastOrder = "SELECT ORDER_ID FROM ORDERS ORDER BY ORDER_TIME DESC LIMIT 1";
+$resOrder = $conn_order->query($sqlLastOrder);
+$lastOrderId = ($resOrder && $resOrder->num_rows > 0) ? $resOrder->fetch_assoc()['ORDER_ID'] : 'O000';
+
+$newOrderNum = intval(substr($lastOrderId, 1)) + 1;
+$orderId = 'O' . str_pad($newOrderNum, 3, '0', STR_PAD_LEFT);
+// ================================================================
+
 // Lấy CUSTOMER_ID từ session nếu có
 $customerId = $_SESSION['CUSTOMER_ID'] ?? null;
 
-// Tạo ORDER_ID duy nhất
-$orderId = 'O' . uniqid('', true);
-
-// Tạo ORDER
+// Tạo ORDER (STATUS luôn Pending)
 $orderSql = "INSERT INTO ORDERS (ORDER_ID, CUSTOMER_ID, RESERVATION_ID, TOTAL_AMOUNT, STATUS, DELIVERY_NOTES, ORDER_TIME)
              VALUES ('$orderId', ".($customerId ? "'$customerId'" : "NULL").", NULL, $total, 'Pending', '', NOW())";
 
-if (!$conn_order->query($orderSql)) {
-    echo json_encode(["success" => false, "message" => "Lỗi tạo đơn hàng: " . $conn_order->error]);
+if(!$conn_order->query($orderSql)){
+    echo json_encode(["success"=>false,"message"=>"Lỗi tạo đơn hàng: ".$conn_order->error]);
     exit;
 }
 
-// Thêm ORDER_ITEMS cho ghế
-foreach ($seats as $seat) {
-    $orderItemId = 'OI' . uniqid('', true);
-    $itemId = $conn_order->real_escape_string($seat['id']);
-    $qty = intval($seat['quantity'] ?? 1);
-    $unitPrice = floatval($seat['price']);
+// ======================= TẠO ORDER_ITEM_ID =======================
+$sqlLastItem = "SELECT ORDER_ITEM_ID FROM ORDER_ITEMS ORDER BY ORDER_ITEM_ID DESC LIMIT 1";
+$resItem = $conn_order->query($sqlLastItem);
+$lastItemId = ($resItem && $resItem->num_rows > 0) ? $resItem->fetch_assoc()['ORDER_ITEM_ID'] : 'OI000';
 
-    $sqlItem = "INSERT INTO ORDER_ITEMS (ORDER_ITEM_ID, ORDER_ID, ITEM_ID, QUANTITY, UNIT_PRICE)
-                VALUES ('$orderItemId', '$orderId', '$itemId', $qty, $unitPrice)";
-    if (!$conn_order->query($sqlItem)) {
-        echo json_encode(["success" => false, "message" => "Lỗi thêm ghế: " . $conn_order->error]);
-        exit;
-    }
-}
+$itemCounter = intval(substr($lastItemId, 2));
+// ================================================================
 
-// Thêm ORDER_ITEMS cho menu
-foreach ($menu as $item) {
-    $orderItemId = 'OI' . uniqid('', true);
+
+// Tạo ORDER_ITEMS
+foreach($menu as $item){
+    $itemCounter++;
+    $orderItemId = 'OI' . str_pad($itemCounter, 3, '0', STR_PAD_LEFT);
+
     $itemId = $conn_order->real_escape_string($item['item_id']);
     $qty = intval($item['quantity']);
     $unitPrice = floatval($item['unit_price']);
 
     $sqlItem = "INSERT INTO ORDER_ITEMS (ORDER_ITEM_ID, ORDER_ID, ITEM_ID, QUANTITY, UNIT_PRICE)
                 VALUES ('$orderItemId', '$orderId', '$itemId', $qty, $unitPrice)";
-    if (!$conn_order->query($sqlItem)) {
-        echo json_encode(["success" => false, "message" => "Lỗi thêm món: " . $conn_order->error]);
+    if(!$conn_order->query($sqlItem)){
+        echo json_encode(["success"=>false,"message"=>"Lỗi thêm món: ".$conn_order->error]);
         exit;
     }
 }
 
-// Tạo PAYMENT
-$paymentId = 'P' . uniqid('', true);
-$transactionId = 'T' . uniqid('', true);
+// ======================= TẠO PAYMENT_ID ===========================
+$sqlLastPay = "SELECT PAYMENT_ID FROM PAYMENTS ORDER BY PAYMENT_TIME DESC LIMIT 1";
+$resPay = $conn_order->query($sqlLastPay);
+$lastPayId = ($resPay && $resPay->num_rows > 0) ? $resPay->fetch_assoc()['PAYMENT_ID'] : 'PAY000';
 
+$newPayNum = intval(substr($lastPayId, 3)) + 1;
+
+$paymentId = 'PAY' . str_pad($newPayNum, 3, '0', STR_PAD_LEFT);
+$transactionId = 'T' . str_pad($newPayNum, 3, '0', STR_PAD_LEFT);
+// =================================================================
+
+
+// Tạo PAYMENT → LUÔN để trạng thái Pending
 $paymentSql = "INSERT INTO PAYMENTS (PAYMENT_ID, ORDER_ID, CUSTOMER_ID, AMOUNT, PAYMENT_METHOD, TRANSACTION_ID, PAYMENT_TIME, PAYMENT_STATUS)
-               VALUES ('$paymentId', '$orderId', ".($customerId ? "'$customerId'" : "NULL").", $total, '$paymentMethod', '$transactionId', NOW(), 'Completed')";
+               VALUES ('$paymentId', '$orderId', ".($customerId ? "'$customerId'" : "NULL").", 
+               $total, '$paymentMethod', '$transactionId', NOW(), 'Pending')";
 
-if (!$conn_order->query($paymentSql)) {
-    echo json_encode(["success" => false, "message" => "Lỗi tạo payment: " . $conn_order->error]);
+if(!$conn_order->query($paymentSql)){
+    echo json_encode(["success"=>false,"message"=>"Lỗi tạo payment: ".$conn_order->error]);
     exit;
 }
 
@@ -86,9 +93,9 @@ if (!$conn_order->query($paymentSql)) {
 unset($_SESSION['selectedSeats']);
 unset($_SESSION['order_menu']);
 
-// Trả kết quả
 echo json_encode([
-    "success" => true,
-    "order_id" => $orderId,
-    "message" => "Đặt hàng thành công"
+    "success"=>true,
+    "order_id"=>$orderId,
+    "message"=>"Đặt hàng thành công. Vui lòng chuyển khoản để hoàn tất thanh toán."
 ]);
+?>

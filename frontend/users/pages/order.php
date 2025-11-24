@@ -16,11 +16,11 @@ require_once __DIR__ . '/../../config.php';
 
 <!-- CATEGORY FILTER -->
 <section>
-    <div class="categories">
-        <button class="category-btn active">Tất cả</button>
-        <button class="category-btn">Đồ ăn</button>
-        <button class="category-btn">Nước uống</button>
-    </div>
+        <div class="categories">
+            <button class="category-btn active">Tất cả</button>
+            <button class="category-btn">Đồ ăn</button>
+            <button class="category-btn">Nước uống</button>
+        </div>
 </section>
 
 <!-- FOOD GRID -->
@@ -43,6 +43,15 @@ require_once __DIR__ . '/../../config.php';
 
 <!-- Toggle Button -->
 <button id="btn-toggle-cart" class="btn-toggle-cart">🧺<span id="toggle-count">0</span></button>
+
+<!-- MODAL: Chưa chọn món -->
+<div id="empty-cart-modal" class="empty-modal-overlay">
+    <div class="empty-modal-box">
+        <div class="empty-modal-title">Thông báo</div>
+        <div class="empty-modal-text">Bạn chưa chọn món nào.</div>
+        <button id="close-empty-cart" class="empty-modal-btn">Đóng</button>
+    </div>
+</div>
 
 <script>
 window.addEventListener("DOMContentLoaded", async () => {
@@ -173,30 +182,47 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     // ===================== CART CONTINUE =====================
-    cartContinueBtn.onclick = async () => {
-        try {
-            const res = await fetch("/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=get_cart_count");
-            const data = await res.json();
-            if(data.count > 0){
-                window.location.href = "index.php?page=payment";
-            } else {
-                alert("Bạn chưa chọn món nào!");
-            }
-        } catch(err){ console.error(err); }
-    }
+cartContinueBtn.onclick = async () => {
+    try {
+        const res = await fetch("/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=get_cart_count");
+        const data = await res.json();
+
+        if (data.count > 0) {
+            window.location.href = "index.php?page=payment";
+        } else {
+            document.getElementById("empty-cart-modal").style.display = "flex";
+        }
+
+    } catch(err){ console.error(err); }
+};
+
+document.getElementById("close-empty-cart").onclick = () => {
+    document.getElementById("empty-cart-modal").style.display = "none";
+};
 
     // ===================== CATEGORY FILTER =====================
-    document.querySelectorAll(".category-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const selectedCategory = btn.textContent.trim().toLowerCase();
-            document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            document.querySelectorAll(".food-item").forEach(item => {
-                const itemCategory = item.dataset.category.toLowerCase();
-                item.style.display = (selectedCategory === "all" || itemCategory === selectedCategory) ? "block" : "none";
+        document.querySelectorAll(".category-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                const text = btn.textContent.trim();
+
+                let selectedCategory = "";
+                if (text === "Tất cả") selectedCategory = "all";
+                if (text === "Đồ ăn") selectedCategory = "Đồ ăn";
+                if (text === "Nước uống") selectedCategory = "Nước uống";
+
+                document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                document.querySelectorAll(".food-item").forEach(item => {
+                    const cate = item.dataset.category.trim();
+                    item.style.display = 
+                        (selectedCategory === "all" || cate === selectedCategory)
+                        ? "block"
+                        : "none";
+                });
             });
         });
-    });
 
     // ===================== CART TOGGLE =====================
     btnToggleCart.addEventListener("click", () => {
@@ -206,22 +232,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     // ===================== INITIAL LOAD =====================
     await loadMenu();
     await loadCart();
-    
-    cartContinueBtn.onclick = async () => {
-    try {
-        const res = await fetch("/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=get_cart_count");
-        const data = await res.json();
-        if(data.count > 0){
-            // Lưu cart vào session trước
-            await fetch('save_session_order.php', {
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body: JSON.stringify({order_menu: data.cart})
-            });
-            window.location.href = "index.php?page=payment";
-        } else alert("Bạn chưa chọn món nào!");
-    } catch(err){ console.error(err); }
-}
 
 });
 </script>

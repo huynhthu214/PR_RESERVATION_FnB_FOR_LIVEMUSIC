@@ -38,9 +38,9 @@ $hideSidebarPages = [
 <aside class="sidebar compact" id="sidebar">
   <ul>
     <li onclick="location.href='index.php?page=home'"><i class="fa-solid fa-home"></i><span>Trang chủ</span></li>
-    <li onclick="location.href='index.php?page=tickets'"><i class="fa-solid fa-ticket"></i><span>Vé của tôi</span></li>
-    <li onclick="location.href='index.php?page=order'"><i class="fa-solid fa-cart-shopping"></i><span>Đơn hàng của tôi</span></li>
+    <li onclick="location.href='index.php?page=user_orders'"><i class="fa-solid fa-cart-shopping"></i><span>Đơn hàng của tôi</span></li>
     <li onclick="location.href='index.php?page=contact'"><i class="fa-solid fa-phone"></i><span>Liên hệ</span></li>
+    <li onclick="location.href='pages/logout_user.php'"><i class="fa-solid fa-right-from-bracket"></i></i><span>Đăng xuất</span></li>
   </ul>
 </aside>
 <?php endif; ?>
