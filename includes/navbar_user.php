@@ -31,6 +31,8 @@ $hideSidebarPages = [
 ?>
 
 <title><?php echo htmlspecialchars($title); ?></title>
+<!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/base.css"> -->
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
 <link rel="stylesheet" href="../../frontend/assets/css/navbar.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
@@ -47,12 +49,16 @@ $hideSidebarPages = [
 
 <nav class="navbar" id="navbar">
   <div class="navbar-inner">
-    <div class="logo" id="logo">
-      <a href="index.php?page=home" class="logo-icon">
-        <img src="<?php echo BASE_URL; ?>assets/images/LogoLYZY.png" alt="LYZY Logo" style="height:40px;">
-      </a>
+    <div class="header-left">
+      <div class="logo" id="logo">
+        <a href="index.php?page=home" class="logo-icon">
+          <img src="<?php echo BASE_URL; ?>assets/images/logo_LYZY.png" alt="Logo" width="50" height="45">
+        </a>
+        <div>
+          <h2>LYZY</h2>
+        </div>
+      </div>
     </div>
-
     <div class="nav-links">
       <a href="index.php?page=home">Trang chủ</a>
       <a href="index.php?page=event">Sự kiện</a>

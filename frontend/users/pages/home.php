@@ -7,7 +7,9 @@ require_once __DIR__ . '/../../config.php';
 <body>
 
 <!-- Hero -->
-<section>
+<section class="hero">
+  <div class="overlay"></div>
+  
   <div class="container">
     <h1 style="font-size:2.5rem;">LiveMusic - Trải nghiệm âm nhạc sống động</h1>
     <p>Khám phá những sự kiện âm nhạc đỉnh cao, nơi cảm xúc và giai điệu hòa quyện.</p>
