@@ -175,6 +175,10 @@
     margin-right: 5px;
   }
 
+  .card{
+    display: block;
+  }
+
   .total {
     border-top: 1px solid var(--border);
     padding-top: 0.8rem;
