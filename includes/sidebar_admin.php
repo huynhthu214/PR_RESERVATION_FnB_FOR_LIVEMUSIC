@@ -45,6 +45,12 @@ $page = $page ?? ($_GET['page'] ?? 'dashboard');
         <i data-lucide="notebook-text"></i> Nội dung
       </a>
      </li>
+
+     <li class="<?= ($page == 'notification_log') ? 'active' : ''; ?>">
+      <a href="index.php?page=notification_log">
+        <i data-lucide="notebook-text"></i> Email Log
+      </a>
+     </li>
     </ul>
   </nav>
 </aside>

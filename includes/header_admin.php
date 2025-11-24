@@ -27,6 +27,7 @@ $title = match($page) {
     'order' => 'LYZY - Đơn hàng',
     'users' => 'LYZY - Người dùng',
     'order_detail' => 'LYZY - Chi tiết đơn hàng',
+    'notification_log' => 'LYZY - Xem thông báo đã gửi',
     'notification' => 'LYZY - Thông báo',
     'notitification_detail' => 'LYZY - Chi tiết thông báo',
     'menu' => 'LYZY - Menu',
