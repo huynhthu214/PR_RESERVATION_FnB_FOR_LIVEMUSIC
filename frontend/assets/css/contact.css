@@ -1,12 +1,14 @@
 :root {
-  --primary: #d4af37;     /* Vàng kim chính */
-  --accent: #c9a227;      /* Vàng nhạt hơn một chút */
-  --secondary: #8b7355;   /* Nâu đồng */
-  --background: #0e0c0a;  /* Đen than */
-  --card: #1a1815;        /* Card tối hơn */
-  --border: #2a261f;      /* Viền tối tinh tế */
-  --text: #f2f2f2;        /* Chữ trắng sáng */
-  --muted: #b0a88a;       /* Chữ phụ xám vàng */
+  --bg--:#000000;
+  --bg-card: #1a1a1a;
+  --text-light: #ffffff;
+  --text-color:#a87038;
+  --text-gray: #d41a1a;
+  --primary: #ee7a02;
+  --success: #f1a02a;
+  --danger: #b84736;
+  --card--:#161412;
+  --border-card--:#43301e;
 }
 
 body {
@@ -54,11 +56,7 @@ h1{
 
 /* Card chung */
 .card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  transition: all 0.3s ease;
+  display: block;
 }
 .card:hover {
   border-color: var(--primary);
@@ -146,8 +144,8 @@ input::placeholder, textarea::placeholder {
 textarea { resize: vertical; min-height: 130px; }
 
 .submit-btn {
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  color: #000;
+  background: linear-gradient(90deg, var(--text-color), var( --primary));
+  color: #ffffff;
   font-weight: bold;
   padding: 10px;
   font-size: 1.1rem;

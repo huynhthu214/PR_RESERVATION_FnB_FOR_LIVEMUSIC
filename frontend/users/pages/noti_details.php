@@ -17,7 +17,7 @@ if (!$notif_id) {
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/noti_details.css">
 
 <div class="container">
-    <a href="index.php?page=notification" class="back-btn">⬅ Back to Notifications</a>
+    <a href="index.php?page=notification" class="back-btn">⬅ Quay lại thông báo</a>
 
     <div id="notification-card" class="card">
         <div class="header">
@@ -31,10 +31,6 @@ if (!$notif_id) {
         <div class="content"></div>
     </div>
 
-    <div class="settings">
-        <h3>🔔 Notification Settings</h3>
-        <p>You can manage your notification preferences in your account settings.</p>
-    </div>
 </div>
 
 <script>

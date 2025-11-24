@@ -62,6 +62,7 @@ $hideSidebarPages = [
     <div class="nav-links">
       <a href="index.php?page=home">Trang chủ</a>
       <a href="index.php?page=event">Sự kiện</a>
+      <a href="index.php?page=order">Thực đơn</a>
       <a href="index.php?page=about">Giới thiệu</a>
       <a href="index.php?page=contact">Hỗ trợ</a>
     </div>

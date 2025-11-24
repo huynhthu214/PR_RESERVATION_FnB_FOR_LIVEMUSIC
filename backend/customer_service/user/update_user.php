@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: PUT, OPTIONS");
+header("Access-Control-Allow-Methods: PUT, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -21,7 +21,7 @@ if (!$data) {
     exit;
 }
 
-// Bắt buộc phải có CUSTOMER_ID
+// CUSTOMER_ID bắt buộc
 if (empty($data['CUSTOMER_ID'])) {
     echo json_encode(["success" => false, "message" => "Thiếu tham số CUSTOMER_ID"]);
     exit;
@@ -32,12 +32,11 @@ $USERNAME = isset($data['USERNAME']) ? $conn_customer->real_escape_string($data[
 $EMAIL = isset($data['EMAIL']) ? $conn_customer->real_escape_string($data['EMAIL']) : null;
 $PASSWORD_RAW = isset($data['PASSWORD']) ? $data['PASSWORD'] : null;
 
-// Build dynamic update query (chỉ cập nhật các trường thực sự có)
+// Build dynamic query
 $updates = [];
 if ($USERNAME !== null) $updates[] = "USERNAME = '$USERNAME'";
 if ($EMAIL !== null) $updates[] = "EMAIL = '$EMAIL'";
 if (!empty($PASSWORD_RAW)) {
-    // hash password khi người dùng nhập mới
     $hashed = password_hash($PASSWORD_RAW, PASSWORD_BCRYPT);
     $updates[] = "PASSWORD = '$hashed'";
 }
@@ -51,7 +50,13 @@ $set_clause = implode(', ', $updates);
 $sql = "UPDATE CUSTOMER_USERS SET $set_clause WHERE CUSTOMER_ID = '$CUSTOMER_ID'";
 
 if ($conn_customer->query($sql)) {
-    echo json_encode(["success" => true, "message" => "Cập nhật người dùng thành công"]);
+    // trả về dữ liệu mới luôn để frontend cập nhật
+    echo json_encode([
+        "success" => true,
+        "message" => "Cập nhật người dùng thành công",
+        "USERNAME" => $USERNAME,
+        "EMAIL" => $EMAIL
+    ]);
 } else {
     echo json_encode(["success" => false, "message" => "Lỗi khi cập nhật: " . $conn_customer->error]);
 }
