@@ -62,12 +62,15 @@ while ($order = $resOrders->fetch_assoc()) {
         $reservation = $stmtRes->get_result()->fetch_assoc() ?? null;
     }
 
+    $order['seats'] = json_decode($order['SEATS_JSON'] ?? '[]', true);
+
     $orders[] = [
         'order' => $order,
         'items' => $items,
         'payment' => $payment,
         'reservation' => $reservation
     ];
+
 }
 
 // Trả về JSON
