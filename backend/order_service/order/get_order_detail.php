@@ -18,7 +18,7 @@ $order_id = $_GET['order_id'];
    LẤY THÔNG TIN ĐƠN HÀNG (orderdb)
 ============================================================ */
 $sql_order = "SELECT 
-                  ORDER_ID, CUSTOMER_ID, RESERVATION_ID, PROMO_ID, 
+                  ORDER_ID, CUSTOMER_ID, RESERVATION_ID, 
                   ORDER_TIME, TOTAL_AMOUNT, STATUS, DELIVERY_NOTES
               FROM ORDERS
               WHERE ORDER_ID = ?";
@@ -45,7 +45,7 @@ if (!$order) {
 ============================================================ */
 $customer_name = "(Không xác định)";
 if (!empty($order['CUSTOMER_ID'])) {
-    $sql_customer = "SELECT USERNAME FROM CUSTOMER_USERS WHERE CUSTOMER_ID = ?";
+    $sql_customer = "SELECT USERNAME, EMAIL FROM CUSTOMER_USERS WHERE CUSTOMER_ID = ?";
     $stmt_cus = $conn_customer->prepare($sql_customer);
     if ($stmt_cus) {
         $stmt_cus->bind_param("s", $order['CUSTOMER_ID']);
@@ -53,6 +53,7 @@ if (!empty($order['CUSTOMER_ID'])) {
         $res_cus = $stmt_cus->get_result();
         if ($row_cus = $res_cus->fetch_assoc()) {
             $customer_name = $row_cus['USERNAME'];
+             $customer_email = $row_cus['EMAIL'];
         }
         $stmt_cus->close();
     }
@@ -113,7 +114,7 @@ echo json_encode([
     "data" => [
         "ORDER_ID"      => $order['ORDER_ID'],
         "CUSTOMER_NAME" => $customer_name,
-        "EMAIL"         => "", // hoặc lấy thêm từ CUSTOMER_USERS nếu có
+        "EMAIL"         => $customer_email,
         "ORDER_DATE"    => $order['ORDER_TIME'],
         "STATUS"        => strtolower($order['STATUS']),
         "TOTAL_AMOUNT"  => $order['TOTAL_AMOUNT'],

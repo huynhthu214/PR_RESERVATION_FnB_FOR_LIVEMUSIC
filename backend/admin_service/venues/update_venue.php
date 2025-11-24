@@ -18,14 +18,14 @@ if (!$VENUE_ID) {
 
 /* Xử lý file nếu có */
 if (isset($_FILES['seat_layout']) && $_FILES['seat_layout']['error'] == 0) {
-    $uploadDir = __DIR__ . '/../uploads/seat_layouts/';
+    $uploadDir = __DIR__ . '/../seat_layouts/';
     if (!file_exists($uploadDir)) mkdir($uploadDir, 0777, true);
 
-    $fileName = uniqid('layout_') . '_' . basename($_FILES['seat_layout']['name']);
+    $fileName = basename($_FILES['seat_layout']['name']);
     $targetFile = $uploadDir . $fileName;
 
     if (move_uploaded_file($_FILES['seat_layout']['tmp_name'], $targetFile)) {
-        $SEAT_LAYOUT = $conn_admin->real_escape_string('uploads/seat_layouts/' . $fileName);
+        $SEAT_LAYOUT = $conn_admin->real_escape_string('seat_layouts/' . $fileName);
         $sql = "UPDATE VENUES 
                 SET NAME='$NAME', ADDRESS='$ADDRESS', CAPACITY=$CAPACITY, SEAT_LAYOUT='$SEAT_LAYOUT'
                 WHERE VENUE_ID='$VENUE_ID'";
