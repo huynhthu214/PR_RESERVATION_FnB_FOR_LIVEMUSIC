@@ -60,7 +60,6 @@ async function loadUserOrders(){
         const isPaid = payment?.PAYMENT_STATUS==='Completed';
         const statusClass = isPaid?'done':'pending';
         const statusText = isPaid?'Đã thanh toán':'Chưa thanh toán';
-
         // Ghế từ ORDER.seats (dùng đúng key SEAT_NUMBER và PRICE)
         const seatRows = order?.seats?.map(s => `
             <div class="item-row">

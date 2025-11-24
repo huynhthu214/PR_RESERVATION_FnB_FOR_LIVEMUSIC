@@ -61,7 +61,6 @@ while ($order = $resOrders->fetch_assoc()) {
         $stmtRes->execute();
         $reservation = $stmtRes->get_result()->fetch_assoc() ?? null;
     }
-
     $order['seats'] = json_decode($order['SEATS_JSON'] ?? '[]', true);
 
     $orders[] = [
@@ -72,6 +71,7 @@ while ($order = $resOrders->fetch_assoc()) {
     ];
 
 }
+
 
 // Trả về JSON
 echo json_encode(['success'=>true,'orders'=>$orders]);
