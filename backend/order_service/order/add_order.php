@@ -56,10 +56,16 @@ $lastOrderId = ($resOrder && $resOrder->num_rows > 0) ? $resOrder->fetch_assoc()
 $newOrderNum = intval(substr($lastOrderId,1)) + 1;
 $orderId = 'O'.str_pad($newOrderNum,3,'0',STR_PAD_LEFT);
 
-$orderSql = "INSERT INTO ORDERS
-    (ORDER_ID, CUSTOMER_ID, RESERVATION_ID, TOTAL_AMOUNT, STATUS, DELIVERY_NOTES, ORDER_TIME)
+$selectedSeats = $_SESSION['selectedSeats'] ?? [];
+$seatsJson = $conn_order->real_escape_string(json_encode($selectedSeats, JSON_UNESCAPED_UNICODE));
+
+$orderSql = "
+    INSERT INTO ORDERS
+    (ORDER_ID, CUSTOMER_ID, RESERVATION_ID, TOTAL_AMOUNT, STATUS, DELIVERY_NOTES, ORDER_TIME, SEATS_JSON)
     VALUES
-    ('$orderId', ".($customerId ? "'$customerId'" : "NULL").", '$reservationId', $total, 'Pending', '', NOW())";
+    ('$orderId', ".($customerId ? "'$customerId'" : "NULL").", '$reservationId', $total, 'Pending', '', NOW(), '$seatsJson')
+";
+
 if(!$conn_order->query($orderSql)){
     echo json_encode(["success"=>false,"message"=>"Lỗi tạo order: ".$conn_order->error]);
     exit;
