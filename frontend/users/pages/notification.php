@@ -119,21 +119,28 @@ function renderNotifications(tab) {
 // =================== Mark as read ===================
 async function markAsRead(notif, div) {
     try {
-        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_as_read&id=${notif.id}&receiver_id=${customer_id}&receiver_type=CUSTOMER`, {
+        const formData = new FormData();
+        formData.append("notification_id", notif.id);
+
+        const res = await fetch(`/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=mark_as_read`, {
             method: 'POST',
+            body: formData,
             credentials: 'include'
         });
+
         const data = await res.json();
         if (data.success) {
             notif.is_read = true;
             div.classList.remove('unread');
             div.classList.add('read');
+
             if (currentTab === 'unread') renderNotifications(currentTab);
         }
     } catch(err) {
         console.error('Lỗi đánh dấu đã đọc:', err);
     }
 }
+
 
 // =================== Modal & Delete ===================
 document.querySelector('.modal-close').onclick = () => document.getElementById('deleteModal').classList.add('hidden');
