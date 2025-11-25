@@ -72,7 +72,7 @@ async function loadEventsAndArtists() {
                     <h3>${ev.band}</h3>
                     <p><strong>${ev.artist_name}</strong></p>
                     <p>${new Date(ev.date).toLocaleString("vi-VN")}</p>
-                    <p>${ev.venue}</p>
+                    <p>${ev.venue_name} — ${ev.venue_address}</p>
                     <p class="price">${ev.price.toLocaleString()} VND</p>
                     <button class="btn-buy" onclick="viewEvent('${encodeURIComponent(ev.id)}')">Xem chi tiết</button>
                 </div>
