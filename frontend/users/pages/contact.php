@@ -1,85 +1,74 @@
-<?php
-function loadCmsContent($type) {
-    $url = 'http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_content&type=' . urlencode($type);
-
-    $json = @file_get_contents($url);
-    if ($json === false) {
-        echo '<p style="color:#999; text-align:center;">Đang tải FAQ...</p>';
-        return;
-    }
-    $data = json_decode($json, true);
-    if ($data && $data['success']) {
-        echo $data['content'];
-    } else {
-        echo '<p style="color:#999; text-align:center;">Chưa có câu hỏi nào.</p>';
-    }
-}
-?>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/contact.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <div class="container">
   <div class="hero">
     <h1>Chúng tôi có thể giúp gì cho bạn?</h1>
     <p>Tìm câu trả lời nhanh cho các câu hỏi thường gặp hoặc liên hệ trực tiếp với đội ngũ hỗ trợ của chúng tôi.</p>
   </div>
-  <!-- FAQ và Form liên hệ -->
+
   <div class="grid lg-2">
-  <!-- FAQ -->
-  <div class="card">
-    <h2>Câu Hỏi Thường Gặp</h2>
-    <div class="accordion" id="faqAccordion">
-      <?php loadCmsContent('faq'); ?>
+    <!-- FAQ -->
+    <div class="card">
+      <h2>Câu Hỏi Thường Gặp</h2>
+      <div class="accordion" id="faqAccordion">
+        <?php
+        function loadCmsContent($type) {
+            $url = 'http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_content&type=' . urlencode($type);
+            $json = @file_get_contents($url);
+            if ($json === false) {
+                echo '<p style="color:#999; text-align:center;">Đang tải FAQ...</p>';
+                return;
+            }
+            $data = json_decode($json, true);
+            if ($data && $data['success']) {
+                echo $data['content'];
+            } else {
+                echo '<p style="color:#999; text-align:center;">Chưa có câu hỏi nào.</p>';
+            }
+        }
+        loadCmsContent('faq');
+        ?>
+      </div>
     </div>
-  </div>
 
     <!-- Form liên hệ -->
-  <div class="card">
-    <h2>Gửi Tin Nhắn Cho Chúng Tôi</h2>
-    <form id="contactForm">
-      <label>Họ và tên</label>
-      <input type="text" name="name" placeholder="Nguyễn Văn A" required />
+    <div class="card">
+      <h2>Gửi Tin Nhắn Cho Chúng Tôi</h2>
+      <form id="contactForm">
+        <label>Họ và tên</label>
+        <input type="text" name="name" placeholder="Nguyễn Văn A" required />
 
-      <label>Địa chỉ email</label>
-      <input type="email" name="email" placeholder="bạn@email.com" required />
+        <label>Địa chỉ email</label>
+        <input type="email" name="email" placeholder="bạn@email.com" required />
 
-      <label>Mã vé (nếu có)</label>
-      <input type="text" name="ticket_id" placeholder="TKT123456" />
+        <label>Mã vé (nếu có)</label>
+        <input type="text" name="ticket_id" placeholder="TKT123456" />
 
-      <label>Nội dung liên hệ</label>
-      <textarea name="message" placeholder="Bạn cần hỗ trợ gì ạ?" required></textarea>
+        <label>Nội dung liên hệ</label>
+        <textarea name="message" placeholder="Bạn cần hỗ trợ gì ạ?" required></textarea>
 
-      <button type="submit" class="submit-btn">Gửi Tin Nhắn</button>
-    </form>
-  </div>
+        <button type="submit" class="submit-btn">Gửi Tin Nhắn</button>
+      </form>
+    </div>
   </div>
 </div>
-<div id="toast-container"></div>
-<script>
-// Accordion FAQ
-document.querySelectorAll('.accordion-header').forEach(header => {
-    header.addEventListener('click', () => {
-        header.parentElement.classList.toggle('active');
-    });
-});
 
+<div id="toast-container"></div>
+
+<script>
+// Toast
 function showToast(message, type = 'success') {
     const container = document.getElementById('toast-container');
-
     const toast = document.createElement('div');
     toast.className = `toast-notification ${type}`;
-    toast.innerHTML = `
-        <span>${message}</span>
-        <span class="toast-close">&times;</span>
-    `;
+    toast.innerHTML = `<span>${message}</span><span class="toast-close">&times;</span>`;
     container.appendChild(toast);
 
-    // Hiển thị toast
     setTimeout(() => toast.classList.add('show'), 100);
 
-    // Tự tắt sau 3s
     const autoClose = setTimeout(() => hideToast(toast), 5000);
 
-    // Đóng khi click X
     toast.querySelector('.toast-close').addEventListener('click', () => {
         clearTimeout(autoClose);
         hideToast(toast);
@@ -91,7 +80,8 @@ function hideToast(toast) {
     setTimeout(() => toast.remove(), 300);
 }
 
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+// Submit form
+document.getElementById('contactForm').addEventListener('submit', async function(e){
     e.preventDefault();
 
     const btn = this.querySelector('.submit-btn');
@@ -99,27 +89,25 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
     btn.disabled = true;
 
-    const formData = new FormData(this);
+    try {
+        const formData = new FormData(this);
 
-    fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=submit_contact', {
-        method: 'POST',
-        body: new FormData(document.getElementById('contactForm'))
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
+        const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=notification&action=submit_contact', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await res.json();
         showToast(data.message, data.success ? 'success' : 'error');
-        if (data.success) {
-            document.getElementById('contactForm').reset();
-        }
-    })
-    .catch(error => {
-        console.error('Lỗi:', error);
+
+        if (data.success) this.reset();
+
+    } catch (err) {
+        console.error(err);
         showToast('Lỗi kết nối, vui lòng thử lại sau', 'error');
-    })
-    .finally(() => {
+    } finally {
         btn.innerHTML = oldText;
         btn.disabled = false;
-    });
-    });
+    }
+});
 </script>

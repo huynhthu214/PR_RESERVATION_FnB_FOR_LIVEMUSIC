@@ -117,9 +117,7 @@ if(!$conn_order->query($paymentSql)){
 // ==========================
 // 5. Xóa session tạm
 // ==========================
-unset($_SESSION['selectedSeats']);
-unset($_SESSION['order_menu']);
-unset($_SESSION['reservation_id']);
+
 
 // ==========================
 // 6. Trả kết quả

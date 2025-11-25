@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../db.php'; 
 
-// Kiểm tra kết nối trước (không dùng die của db.php)
+// Kiểm tra kết nối database
 if (!isset($conn_noti) || $conn_noti->connect_error) {
     echo json_encode(['success' => false, 'message' => 'Không kết nối được database']);
     exit;
@@ -14,11 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Lấy dữ liệu
-$name       = trim($_POST['name'] ?? '');
-$email      = trim($_POST['email'] ?? '');
-$ticket_id  = trim($_POST['ticket_id'] ?? '');
-$message    = trim($_POST['message'] ?? '');
+// Lấy dữ liệu từ FormData
+$name      = trim($_POST['name'] ?? '');
+$email     = trim($_POST['email'] ?? '');
+$ticket_id = trim($_POST['ticket_id'] ?? '');
+$message   = trim($_POST['message'] ?? '');
 
 // Validate
 if ($name === '' || $email === '' || $message === '') {
@@ -36,16 +36,11 @@ if (strlen($message) > 3000) {
     exit;
 }
 
-// Dùng đúng connection trong db.php
-$conn = $conn_noti;
-
 // Lấy ID cuối
+$conn = $conn_noti;
 $sql = "SELECT EMAILLOG_ID FROM EMAIL_LOG ORDER BY EMAILLOG_ID DESC LIMIT 1";
 $result = $conn->query($sql);
-
-$lastId = ($result && $result->num_rows > 0) 
-            ? $result->fetch_assoc()['EMAILLOG_ID']
-            : 'EL000';
+$lastId = ($result && $result->num_rows > 0) ? $result->fetch_assoc()['EMAILLOG_ID'] : 'EL000';
 
 $newNum = str_pad(intval(substr($lastId, 2)) + 1, 3, '0', STR_PAD_LEFT);
 $newId  = 'EL' . $newNum;
@@ -53,10 +48,10 @@ $newId  = 'EL' . $newNum;
 // Nội dung lưu
 $content_detail = "Tên: $name\nEmail: $email\nMã vé: " . ($ticket_id ?: 'Không có') . "\n\nNội dung:\n$message";
 
-// Chuẩn bị insert
+// Insert
 $stmt = $conn->prepare("
     INSERT INTO EMAIL_LOG 
-    (EMAILLOG_ID, ADMIN_ID, CUSTOMER_ID, RECIPIENT_EMAIL, SUBJECT, SENT_TIME, STATUS, ERRORMESSAGE) 
+    (EMAILLOG_ID, ADMIN_ID, CUSTOMER_ID, RECIPIENT_EMAIL, SUBJECT, SENT_TIME, STATUS, ERRORMESSAGE)
     VALUES (?, NULL, NULL, 'support@livemusic.vn', 'Liên hệ từ khách hàng', NOW(), 'new', ?)
 ");
 
@@ -67,21 +62,10 @@ if (!$stmt) {
 
 $stmt->bind_param("ss", $newId, $content_detail);
 
-// Thực thi
 if ($stmt->execute()) {
-
-    echo json_encode([
-        'success' => true,
-        'message' => 'Tin nhắn đã được gửi thành công.'
-    ]);
-
+    echo json_encode(['success' => true, 'message' => 'Tin nhắn đã được gửi thành công.']);
 } else {
-
-    echo json_encode([
-        'success' => false,
-        'message' => 'Không thể lưu tin nhắn, vui lòng thử lại.'
-    ]);
-
+    echo json_encode(['success' => false, 'message' => 'Không thể lưu tin nhắn, vui lòng thử lại.']);
 }
 
 exit;

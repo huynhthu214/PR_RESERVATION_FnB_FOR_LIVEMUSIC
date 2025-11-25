@@ -7,9 +7,34 @@ if (!$orderId) {
     echo "Order ID không hợp lệ";
     exit;
 }
+
+// Gọi API backend để lấy order
+$order = null;
+$apiUrl = "http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=get_order_bank&order_id=$orderId";
+
+$response = file_get_contents($apiUrl);
+if ($response) {
+    $data = json_decode($response, true);
+    if ($data['success'] ?? false) {
+        $order = $data['order'];
+    }
+}
+
+if (!$order) {
+    echo "Đơn hàng không tồn tại";
+    exit;
+}
+
+$total = $order['TOTAL_AMOUNT'] ?? 0;
+// Tạo QR tạm (giả lập link thanh toán)
+$qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode("ORDER:$orderId|TOTAL:$total");
+
 ?>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/payment_user.css">
 <style>
+    /*==============================================================*/
+/* Payment Page Styles                                         */
+/*==============================================================*/
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
@@ -17,6 +42,141 @@ body {
     padding: 0;
 }
 
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+/* Card */
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 25px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Card Titles */
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    color: #222;
+}
+
+/* Order Items */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item span {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Total Row */
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 15px;
+}
+
+/* Form Inputs */
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Grid Layout */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.grid-lg-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* Buttons */
+.btn, .submit-btn, .btn-paid, .btn-resend {
+    display: inline-block;
+    padding: 10px 22px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+    font-weight: 600;
+}
+
+/* Confirm / Submit */
+.btn, .submit-btn {
+    background-color: #007BFF;
+    color: #fff;
+    width: 100%;
+}
+
+.btn:hover, .submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Payment Methods */
+.payment-methods {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.payment-methods .method {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    background-color: #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.payment-methods .method.active {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+/* Checkbox */
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.checkbox input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* QR Container */
 #qr-container {
     max-width: 400px;
     margin: 50px auto;
@@ -75,28 +235,47 @@ body {
     background-color: #e0a800;
 }
 
+/* Timer */
 #timer {
     font-weight: bold;
     margin-top: 10px;
     color: #ffdd57;
 }
-</style>
 
+/* Responsive */
+@media (max-width: 768px) {
+    .grid-2, .grid-lg-2 {
+        grid-template-columns: 1fr;
+    }
+    #qr-container {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+</style>
 <div id="qr-container">
-    <p>Đang tải thông tin thanh toán...</p>
+    <p>Mã đơn hàng: <b><?= $orderId ?></b></p>
+    <p>Số tiền: <b><?= number_format($total) ?> VND</b></p>
+    <p>Quét QR bên dưới bằng ứng dụng ngân hàng hoặc ví điện tử:</p>
+    <img src="<?= $qrUrl ?>" alt="QR Payment">
+    <div id="timer"></div>
+    <a class="btn-paid" id="btn-paid">Đã thanh toán</a>
+    <div id="resend-container" style="display:none;">
+        <p>Mã QR hết hạn.</p>
+        <a class="btn-resend" id="btn-resend">Gửi lại QR</a>
+    </div>
 </div>
 
 <script>
 const orderId = "<?= $orderId ?>";
-
-let timerInterval;
-let remainingSeconds = 20; // 5 phút = 300 giây
+let remainingSeconds = 300; // 5 phút
 
 function startTimer() {
     const timerElem = document.getElementById('timer');
-    timerInterval = setInterval(() => {
+    const interval = setInterval(() => {
         if (remainingSeconds <= 0) {
-            clearInterval(timerInterval);
+            clearInterval(interval);
             document.getElementById('btn-paid').style.display = 'none';
             document.getElementById('resend-container').style.display = 'block';
             timerElem.textContent = "Mã QR đã hết hạn";
@@ -108,55 +287,26 @@ function startTimer() {
         remainingSeconds--;
     }, 1000);
 }
+startTimer();
 
-async function loadQR() {
+// Xử lý "Đã thanh toán"
+document.getElementById('btn-paid').addEventListener('click', async () => {
     try {
-        const res = await fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=qr_api&order_id=${orderId}`);
+        const res = await fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=confirm_transfer&order_id=${orderId}`);
         const data = await res.json();
-
-        if(!data.success){
-            document.getElementById('qr-container').innerHTML = `<p>${data.message}</p>`;
-            return;
+        if (data.success) {
+            alert('Đơn hàng đã được xác nhận và email thông báo đã gửi!');
+            window.location.href = `index.php?page=user_orders`;
+        } else {
+            alert(data.message || 'Có lỗi xảy ra');
         }
-
-        const container = document.getElementById('qr-container');
-        container.innerHTML = `
-            <p>Mã đơn hàng: <b>${data.order_id}</b></p>
-            <p>Số tiền: <b>${data.total.toLocaleString()} VND</b></p>
-            <p>Quét QR bên dưới bằng ứng dụng ngân hàng hoặc ví điện tử:</p>
-            <img src="${data.qr_url}" alt="QR Payment">
-            <div id="timer"></div>
-            <a class="btn-paid" id="btn-paid">Đã thanh toán</a>
-            <div id="resend-container" style="display:none;">
-                <p>Mã QR hết hạn.</p>
-                <a class="btn-resend" id="btn-resend">Gửi lại QR</a>
-            </div>
-        `;
-
-        remainingSeconds = 20;
-        startTimer();
-
-        // Xử lý "Đã thanh toán"
-        document.getElementById('btn-paid').addEventListener('click', async () => {
-            const resConfirm = await fetch(`http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=order&action=confirm_transfer&order_id=${orderId}`);
-            const resp = await resConfirm.json();
-            if(resp.success){
-                alert('Đơn hàng đã được xác nhận và email thông báo đã gửi!');
-                window.location.href = `index.php?page=user_orders`;
-            } else {
-                alert(resp.message || 'Có lỗi xảy ra');
-            }
-        });
-
-        // Xử lý gửi lại QR
-        document.getElementById('btn-resend').addEventListener('click', () => {
-            loadQR();
-        });
-
     } catch(e) {
-        document.getElementById('qr-container').innerHTML = `<p>Không thể tải QR.</p>`;
+        alert('Lỗi server, vui lòng thử lại');
     }
-}
+});
 
-loadQR();
+// Gửi lại QR
+document.getElementById('btn-resend').addEventListener('click', () => {
+    window.location.reload();
+});
 </script>
