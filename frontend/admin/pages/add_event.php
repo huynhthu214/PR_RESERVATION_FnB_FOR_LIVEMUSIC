@@ -21,8 +21,10 @@
       </div>
 
       <div class="form-group">
-        <label for="venue_name">Địa điểm</label>
-        <input type="text" id="venue_name" name="venue_name" placeholder="Nhập địa điểm" required>
+        <label for="venue_id">Địa điểm:</label>
+        <select id="venue_id" name="venue_id" required>
+          <option value="">-- Chọn địa điểm --</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -55,22 +57,44 @@
 </main>
 
 <script>
+// Load danh sách venue từ backend
+async function loadVenues() {
+  try {
+    const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_venues');
+    const data = await res.json();
+    const select = document.getElementById("venue_id");
+
+    if (data.success && Array.isArray(data.data)) {
+      data.data.forEach(v => {
+        const opt = document.createElement("option");
+        // Sử dụng đúng key API trả về
+        opt.value = v.id;   // v.id thay vì v.VENUE_ID
+        opt.text = v.name;  // v.name thay vì v.NAME
+        select.appendChild(opt);
+      });
+    }
+  } catch (err) {
+    console.error("Lỗi load venues:", err);
+  }
+}
+
+// Submit form
 document.getElementById("add-event-form").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const band_name = document.getElementById("band_name").value.trim();
   const event_name = document.getElementById("event_name").value.trim();
-  const venue_name = document.getElementById("venue_name").value.trim();
+  const venue_id = document.getElementById("venue_id").value;
   const event_date = document.getElementById("event_date").value.trim();
   const ticket_price = document.getElementById("ticket_price").value.trim();
   const status = document.getElementById("status").value;
 
-  if (!band_name || !event_name || !venue_name || !event_date || !ticket_price) {
+  if (!band_name || !event_name || !venue_id || !event_date || !ticket_price) {
     showToast("Vui lòng nhập đầy đủ thông tin!", "error");
     return;
   }
 
-  const data = { band_name, event_name, venue_name, event_date, ticket_price, status };
+  const data = { band_name, event_name, venue_id, event_date, ticket_price, status };
 
   try {
     const res = await fetch('http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=add_event', {
@@ -93,6 +117,8 @@ document.getElementById("add-event-form").addEventListener("submit", async funct
   }
 });
 
+document.addEventListener("DOMContentLoaded", loadVenues);
+
 function showToast(message, type = "info") {
   const container = document.getElementById("toast-container");
   const toast = document.createElement("div");
@@ -101,20 +127,14 @@ function showToast(message, type = "info") {
     <span>${message}</span>
     <span class="close-toast">&times;</span>
   `;
-
   container.appendChild(toast);
-
-  // Cho phép đóng thủ công
   toast.querySelector(".close-toast").addEventListener("click", () => {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
   });
-
-  // Tự động biến mất sau 3 giây
   setTimeout(() => {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
   }, 3000);
 }
-
 </script>
