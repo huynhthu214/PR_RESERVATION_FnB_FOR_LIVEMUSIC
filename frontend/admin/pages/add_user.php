@@ -44,7 +44,7 @@
   </section>
 
   <!-- Toast -->
-  <div id="toast" class="toast"></div>
+  <div id="toast-container"></div>
 </main>
 
 <script>
@@ -88,12 +88,20 @@ document.getElementById("add-user-form").addEventListener("submit", function(e) 
     });
 });
 
-// Toast hiển thị ở góc phải trên
 function showToast(message, type = "info") {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
+  const container = document.getElementById("toast-container");
+
+  const toast = document.createElement("div");
   toast.className = `toast show ${type}`;
-  setTimeout(() => { toast.className = "toast"; }, 2500);
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.style.opacity = 0;
+    setTimeout(() => toast.remove(), 500);
+  }, 2500);
 }
 
 function togglePassword(inputId, icon) {
