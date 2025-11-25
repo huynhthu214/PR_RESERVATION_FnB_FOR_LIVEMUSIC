@@ -14,7 +14,7 @@
                     <th>Tiêu đề</th>
                     <th>Thời gian gửi</th>
                     <th>Trạng thái</th>
-                    <th>Lỗi</th>
+                    <th>Nội dung</th>
                 </tr>
             </thead>
             <tbody id="email-body">

@@ -44,8 +44,8 @@
       <label for="editEventName">Tên sự kiện:</label>
       <input type="text" id="editEventName" required>
 
-      <label for="editVenueName">Địa điểm:</label>
-      <input type="text" id="editVenueName" required>
+      <label for="editVenueId">Địa điểm:</label>
+      <select id="editVenueId" required></select>
 
       <label for="editEventDate">Ngày diễn:</label>
       <input type="date" id="editEventDate" required>
@@ -57,14 +57,16 @@
       <input type="time" id="editEndTime">
 
       <label for="editTicketPrice">Giá vé (VNĐ):</label>
-      <div class="price-input">
-        <input type="text" id="editTicketPrice" required>
-        <span class="currency-label">VNĐ</span>
-      </div>
+        <div class="price-input">
+            <button type="button" class="price-btn" onclick="changePrice(-1000)">−</button>
+            <input type="text" id="editTicketPrice" required>
+            <button type="button" class="price-btn" onclick="changePrice(1000)">+</button>
+            <span class="currency-label">VNĐ</span>
+        </div>
 
       <label for="editStatus">Trạng thái:</label>
       <select id="editStatus">
-        <option value="Scheduled">Đang mở</option>
+        <option value="ACTIVE">Đang mở</option>
         <option value="Cancelled">Hủy</option>
         <option value="Completed">Đã kết thúc</option>
       </select>
@@ -112,6 +114,17 @@ document.getElementById('editImageFile').addEventListener('change', function (ev
     document.getElementById('editImageUrl').value = '';
   }
 });
+
+function changePrice(amount) {
+    const input = document.getElementById('editTicketPrice');
+    let value = parseInt(input.value.replace(/\./g, '')) || 0;
+
+    value += amount;
+    if (value < 0) value = 0;
+
+    input.value = value.toLocaleString("vi-VN");
+}
+
 // ---------------- Toast ----------------
 function showToast(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toast-container');
@@ -187,19 +200,17 @@ function loadEvents() {
 
 // ---------------- Modal chỉnh sửa Event ----------------
 function mapStatus(status) {
-    if (!status) return "Scheduled";
+    if (!status) return "ACTIVE";
+    
+    status = status.toUpperCase();
 
-    status = status.toLowerCase();
+    if (status === "ACTIVE") return "ACTIVE";
+    if (status === "CANCELLED") return "CANCELLED";
+    if (status === "COMPLETED") return "COMPLETED";
 
-    if (status === "active" || status === "scheduled" || status === "đang mở")
-        return "Scheduled";
-    if (status === "cancelled" || status === "hủy")
-        return "Cancelled";
-    if (status === "completed" || status === "đã kết thúc")
-        return "Completed";
-
-    return "Scheduled";
+    return "ACTIVE";
 }
+
 
 let selectedEventId = null;
 
@@ -217,12 +228,13 @@ function editEvent(id) {
             document.getElementById('editEventId').value = event.EVENT_ID;
             document.getElementById('editEventName').value = event.EVENT_NAME;
             document.getElementById('editBandName').value = event.BAND_NAME || '';
-            document.getElementById('editVenueName').value = event.venue_name || event.VENUE_NAME || '';
+            loadVenuesForEdit(event.VENUE_ID);
+            document.getElementById('editVenueId').value = event.VENUE_ID;
             document.getElementById('editEventDate').value = event.EVENT_DATE ? event.EVENT_DATE.split(' ')[0] : '';
             document.getElementById('editStartTime').value = event.START_TIME ? event.START_TIME.split(' ')[1] : '';
             document.getElementById('editEndTime').value = event.END_TIME ? event.END_TIME.split(' ')[1] : '';
             document.getElementById('editTicketPrice').value = Number(event.TICKET_PRICE).toLocaleString("vi-VN");
-            document.getElementById('editStatus').value = mapStatus(event.STATUS || event.status);
+            document.getElementById('editStatus').value = event.STATUS;
             document.getElementById('editDescription').value = event.DESCRIPTION || '';
             document.getElementById('editImageUrl').value = event.IMAGE_URL || '';
 
@@ -243,8 +255,9 @@ document.getElementById('editEventForm').addEventListener('submit', function(e){
 
     const data = {
         EVENT_ID: document.getElementById('editEventId').value,
+        EVENT_NAME: document.getElementById('editEventName').value, 
         BAND_NAME: document.getElementById('editBandName').value,
-        VENUE_NAME: document.getElementById('editVenueName').value,
+        VENUE_ID: document.getElementById('editVenueId').value,
         EVENT_DATE: document.getElementById('editEventDate').value,
         START_TIME: document.getElementById('editStartTime').value,
         END_TIME: document.getElementById('editEndTime').value,
@@ -274,7 +287,22 @@ document.getElementById('editEventForm').addEventListener('submit', function(e){
         showToast('Không thể kết nối tới server.', 'error', 4000);
     });
 });
+function loadVenuesForEdit(selectedId) {
+    fetch("http://localhost/PR_RESERVATION_FnB_FOR_LIVEMUSIC/api_gateway/index.php?service=admin&action=get_venues")
+        .then(res => res.json())
+        .then(list => {
+            const select = document.getElementById("editVenueId");
+            select.innerHTML = "";
 
+            list.data.forEach(v => {
+                const opt = document.createElement("option");
+                opt.value = v.id;
+                opt.textContent = v.name;
+                if (v.id == selectedId) opt.selected = true;
+                select.appendChild(opt);
+            });
+        });
+}
 
 // ---------------- Xóa sự kiện ----------------
 let deleteEventId = null;
