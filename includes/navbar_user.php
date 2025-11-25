@@ -71,10 +71,6 @@ $hideSidebarPages = [
       <a href="index.php?page=notification"><i class="fa-solid fa-bell"></i></a>
     </div>
 
-    <div class="search-box" id="searchBox">
-      <input type="text" placeholder="Tìm kiếm..." />
-    </div>
-
     <div class="user">
       <button class="user-btn" id="userBtn">
         <i class="fa-solid fa-user"></i>

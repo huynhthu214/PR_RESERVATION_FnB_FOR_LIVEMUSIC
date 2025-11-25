@@ -120,7 +120,7 @@ a.back-link:hover {
 
 .seat.available {
   background: var(--card);
-  color: var(--text);
+  color: var(--primary);
 }
 
 .seat.vip {
@@ -130,9 +130,9 @@ a.back-link:hover {
 }
 
 .seat.selected {
-  background: var(--primary);
-  color: #000;
-  border-color: var(--primary);
+  background: var(--primary) !important;
+  color: #000 !important;
+  border-color: var(--primary) !important;
   transform: scale(1.1);
 }
 
@@ -140,6 +140,11 @@ a.back-link:hover {
   background: var(--border);
   color: var(--muted);
   cursor: not-allowed;
+}
+
+.seat.standard {
+  background: #ececec;
+  color: var(--primary);
 }
 
 /* Booking Summary */
@@ -189,20 +194,19 @@ a.back-link:hover {
   color: var(--primary);
 }
 
-  .btn {
-    width: 100%;
-    margin-top: 1rem;
-    padding: 0.8rem;
-    background: #ee7a02;
-    color: #1f2211;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: opacity 0.3s;
-    font-size: 17px;
-  }
-
+.btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: #ee7a02;
+  color: #1f2211;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+  font-size: 17px;
+}
 
 .hint {
   color: var(--muted);

@@ -14,7 +14,7 @@ require_once __DIR__ . '/../../config.php';
         <h2>Chọn chỗ ngồi</h2>
 
         <div class="legend">
-          <div><div class="legend-box" style="background:var(--card);"></div> Trống</div>
+          <div><div class="legend-box" style="background:#ececec;"></div> Trống</div>
           <div><div class="legend-box" style="background:rgba(212,175,55,0.1);border-color:var(--primary);"></div> VIP</div>
           <div><div class="legend-box" style="background:var(--primary);"></div> Đã chọn</div>
           <div><div class="legend-box" style="background:var(--border);"></div> Đã đặt</div>
