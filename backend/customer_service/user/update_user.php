@@ -1,4 +1,5 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -50,13 +51,22 @@ $set_clause = implode(', ', $updates);
 $sql = "UPDATE CUSTOMER_USERS SET $set_clause WHERE CUSTOMER_ID = '$CUSTOMER_ID'";
 
 if ($conn_customer->query($sql)) {
-    // trả về dữ liệu mới luôn để frontend cập nhật
+
+    // cập nhật lại session
+    if ($USERNAME !== null) {
+        $_SESSION['USERNAME'] = $USERNAME;
+    }
+    if ($EMAIL !== null) {
+        $_SESSION['EMAIL'] = $EMAIL;
+    }
+
     echo json_encode([
         "success" => true,
         "message" => "Cập nhật người dùng thành công",
         "USERNAME" => $USERNAME,
         "EMAIL" => $EMAIL
     ]);
+
 } else {
     echo json_encode(["success" => false, "message" => "Lỗi khi cập nhật: " . $conn_customer->error]);
 }
