@@ -96,10 +96,8 @@ document.getElementById('contactForm').addEventListener('submit', async function
             method: 'POST',
             body: formData
         });
-
         const data = await res.json();
         showToast(data.message, data.success ? 'success' : 'error');
-
         if (data.success) this.reset();
 
     } catch (err) {
@@ -129,5 +127,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
- 
+
 </script>

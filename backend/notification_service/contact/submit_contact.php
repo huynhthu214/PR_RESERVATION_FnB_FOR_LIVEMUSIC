@@ -36,27 +36,33 @@ if (strlen($message) > 3000) {
     exit;
 }
 
-// Lấy ID cuối
-$conn = $conn_noti;
-$sql = "SELECT EMAILLOG_ID FROM EMAIL_LOG ORDER BY EMAILLOG_ID DESC LIMIT 1";
-$result = $conn->query($sql);
-$lastId = ($result && $result->num_rows > 0) ? $result->fetch_assoc()['EMAILLOG_ID'] : 'EL000';
+// Lấy ID lớn nhất hiện có trong database
+$result = $conn_noti->query("SELECT MAX(EMAILLOG_ID) AS maxId FROM EMAIL_LOG");
+if ($result && $row = $result->fetch_assoc()) {
+    $lastId = $row['maxId'] ?: 'EL000';
+} else {
+    $lastId = 'EL000';
+}
 
-$newNum = str_pad(intval(substr($lastId, 2)) + 1, 3, '0', STR_PAD_LEFT);
-$newId  = 'EL' . $newNum;
+do {
+    $newNum = str_pad(intval(substr($lastId, 2)) + 1, 3, '0', STR_PAD_LEFT);
+    $newId  = 'EL' . $newNum;
+    $check = $conn_noti->query("SELECT 1 FROM EMAIL_LOG WHERE EMAILLOG_ID = '$newId'");
+    $lastId = $newId;
+} while($check && $check->num_rows > 0);
 
 // Nội dung lưu
 $content_detail = "Tên: $name\nEmail: $email\nMã vé: " . ($ticket_id ?: 'Không có') . "\n\nNội dung:\n$message";
 
 // Insert
-$stmt = $conn->prepare("
+$stmt = $conn_noti->prepare("
     INSERT INTO EMAIL_LOG 
     (EMAILLOG_ID, ADMIN_ID, CUSTOMER_ID, RECIPIENT_EMAIL, SUBJECT, SENT_TIME, STATUS, ERRORMESSAGE)
     VALUES (?, NULL, NULL, 'support@livemusic.vn', 'Liên hệ từ khách hàng', NOW(), 'new', ?)
 ");
 
 if (!$stmt) {
-    echo json_encode(['success' => false, 'message' => 'Lỗi truy vấn database']);
+    echo json_encode(['success' => false, 'message' => 'Lỗi truy vấn database: ' . $conn_noti->error]);
     exit;
 }
 
@@ -68,5 +74,6 @@ if ($stmt->execute()) {
     echo json_encode(['success' => false, 'message' => 'Không thể lưu tin nhắn, vui lòng thử lại.']);
 }
 
+$stmt->close();
 exit;
 ?>
