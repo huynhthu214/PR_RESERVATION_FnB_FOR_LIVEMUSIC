@@ -147,7 +147,7 @@ async function loadEventDetail() {
         detailItems[1].querySelectorAll('p')[1].textContent = `${startTime} - ${endTime}`;
 
         // Venue
-        detailItems[2].querySelectorAll('p')[1].textContent = event.venue || 'Unknown Venue';
+        detailItems[2].querySelectorAll('p')[1].textContent = event.venue_name || 'Unknown Venue';
         detailItems[2].querySelectorAll('p')[2].textContent = event.venue_address || '';
 
         // Capacity
