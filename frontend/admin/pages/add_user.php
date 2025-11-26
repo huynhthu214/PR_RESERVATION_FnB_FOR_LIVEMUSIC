@@ -75,12 +75,20 @@ document.getElementById("add-user-form").addEventListener("submit", function(e) 
   })
     .then(res => res.json())
     .then(result => {
-      if (result.success) {
-        showToast("Thêm người dùng thành công!", "success");
-        setTimeout(() => window.location.href = "index.php?page=users", 1500);
-      } else {
-        showToast(result.message || "Thêm thất bại!", "error");
-      }
+        if (!result) return;
+
+        // Nếu backend báo email đã tồn tại → show toast ngay
+        if (result.message && result.message.includes("Email đã tồn tại")) {
+            showToast("Email này đã được sử dụng!", "error");
+            return;
+        }
+
+        if (result.success) {
+            showToast("Thêm người dùng thành công!", "success");
+            setTimeout(() => window.location.href = "index.php?page=users", 1500);
+        } else {
+            showToast(result.message || "Thêm thất bại!", "error");
+        }
     })
     .catch(error => {
       console.error("Lỗi:", error);

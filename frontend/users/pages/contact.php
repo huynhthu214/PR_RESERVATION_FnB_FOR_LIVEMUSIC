@@ -27,7 +27,7 @@
                 echo '<p style="color:#999; text-align:center;">Chưa có câu hỏi nào.</p>';
             }
         }
-        loadCmsContent('faq');
+        loadCmsContent('faqs');
         ?>
       </div>
     </div>
@@ -110,4 +110,24 @@ document.getElementById('contactForm').addEventListener('submit', async function
         btn.disabled = false;
     }
 });
+
+// Accordion FAQ
+document.addEventListener("DOMContentLoaded", function () {
+    const items = document.querySelectorAll(".accordion-item");
+
+    items.forEach(item => {
+        const header = item.querySelector(".accordion-header");
+
+        header.addEventListener("click", () => {
+            // Đóng tất cả item khác
+            items.forEach(i => {
+                if (i !== item) i.classList.remove("active");
+            });
+
+            // Toggle item hiện tại
+            item.classList.toggle("active");
+        });
+    });
+});
+ 
 </script>

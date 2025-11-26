@@ -37,7 +37,7 @@ function loadCmsContent($type) {
 <section class="values">
   <h2>Giá trị của chúng tôi</h2>
   <div class="values-grid">
-    <?php loadCmsContent('our-value'); ?>
+    <?php loadCmsContent('our-values'); ?>
   </div>
 </section>
 

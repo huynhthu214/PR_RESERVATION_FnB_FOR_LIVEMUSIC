@@ -17,6 +17,13 @@ $username = $conn_customer->real_escape_string($input["username"]);
 $email = $conn_customer->real_escape_string($input["email"]);
 $password = $conn_customer->real_escape_string($input["password"]);
 
+$check = $conn_customer->query("SELECT EMAIL FROM CUSTOMER_USERS WHERE EMAIL = '$email' LIMIT 1");
+
+if ($check && $check->num_rows > 0) {
+    echo json_encode(["success" => false, "message" => "Email đã tồn tại!"]);
+    exit;
+}
+
 // Lấy ID lớn nhất hiện có
 $query = "SELECT CUSTOMER_ID FROM CUSTOMER_USERS ORDER BY CUSTOMER_ID DESC LIMIT 1";
 $result = $conn_customer->query($query);
